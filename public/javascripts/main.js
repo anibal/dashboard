@@ -9,6 +9,7 @@ function updateGithubFrame() {
   if (githubIndex > githubPagesCount) githubIndex = 0;
   
   $("#github").attr("src", githubPages[githubIndex]);
+  setTimeout("updateGithubFrame();", 60000);
 }
 
 function updateMpdSong() {
