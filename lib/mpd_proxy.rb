@@ -12,7 +12,7 @@ class MpdProxy
     end
     
     def current_song; @current_song end
-    def current_song=(song = nil) @current_song = song end
+    def current_song=(song = nil) @current_song = (song ? "#{song.artist} - #{song.title}" : nil) end
     
     def time; @time end
     def time=(elapsed, total); @time = total - elapsed end
