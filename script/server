@@ -13,7 +13,7 @@ if [ "$1" ]
 then
   case "$1" in
     start)
-      thin start -d -p 4567 -e $env -R config.ru
+      thin start -d -p 4568 -e $env -R config.ru
       ;;
     stop)
       thin stop
