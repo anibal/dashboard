@@ -1,0 +1,34 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Georgia;
+  overflow: hidden;
+}
+#wrap {
+  width: 1920px;
+  height: 1080px;
+}
+.quarter {
+  float: left;
+  width: 950px;
+  height: 530px;
+  margin: 5px;
+}
+.clear {
+  clear: both;
+}
+.quarter iframe {
+  width: 100%;
+  height: 100%;
+}
+.clock {
+  margin: 50px 275px;
+}
+#mpd {
+  text-align: center;
+  font-size: 25pt;
+  font-weight: bold;
+}
+#mpd div {
+  padding: 10px 2px;
+}
