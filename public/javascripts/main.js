@@ -1,15 +1,18 @@
-var githubPages = ["https://github.com/tricycle/kando/graphs/punch_card",
-                   "https://github.com/tricycle/kando/graphs/traffic",
-                   "https://github.com/tricycle/kando/graphs/impact"];
-var githubPagesCount = githubPages.length - 1;
-var githubIndex = 0;
+var graphPages = ["https://github.com/tricycle/kando/graphs/punch_card",
+                  "https://github.com/tricycle/kando/graphs/traffic",
+                  "https://github.com/tricycle/kando/graphs/impact",
+                   "http://www.pivotaltracker.com/reports/point_count/iteration?iteration_designation=current&project_id=25033&chart_type=current_iteration",
+                   "http://www.pivotaltracker.com/reports/point_count/iteration?iteration_designation=current&project_id=40441&chart_type=current_iteration",
+                   ];
+var graphPagesCount = graphPages.length - 1;
+var graphIndex = 0;
 
-function updateGithubFrame() {
-  githubIndex++;
-  if (githubIndex > githubPagesCount) githubIndex = 0;
+function updateGraphFrame() {
+  graphIndex++;
+  if (graphIndex > graphPagesCount) graphIndex = 0;
   
-  $("#github").attr("src", githubPages[githubIndex]);
-  setTimeout("updateGithubFrame();", 60000);
+  $("#github").attr("src", graphPages[graphIndex]);
+  setTimeout("updateGraphFrame();", 60000);
 }
 
 function updateMpdSong() {
@@ -24,6 +27,6 @@ function reload() {
 
 $(function() {
   setTimeout("reload();", 1800000);
-  setTimeout("updateGithubFrame();", 60000);
+  setTimeout("updateGraphFrame();", 60000);
   updateMpdSong();
 });
