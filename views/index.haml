@@ -1,16 +1,15 @@
-#top_left.quarter
-  %iframe{ :src => "http://www.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;mode=WEEK&amp;height=530&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=dnv17juvgme52i520fj9pahf6g%40group.calendar.google.com&amp;color=%230D7813&amp;ctz=Australia%2FSydney", :width => "950",  :height => "530", :frameborder => 0, :scrolling => "no" }
-
-#top_right.quarter
-  %embed.clock{ :src => "http://www.clocklink.com/clocks/5005-blue.swf?TimeZone=AEDT&", :width => 520, :height => 130, :wmode => "transparent", :type => "application/x-shockwave-flash" }
+#top
+  %embed.clock{ :src => "http://www.clocklink.com/clocks/5005-blue.swf?TimeZone=AEDT&", :width => 450, :height => 130, :wmode => "transparent", :type => "application/x-shockwave-flash" }
   #mpd
-    %div Currently playing:
-    #current
+    %div
+      Current Song:
+      %span#current
 
-.clear
-
-#bottom_left.quarter
-  %iframe{ :src => "http://ci.trike.com.au", :frameborder => 0, :scrolling => "no" }
-
-#bottom_right.quarter
-  %iframe#github{ :src => "https://github.com/tricycle/kando/graphs/punch_card", :frameborder => 0, :scrolling => "no" }
+#left.column
+  %iframe{ :src => "http://ci.trike.com.au", :frameborder => 0, :scrolling => "no", :width => 500, :height => 840 }
+  
+#right.column
+  .row
+    %iframe{ :src =>   "http://www.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;mode=WEEK&amp;height=530&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=dnv17juvgme52i520fj9pahf6g%40group.calendar.google.com&amp;color=%230D7813&amp;ctz=Australia%2FSydney", :width => 1340, :height => 400, :frameborder => 0, :scrolling => "no" }
+  .row
+    %iframe#github{ :src => "https://github.com/tricycle/kando/graphs/punch_card", :frameborder => 0, :scrolling => "no", :width => 1340, :height => 400 }

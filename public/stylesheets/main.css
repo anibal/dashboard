@@ -8,27 +8,28 @@ body {
   width: 1920px;
   height: 1080px;
 }
-.quarter {
+#top {
+  height: 180px;
+  margin: 10px;
+  border-bottom: 2px solid #000;
+}
+#left {
+  width: 500px;
+}
+#right {
+  width: 1340px;
+}
+.column {
   float: left;
-  width: 950px;
-  height: 530px;
-  margin: 5px;
+  height: 840px;
+  margin: 20px;
 }
-.clear {
-  clear: both;
-}
-.quarter iframe {
-  width: 100%;
-  height: 100%;
-}
-.clock {
-  margin: 50px 215px;
+.column .row {
+  margin: 20px 0;
+  height: 400px;
 }
 #mpd {
-  text-align: center;
   font-size: 25pt;
   font-weight: bold;
-}
-#mpd div {
-  padding: 10px 2px;
+  margin-left: 35px;
 }
