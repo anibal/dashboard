@@ -49,3 +49,32 @@ body {
   font-weight: bold;
   margin-left: 18px;
 }
+.overlay {
+  display: none;
+}
+#ci-failure-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #b00;
+  opacity: 0.8;
+  z-index: 9;
+}
+#ci-failure-message {
+  position: absolute;
+  top: 100px;
+  left: 220px;
+  width: 500px;
+  z-index: 10;
+  color: white;
+  text-align: center;
+  font-size: 30pt;
+}
+#ci-failure-message div {
+  padding: 20px;
+}
+#ci-failure-message .project-name {
+  font-weight: bold;
+}

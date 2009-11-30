@@ -2,9 +2,21 @@ function fetchCIStatus() {
   $.getJSON("/ci_status", function(data) {
     $(".project-status").removeClass("success").removeClass("failure").removeClass("building");
 
+    var failures = [];
     _(data).each(function(project) {
-      $(".project-status[ref = " + project["identifier"] + "]").addClass(project["status"])
+      if (project["status"] == "failure") failures[failures.length] = project["name"];
+      $(".project-status[ref = " + project["identifier"] + "]").addClass(project["status"]);
     });
+    
+    if (!_(failures).isEmpty()) {
+      $(".overlay").show();
+      
+      var first = failures.shift();
+      $("#ci-failure-message .project-name").html(_(failures).inject(first, function(res, project) { return (res + ", " + project) }));
+    }
+    else {
+      $(".overlay").hide();
+    }
   });
 
   setTimeout("fetchCIStatus();", 30000);
@@ -35,7 +47,7 @@ $(function() {
 
   updateMpdSong();
 
-  setTimeout("updateBottomFrame();", 60000);
+  // setTimeout("updateBottomFrame();", 60000);
   $($("#content iframe")[0]).show();
 
   setTimeout("reload();", 1800000); 

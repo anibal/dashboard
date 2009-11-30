@@ -11,6 +11,12 @@
         Current Song:
         %span#current
 
+#ci-failure-overlay.overlay
+#ci-failure-message.overlay
+  .project-name Test
+  .message build failed.
+  .message Someone go and fix it!!!
+
 #content
-  - %w[http://www.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;mode=WEEK&amp;height=530&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=dnv17juvgme52i520fj9pahf6g%40group.calendar.google.com&amp;color=%230D7813&amp;ctz=Australia%2FSydney https://github.com/tricycle/kando/graphs/punch_card https://github.com/tricycle/kando/graphs/traffic https://github.com/tricycle/kando/graphs/impact http://www.pivotaltracker.com/reports/point_count/iteration?iteration_designation=current&project_id=25033&chart_type=current_iteration http://www.pivotaltracker.com/reports/point_count/iteration?iteration_designation=current&project_id=40441&chart_type=current_iteration].each do |src|
-    %iframe{ :src => src, :frameborder => 0, :scrolling => "no", :width => 940, :height => 415 }
+  / - %w[http://www.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;mode=WEEK&amp;height=530&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=dnv17juvgme52i520fj9pahf6g%40group.calendar.google.com&amp;color=%230D7813&amp;ctz=Australia%2FSydney https://github.com/tricycle/kando/graphs/punch_card https://github.com/tricycle/kando/graphs/traffic https://github.com/tricycle/kando/graphs/impact http://www.pivotaltracker.com/reports/point_count/iteration?iteration_designation=current&project_id=25033&chart_type=current_iteration http://www.pivotaltracker.com/reports/point_count/iteration?iteration_designation=current&project_id=40441&chart_type=current_iteration].each do |src|
+  %iframe{ :src => "http://www.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;mode=WEEK&amp;height=530&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=dnv17juvgme52i520fj9pahf6g%40group.calendar.google.com&amp;color=%230D7813&amp;ctz=Australia%2FSydney", :frameborder => 0, :scrolling => "no", :width => 940, :height => 415 }
