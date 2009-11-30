@@ -31,7 +31,7 @@ body {
   padding-top: 20px;
   background: url(/images/project-status.png) no-repeat 0 0;
 }
-#header .project-status.bulding {
+#header .project-status.building {
   background: url(/images/project-status.png) no-repeat 0 -65px;
 }
 #header .project-status.failure {
@@ -48,6 +48,7 @@ body {
   font-size: 13pt;
   font-weight: bold;
   margin-left: 18px;
+  overflow: hidden;
 }
 .overlay {
   display: none;
