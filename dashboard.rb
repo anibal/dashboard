@@ -1,4 +1,4 @@
-%w[rubygems sinatra haml librmpd].each { |lib| require lib }
+%w[rubygems sinatra haml open-uri hpricot json librmpd].each { |lib| require lib }
 require 'lib/mpd_proxy'
 
 require 'lib/config'
@@ -21,6 +21,16 @@ end
 # -----------------------------------------------------------------------------------
 get "/" do
   haml :index
+end
+get "/ci_status" do
+  doc = open(CI_URL) { |f| Hpricot::XML(f) }
+
+  status = PROJECTS
+  (doc / :Project).each do |project|
+    status[project.attributes["name"]][:status] = project.attributes["lastBuildStatus"].downcase
+  end
+
+  status.to_json
 end
 get "/mpd_song" do
   "#{MpdProxy.current_song} (#{to_time(MpdProxy.time)})"

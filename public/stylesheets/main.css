@@ -8,16 +8,40 @@ body {
   width: 960px;
   height: 540px;
 }
-#top {
-  height: 90px;
+#header {
+  height: 95px;
   margin: 5px;
   border-bottom: 1px solid #000;
 }
-#bottom {
-  height: 420px;
+#header .top {
+  height: 65px;
+  margin-bottom: 5px;
+}
+#header .clock {
+  margin-right: 20px;
+}
+#header .project-status {
+  float: right;
+  width: 65px;
+  height: 45px;
+  margin: 0 10px;
+  text-align: center;
+  font-size: 18pt;
+  font-weight: bold;
+  padding-top: 20px;
+  background: url(/images/project-status.png) no-repeat 0 0;
+}
+#header .project-status.bulding {
+  background: url(/images/project-status.png) no-repeat 0 -65px;
+}
+#header .project-status.failure {
+  background: url(/images/project-status.png) no-repeat 0 -130px;
+}
+#content {
+  height: 415px;
   margin: 10px;
 }
-#bottom iframe {
+#content iframe {
   display: none;
 }
 #mpd {
