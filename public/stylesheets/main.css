@@ -5,31 +5,23 @@ body {
   overflow: hidden;
 }
 #wrap {
-  width: 1920px;
-  height: 1080px;
+  width: 960px;
+  height: 540px;
 }
 #top {
-  height: 180px;
+  height: 90px;
+  margin: 5px;
+  border-bottom: 1px solid #000;
+}
+#bottom {
+  height: 420px;
   margin: 10px;
-  border-bottom: 2px solid #000;
 }
-#left {
-  width: 500px;
-}
-#right {
-  width: 1340px;
-}
-.column {
-  float: left;
-  height: 840px;
-  margin: 20px;
-}
-.column .row {
-  margin: 20px 0;
-  height: 400px;
+#bottom iframe {
+  display: none;
 }
 #mpd {
-  font-size: 25pt;
+  font-size: 13pt;
   font-weight: bold;
-  margin-left: 35px;
+  margin-left: 18px;
 }

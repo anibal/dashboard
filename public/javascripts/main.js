@@ -1,18 +1,11 @@
-var graphPages = ["https://github.com/tricycle/kando/graphs/punch_card",
-                  "https://github.com/tricycle/kando/graphs/traffic",
-                  "https://github.com/tricycle/kando/graphs/impact",
-                   "http://www.pivotaltracker.com/reports/point_count/iteration?iteration_designation=current&project_id=25033&chart_type=current_iteration",
-                   "http://www.pivotaltracker.com/reports/point_count/iteration?iteration_designation=current&project_id=40441&chart_type=current_iteration",
-                   ];
-var graphPagesCount = graphPages.length - 1;
-var graphIndex = 0;
-
-function updateGraphFrame() {
-  graphIndex++;
-  if (graphIndex > graphPagesCount) graphIndex = 0;
+function updateBottomFrame() {
+  var newFrame = $("#bottom iframe:visible").next();
+  if (newFrame.length == 0) newFrame = $("#bottom iframe")[0];
   
-  $("#github").attr("src", graphPages[graphIndex]);
-  setTimeout("updateGraphFrame();", 60000);
+  $($("#bottom iframe:visible")[0]).hide();
+  $(newFrame).show();
+  
+  setTimeout("updateBottomFrame();", 5000);
 }
 
 function updateMpdSong() {
@@ -27,6 +20,9 @@ function reload() {
 
 $(function() {
   setTimeout("reload();", 1800000);
-  setTimeout("updateGraphFrame();", 60000);
+  
+  setTimeout("updateBottomFrame();", 10000);
+  $($("#bottom iframe")[0]).show();
+  
   updateMpdSong();
 });
