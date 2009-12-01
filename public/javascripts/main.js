@@ -1,11 +1,11 @@
 function fetchCIStatus() {
   $.getJSON("/ci_status", function(data) {
-    $(".project-status").removeClass("success").removeClass("failure").removeClass("building");
+    $(".project-status").remove();
 
     var failures = [];
     _(data).each(function(project) {
       if (project["status"] == "failure") failures[failures.length] = project;
-      $(".project-status[ref = " + project["identifier"] + "]").addClass(project["status"]);
+      $("#header .top").append('<div class="project-status ' + project["status"] + '">' + project["identifier"] + '</div>');
     });
 
     if (!_(failures).isEmpty()) {
