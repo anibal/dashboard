@@ -23,12 +23,9 @@ body {
 #header .project-status {
   float: right;
   width: 65px;
-  height: 45px;
+  height: 65px;
   margin: 0 10px;
   text-align: center;
-  font-size: 18pt;
-  font-weight: bold;
-  padding-top: 20px;
   background: url(/images/project-status.png) no-repeat 0 0;
 }
 #header .project-status.building {
@@ -36,6 +33,18 @@ body {
 }
 #header .project-status.failure {
   background: url(/images/project-status.png) no-repeat 0 -130px;
+}
+#header .project-status span {
+  display: block;
+}
+#header .project-status .identifier {
+  height: 27px;
+  font-size: 18pt;
+  font-weight: bold;
+  margin-top: 20px;
+}
+#header .project-status .label {
+  font-size: 9pt;
 }
 #content {
   height: 415px;

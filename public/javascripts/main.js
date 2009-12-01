@@ -5,7 +5,11 @@ function fetchCIStatus() {
     var failures = [];
     _(data).each(function(project) {
       if (project["status"] == "failure") failures[failures.length] = project;
-      $("#header .top").append('<div class="project-status ' + project["status"] + '">' + project["identifier"] + '</div>');
+      $("#header .top").append(' \
+        <div class="project-status ' + project["status"] + '"> \
+          <span class="identifier">' + project["identifier"] + '</span> \
+          <span class="label">' + project["label"] + '</span> \
+        </div>');
     });
 
     if (!_(failures).isEmpty()) {
