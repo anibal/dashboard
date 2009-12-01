@@ -13,7 +13,7 @@ function fetchCIStatus() {
 
       var first = failures.shift();
       $("#ci-failure-message .project-name").html(_(failures).inject(first["name"], function(res, project) { return (res + ", " + project["name"]) }));
-      $("#ci-failure-message .author").html(_(failures).inject(first["author"], function(res, project) { return (res + ", " + project["author"]) }));
+      $("#ci-failure-message .author").html("(" + _(failures).inject(first["author"], function(res, project) { return (res + ", " + project["author"]) }) + ")");
     }
     else {
       $(".overlay").hide();

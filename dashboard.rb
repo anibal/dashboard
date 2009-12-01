@@ -32,7 +32,7 @@ get "/ci_status" do
 
     status[name][:status] = build_status
     status[name][:label] = project.attributes["lastBuildLabel"]
-    status[name][:author] = "(#{project.attributes["lastBuildAuthor"].split(" ")[0]})"
+    status[name][:author] = project.attributes["lastBuildAuthor"].split(" ")[0]
   end
 
   status.to_json
