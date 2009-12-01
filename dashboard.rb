@@ -27,8 +27,12 @@ get "/ci_status" do
 
   status = PROJECTS
   (doc / :Project).each do |project|
+    name = project.attributes["name"]
     build_status = (project.attributes["activity"] == "Building" ? "building" : project.attributes["lastBuildStatus"].downcase)
-    status[project.attributes["name"]][:status] = build_status
+
+    status[name][:status] = build_status
+    status[name][:label] = project.attributes["lastBuildLabel"]
+    status[name][:author] = project.attributes["lastBuildAuthor"].split(" ")[0]
   end
 
   status.to_json

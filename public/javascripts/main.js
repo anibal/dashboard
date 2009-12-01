@@ -4,15 +4,16 @@ function fetchCIStatus() {
 
     var failures = [];
     _(data).each(function(project) {
-      if (project["status"] == "failure") failures[failures.length] = project["name"];
+      if (project["status"] == "failure") failures[failures.length] = project;
       $(".project-status[ref = " + project["identifier"] + "]").addClass(project["status"]);
     });
-    
+
     if (!_(failures).isEmpty()) {
       $(".overlay").show();
-      
+
       var first = failures.shift();
-      $("#ci-failure-message .project-name").html(_(failures).inject(first, function(res, project) { return (res + ", " + project) }));
+      $("#ci-failure-message .project-name").html(_(failures).inject(first["name"], function(res, project) { return (res + ", " + project["name"]) }));
+      $("#ci-failure-message .author").html(_(failures).inject(first["author"], function(res, project) { return (res + ", " + project["author"]) }));
     }
     else {
       $(".overlay").hide();
@@ -50,5 +51,5 @@ $(function() {
   // setTimeout("updateBottomFrame();", 60000);
   $($("#content iframe")[0]).show();
 
-  setTimeout("reload();", 1800000); 
+  setTimeout("reload();", 1800000);
 });

@@ -7,8 +7,11 @@ configure :development do
   CI_URL = "http://ci.trike.com.au/XmlStatusReport.aspx"
   PROJECTS = {
     "project1" => {
+      :name => "Project 1",
       :identifier => "P1",
-      :status => ""
+      :status => "",
+      :label => "",
+      :author => "",
     }
   }
 end
@@ -22,8 +25,11 @@ configure :production do
   CI_URL = "http://ci.trike.com.au/XmlStatusReport.aspx"
   PROJECTS = {
     "project1" => {
+      :name => "Project 1",
       :identifier => "P1",
-      :status => ""
+      :status => "",
+      :label => "",
+      :author => "",
     }
   }
 end
