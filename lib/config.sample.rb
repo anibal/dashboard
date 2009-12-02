@@ -12,6 +12,7 @@ configure :development do
       :status => "",
       :label => "",
       :author => "",
+      :time => ""
     }
   }
 end
@@ -30,6 +31,7 @@ configure :production do
       :status => "",
       :label => "",
       :author => "",
+      :time => ""
     }
   }
 end

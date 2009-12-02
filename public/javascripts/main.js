@@ -8,7 +8,7 @@ function fetchCIStatus() {
       $("#header .top").append(' \
         <div class="project-status ' + project["status"] + '"> \
           <span class="identifier">' + project["identifier"] + '</span> \
-          <span class="label">' + project["label"] + '</span> \
+          <span class="time">' + project["time"] + '</span> \
         </div>');
     });
 
@@ -16,8 +16,16 @@ function fetchCIStatus() {
       $(".overlay").show();
 
       var first = failures.shift();
-      $("#ci-failure-message .project-name").html(_(failures).inject(first["name"], function(res, project) { return (res + ", " + project["name"]) }));
-      $("#ci-failure-message .author").html("(" + _(failures).inject(first["author"], function(res, project) { return (res + ", " + project["author"]) }) + ")");
+
+      var failingProjects = _(failures).inject(first["name"] + "(" + first["label"] + ")", function(res, project) {
+        return (res + ", " + project["name"] + "(" + project["label"] + ")")
+      });
+      $("#ci-failure-message .project-name").html(failingProjects);
+
+      var projectAuthors ="(" + _(failures).inject(first["author"], function(res, project) {
+        return (res + ", " + project["author"])
+      }) + ")";
+      $("#ci-failure-message .author").html(projectAuthors);
     }
     else {
       $(".overlay").hide();

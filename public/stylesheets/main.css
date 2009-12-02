@@ -43,8 +43,9 @@ body {
   font-weight: bold;
   margin-top: 20px;
 }
-#header .project-status .label {
+#header .project-status .time {
   font-size: 9pt;
+  color: #fff;
 }
 #content {
   height: 415px;
@@ -74,9 +75,9 @@ body {
 }
 #ci-failure-message {
   position: absolute;
-  top: 100px;
-  left: 220px;
-  width: 500px;
+  top: 60px;
+  left: 70px;
+  width: 800px;
   z-index: 10;
   color: white;
   text-align: center;
