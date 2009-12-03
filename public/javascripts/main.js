@@ -21,8 +21,8 @@ function fetchCIStatus() {
 
       var first = failures.shift();
 
-      var failingProjects = _(failures).inject(first.name + "(" + first.label + ")", function(res, project) {
-        return (res + ", " + project.name + "(" + project.label + ")")
+      var failingProjects = _(failures).inject(first.name + " (" + first.label + ")", function(res, project) {
+        return (res + ", " + project.name + " (" + project.label + ")")
       });
       $("#ci-failure-message .project-name").html(failingProjects);
 
