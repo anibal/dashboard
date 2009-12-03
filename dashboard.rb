@@ -13,15 +13,15 @@ helpers do
     distance_in_minutes = (((to_time - from_time).abs)/60).round
 
     case distance_in_minutes
-      when 0               then "< 1 min"
-      when 1               then "1 min"
-      when 2..44           then "#{distance_in_minutes} min"
-      when 45..89          then "1 h"
-      when 90..1439        then "#{(distance_in_minutes.to_f / 60.0).round} h"
+      when 0               then "less than a minute"
+      when 1               then "1 minute"
+      when 2..44           then "#{distance_in_minutes} minutes"
+      when 45..89          then "about 1 hour"
+      when 90..1439        then "about #{(distance_in_minutes.to_f / 60.0).round} hours"
       when 1440..2529      then "1 day"
       when 2530..43199     then "#{(distance_in_minutes.to_f / 1440.0).round} days"
-      when 43200..86399    then "1 mon"
-      else                      "> 1 mon"
+      when 43200..86399    then "about 1 month"
+      else                      "over 1 month"
     end
   end
 
