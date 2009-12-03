@@ -1,10 +1,13 @@
-#header
-  .top
-    %embed.clock{ :src => "http://www.clocklink.com/clocks/5005-blue.swf?TimeZone=AEDT&", :width => 225, :height => 65, :wmode => "transparent", :type => "application/x-shockwave-flash" }/
+#content
+  #left.column
+    %embed.clock{ :src => "http://www.clocklink.com/clocks/5005-blue.swf?TimeZone=AEDT&", :width => 225, :height => 65, :wmode => "transparent", :type => "application/x-shockwave-flash" }
 
-  .bottom
-    #mpd
-      %span#current
+  #right.column
+    %iframe{ :src => "http://www.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;mode=WEEK&amp;height=530&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=dnv17juvgme52i520fj9pahf6g%40group.calendar.google.com&amp;color=%230D7813&amp;ctz=Australia%2FSydney", :frameborder => 0, :scrolling => "no", :width => 715, :height => 496 }
+
+#footer
+  #mpd
+    %span#current
 
 #ci-failure-overlay.overlay
 #ci-failure-message.overlay
@@ -15,6 +18,5 @@
     %span.author
   .message go and fix it!!!
 
-#content
   / - %w[http://www.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;mode=WEEK&amp;height=530&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=dnv17juvgme52i520fj9pahf6g%40group.calendar.google.com&amp;color=%230D7813&amp;ctz=Australia%2FSydney https://github.com/tricycle/kando/graphs/punch_card https://github.com/tricycle/kando/graphs/traffic https://github.com/tricycle/kando/graphs/impact http://www.pivotaltracker.com/reports/point_count/iteration?iteration_designation=current&project_id=25033&chart_type=current_iteration http://www.pivotaltracker.com/reports/point_count/iteration?iteration_designation=current&project_id=40441&chart_type=current_iteration].each do |src|
-  %iframe{ :src => "http://www.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;mode=WEEK&amp;height=530&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=dnv17juvgme52i520fj9pahf6g%40group.calendar.google.com&amp;color=%230D7813&amp;ctz=Australia%2FSydney", :frameborder => 0, :scrolling => "no", :width => 940, :height => 415 }
+

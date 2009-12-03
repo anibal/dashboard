@@ -1,3 +1,5 @@
+/* page layout
+ **************************************************************** */
 body {
   margin: 0;
   padding: 0;
@@ -8,58 +10,80 @@ body {
   width: 960px;
   height: 540px;
 }
-#header {
-  height: 95px;
-  margin: 5px;
-  border-bottom: 1px solid #000;
+
+/* content
+ **************************************************************** */
+#content {
+  height: 496px;
+  margin: 5px 0;
 }
-#header .top {
+#content .column {
+  float: left;
+  margin: 0 5px;
+}
+
+/* content: left column
+ **************************************************************** */
+#left {
+  width: 225px;
+}
+.project-status {
+  display: block;
+  width: 205px;
   height: 65px;
-  margin-bottom: 5px;
-}
-#header .clock {
-  margin-right: 20px;
-}
-#header .project-status {
-  float: right;
-  width: 65px;
-  height: 65px;
-  margin: 0 10px;
-  text-align: center;
+  margin: 10px;
   background: url(/images/project-status.png) no-repeat 0 0;
 }
-#header .project-status.building {
+.project-status.building {
   background: url(/images/project-status.png) no-repeat 0 -65px;
 }
-#header .project-status.failure {
+.project-status.failure {
   background: url(/images/project-status.png) no-repeat 0 -130px;
 }
-#header .project-status span {
-  display: block;
+.project-status .identifier,
+.project-status .info {
+  float: left;
 }
-#header .project-status .identifier {
+.project-status .identifier {
+  width: 65px;
   height: 27px;
   font-size: 18pt;
   font-weight: bold;
-  margin-top: 20px;
+  padding-top: 20px;
+  margin: 0 5px;
+  text-align: center;
 }
-#header .project-status .time {
-  font-size: 9pt;
+.project-status .info {
+  width: 120px;
+  font-size: 10pt;
   color: #fff;
+  padding: 5px;
+  line-height: 18px;
 }
-#content {
-  height: 415px;
-  margin: 10px;
+
+/* content: right column
+ **************************************************************** */
+#right {
+  width: 715px;
 }
-#content iframe {
-  display: none;
+
+/* footer
+ **************************************************************** */
+#footer {
+  clear: both;
+  height: 24px;
+  margin: 5px;
+  border-top: 1px solid #000;
 }
 #mpd {
   font-size: 13pt;
   font-weight: bold;
-  margin-left: 18px;
+  margin-left: 5px;
   overflow: hidden;
 }
+
+/* overlays
+ **************************************************************** */
 .overlay {
   display: none;
 }
