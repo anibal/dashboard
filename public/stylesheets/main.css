@@ -108,22 +108,26 @@ body {
 
 /* overlays
  **************************************************************** */
-.overlay {
+.overlay,
+.overlay-message {
   display: none;
-}
-#ci-failure-overlay {
   position: absolute;
+}
+.overlay {
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #b00;
   opacity: 0.8;
   z-index: 9;
 }
-#ci-failure-message {
-  position: absolute;
-  top: 60px;
+#ci-failure-overlay {
+  background-color: #b00;
+}
+#standup-overlay {
+  background-color: #ff0;
+}
+.overlay-message {
   left: 70px;
   width: 800px;
   z-index: 10;
@@ -131,9 +135,16 @@ body {
   text-align: center;
   font-size: 30pt;
 }
-#ci-failure-message div {
+.overlay-message div {
   padding: 20px;
+}
+#ci-failure-message {
+  top: 60px;
 }
 #ci-failure-message .project-name {
   font-weight: bold;
+}
+#standup-message {
+  top: 150px;
+  color: #000;
 }

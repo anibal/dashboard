@@ -17,7 +17,7 @@ function fetchCIStatus() {
     });
 
     if (!_(failures).isEmpty()) {
-      $(".overlay").show();
+      $(".ci-failure").show();
 
       var first = failures.shift();
 
@@ -32,7 +32,7 @@ function fetchCIStatus() {
       $("#ci-failure-message .author").html(projectAuthors);
     }
     else {
-      $(".overlay").hide();
+      $(".ci-failure").hide();
     }
   });
 
@@ -41,7 +41,21 @@ function fetchCIStatus() {
 
 function updateMpdSong() {
   $("#current").load("/mpd_song");
+
+  standupOverlay();
+
   setTimeout("updateMpdSong();", 10000);
+}
+
+function standupOverlay() {
+  var date = new Date();
+
+  if (date.getHours() == 10 && date.getMinutes() >= 0 && date.getMinutes() < 10) {
+    $(".standup").show();
+  }
+  else {
+    $(".standup").hide();
+  }
 }
 
 function reload() {
