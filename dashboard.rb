@@ -1,4 +1,4 @@
-%w[rubygems sinatra haml open-uri hpricot json librmpd].each { |lib| require lib }
+%w[rubygems sinatra haml open-uri hpricot json librmpd yahoo-weather].each { |lib| require lib }
 require 'lib/mpd_proxy'
 
 require 'lib/config'
@@ -42,6 +42,8 @@ end
 # Actions
 # -----------------------------------------------------------------------------------
 get "/" do
+  @weather = YahooWeather::Client.new.lookup_location("ASXX0075", "c")
+
   haml :index
 end
 get "/ci_status" do
