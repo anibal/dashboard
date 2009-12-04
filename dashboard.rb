@@ -26,7 +26,7 @@ helpers do
   end
 
   def time_ago_in_words(from_time)
-    distance_of_time_in_words(from_time, Time.now)
+    distance_of_time_in_words(from_time, Time.now.utc + (11 * 3600))
   end
 
   def to_time(seconds)
