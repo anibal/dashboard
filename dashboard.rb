@@ -16,12 +16,12 @@ helpers do
       when 0               then "< 1 minute"
       when 1               then "1 minute"
       when 2..44           then "#{distance_in_minutes} minutes"
-      when 45..89          then "~ 1 hour"
-      when 90..1439        then "~ #{(distance_in_minutes.to_f / 60.0).round} hours"
+      when 45..89          then "1 hour"
+      when 90..1439        then "#{(distance_in_minutes.to_f / 60.0).round} hours"
       when 1440..2529      then "1 day"
       when 2530..43199     then "#{(distance_in_minutes.to_f / 1440.0).round} days"
-      when 43200..86399    then "~ 1 month"
-      else                      "> 1 month"
+      when 43200..86399    then "1 month"
+      else                      "long"
     end
   end
 
