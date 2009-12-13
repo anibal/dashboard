@@ -136,6 +136,9 @@ body {
 #standup-overlay {
   background-color: #ff0;
 }
+#monday-overlay {
+  background-color: #fc0;
+}
 .overlay-message {
   left: 70px;
   width: 800px;
@@ -153,7 +156,8 @@ body {
 #ci-failure-message .project-name {
   font-weight: bold;
 }
-#standup-message {
+#standup-message,
+#monday-message {
   top: 150px;
   color: #000;
 }

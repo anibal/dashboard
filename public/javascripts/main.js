@@ -42,19 +42,22 @@ function fetchCIStatus() {
 function updateMpdSong() {
   $("#current").load("/mpd_song");
 
-  standupOverlay();
+  meetingOverlay();
 
   setTimeout("updateMpdSong();", 10000);
 }
 
-function standupOverlay() {
+function meetingOverlay() {
   var date = new Date();
 
-  if (date.getHours() == 10 && date.getMinutes() >= 0 && date.getMinutes() < 10) {
+  if (date.getDay() == 1 && date.getHours() == 10 && date.getMinutes() >= 0 && date.getMinutes() < 30) {
+    $(".monday").show();
+  }
+  else if (date.getHours() == 10 && date.getMinutes() >= 0 && date.getMinutes() < 10) {
     $(".standup").show();
   }
   else {
-    $(".standup").hide();
+    $(".monday, .standup").hide();
   }
 }
 
