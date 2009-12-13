@@ -27,10 +27,13 @@ body {
 #left {
   width: 225px;
 }
+.clock {
+  margin: 10px 0;
+}
 .weather {
   width: 185px;
   height: 52px;
-  margin: 5px 10px 5px 30px;
+  margin: 10px 10px 10px 30px;
 }
 .weather .image,
 .weather .info {
@@ -85,10 +88,16 @@ body {
   line-height: 18px;
 }
 
+/* content: center column
+ **************************************************************** */
+#right {
+  width: 480px;
+}
+
 /* content: right column
  **************************************************************** */
 #right {
-  width: 715px;
+  width: 225px;
 }
 
 /* footer
