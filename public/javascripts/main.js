@@ -25,6 +25,7 @@ function fetchCIStatus() {
         return (res + ", " + project.name + " (" + project.label + ")")
       });
       $("#ci-failure-message .project-name").html(failingProjects);
+      $("#ci-failure-message .project-name").effect("pulsate", { times: 10 }, 2000);
 
       var projectAuthors ="(" + _(failures).inject(first.author, function(res, project) {
         return (res + ", " + project.author)
