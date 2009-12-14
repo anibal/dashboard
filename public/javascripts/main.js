@@ -5,7 +5,7 @@ function fetchCIStatus() {
     var failures = [];
     _(data).each(function(project) {
       if (project.status == "failure") failures[failures.length] = project;
-      $("#right").append(' \
+      $("#header").append(' \
         <div class="project-status ' + project.status + '"> \
           <div class="identifier">' + project.identifier + '</div> \
           <div class="info"> \

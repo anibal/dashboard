@@ -11,10 +11,52 @@ body {
   height: 540px;
 }
 
+/* header
+ **************************************************************** */
+#header {
+  height: 65px;
+  margin: 5px;
+  padding: 5px 0;
+  border-bottom: 1px solid #000;
+}
+.project-status {
+  float: left;
+  width: 205px;
+  height: 65px;
+  margin: 0 10px;
+  background: url(/images/project-status.png) no-repeat 0 0;
+}
+.project-status.building {
+  background: url(/images/project-status.png) no-repeat 0 -65px;
+}
+.project-status.failure {
+  background: url(/images/project-status.png) no-repeat 0 -130px;
+}
+.project-status .identifier,
+.project-status .info {
+  float: left;
+}
+.project-status .identifier {
+  width: 65px;
+  height: 27px;
+  font-size: 18pt;
+  font-weight: bold;
+  padding-top: 20px;
+  margin: 0 5px;
+  text-align: center;
+}
+.project-status .info {
+  width: 120px;
+  font-size: 10pt;
+  color: #fff;
+  padding: 5px;
+  line-height: 18px;
+}
+
 /* content
  **************************************************************** */
 #content {
-  height: 496px;
+  height: 411px;
   margin: 5px 0;
 }
 #content .column {
@@ -55,49 +97,11 @@ body {
   font-size: 10pt;
   overflow: hidden;
 }
-.project-status {
-  width: 205px;
-  height: 65px;
-  margin: 10px;
-  background: url(/images/project-status.png) no-repeat 0 0;
-}
-.project-status.building {
-  background: url(/images/project-status.png) no-repeat 0 -65px;
-}
-.project-status.failure {
-  background: url(/images/project-status.png) no-repeat 0 -130px;
-}
-.project-status .identifier,
-.project-status .info {
-  float: left;
-}
-.project-status .identifier {
-  width: 65px;
-  height: 27px;
-  font-size: 18pt;
-  font-weight: bold;
-  padding-top: 20px;
-  margin: 0 5px;
-  text-align: center;
-}
-.project-status .info {
-  width: 120px;
-  font-size: 10pt;
-  color: #fff;
-  padding: 5px;
-  line-height: 18px;
-}
 
 /* content: center column
  **************************************************************** */
 #right {
-  width: 480px;
-}
-
-/* content: right column
- **************************************************************** */
-#right {
-  width: 225px;
+  width: 715px;
 }
 
 /* footer
