@@ -11,19 +11,22 @@ body {
   height: 540px;
 }
 
-/* header
+/* content
  **************************************************************** */
-#header {
-  height: 65px;
-  margin: 5px;
-  padding: 5px 0;
-  border-bottom: 1px solid #000;
+#content {
+  margin: 5px 0;
 }
-.project-status {
+#content .column {
   float: left;
+  height: 496px;
+  margin: 0 5px;
+  width: 310px !important;
+}
+
+.project-status {
   width: 205px;
   height: 65px;
-  margin: 0 10px;
+  margin: 10px auto;
   background: url(/images/project-status.png) no-repeat 0 0;
 }
 .project-status.building {
@@ -53,29 +56,13 @@ body {
   line-height: 18px;
 }
 
-/* content
- **************************************************************** */
-#content {
-  height: 411px;
-  margin: 5px 0;
-}
-#content .column {
-  float: left;
-  margin: 0 5px;
-}
-
-/* content: left column
- **************************************************************** */
-#left {
-  width: 225px;
-}
 .clock {
-  margin: 10px 0;
+  margin: 10px 40px;
 }
 .weather {
   width: 185px;
   height: 52px;
-  margin: 10px 10px 10px 30px;
+  margin: 10px auto;
 }
 .weather .image,
 .weather .info {
@@ -96,12 +83,6 @@ body {
 .weather .text {
   font-size: 10pt;
   overflow: hidden;
-}
-
-/* content: center column
- **************************************************************** */
-#right {
-  width: 715px;
 }
 
 /* footer
