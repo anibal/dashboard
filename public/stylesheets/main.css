@@ -68,6 +68,9 @@ h1 {
   padding: 5px;
   line-height: 18px;
 }
+.status .problems {
+  font-weight: bold;
+}
 
 .clock {
   margin: 10px 40px;
@@ -128,11 +131,15 @@ h1 {
   opacity: 0.8;
   z-index: 9;
 }
-#ci-failure-overlay {
+#ci-failure-overlay,
+#nagios-failure-overlay {
   left: 5px;
   width: 315px;
   height: 501px;
   background-color: #b00;
+}
+#nagios-failure-overlay {
+  left: 320px;
 }
 #standup-overlay {
   background-color: #ff0;
@@ -151,12 +158,17 @@ h1 {
 .overlay-message div {
   padding: 20px;
 }
-#ci-failure-message {
+#ci-failure-message,
+#nagios-failure-message {
   left: 10px;
   width: 300px;
   top: 60px;
 }
-#ci-failure-message .project-name {
+#nagios-failure-message {
+  left: 330px;
+}
+#ci-failure-message .project-name,
+#nagios-failure-message .system-name {
   font-weight: bold;
 }
 #ci-failure-message .author {

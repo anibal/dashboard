@@ -46,6 +46,7 @@ get "/" do
 
   haml :index
 end
+
 get "/ci_status" do
   doc = open(CI_URL) { |f| Hpricot::XML(f) }
 
@@ -62,6 +63,11 @@ get "/ci_status" do
 
   status.to_json
 end
+
+get "/nagios_status" do
+  { :system_count => 0, :problem_count => 0, :problems => [] }.to_json
+end
+
 get "/mpd_song" do
   "#{MpdProxy.current_song} (#{to_time(MpdProxy.time)})"
 end
