@@ -35,41 +35,43 @@ h1 {
   width: 275px;
   height: 105px;
   margin: 10px auto;
-
-  background-image: -webkit-gradient(linear, 0% 0%, 0% 90%, from(rgba(108, 191, 255, 0.9)), to(#45CC00));
-  background-image: -moz-linear-gradient(top, rgba(108, 191, 255, 0.9) 100%, #45CC00 0%);
+  background-color: #fff;
+  border: 2px solid #fff;
   -webkit-border-radius: 12px;
   -moz-border-radius: 12px;
   -webkit-box-shadow: rgba(66, 66, 66, 0.5) 4px 4px 4px;
   -moz-box-shadow: rgba(66, 66, 66, 0.5) 4px 4px 4px;
 }
-.status.building {
-  background-image: -webkit-gradient(linear, 0% 0%, 0% 90%, from(rgba(108, 191, 255, 0.9)), to(#EEF200));
-  background-image: -moz-linear-gradient(top, rgba(108, 191, 255, 0.9) 0%, rgba(#EEF200) 100%);
-}
-.status.failure {
-  background-image: -webkit-gradient(linear, 0% 0%, 0% 90%, from(rgba(108, 191, 255, 0.9)), to(#C73500));
-  background-image: -moz-linear-gradient(top, rgba(108, 191, 255, 0.9) 0%, rgba(#C73500) 100%);
-}
 .status .identifier {
-  width: 65px;
   height: 27px;
   font-size: 14pt;
   font-weight: bold;
-  margin: 0 20px;
-  padding-top: 5px;
-  text-align: center;
+  margin-bottom: 2px;
+  padding: 5px 20px 0 20px;
+  background-color: #83C500;
+  -webkit-border-radius: 12px 12px 0 0;
+  -moz-border-radius: 12px 12px 0 0;
   text-shadow: #eee 1px 1px;
 }
+.status.building .identifier {
+  background-color: #EDF600;
+}
+.status.failure .identifier {
+  background-color: #EF4136;
+}
 .status .info {
+  height: 55px;
   font-size: 10pt;
-  color: #fff;
-  margin: 0 20px;
-  padding: 5px;
+  padding: 8px 15px;
   line-height: 18px;
+  font-weight: bold;
+  -webkit-border-radius: 0 0 12px 12px;
+  -moz-border-radius: 0 0 12px 12px;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#C8C8CA), to(#E8E9E8));
+  background-image: -moz-linear-gradient(top, #C8C8CA 100%, #E8E9E8 0%);
 }
 .status .problems {
-  font-weight: bold;
+  color: #EF4136;
 }
 
 .clock {
