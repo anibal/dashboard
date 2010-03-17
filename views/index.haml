@@ -1,7 +1,19 @@
 #content
   #first.column
+    %h1 Projects
 
   #second.column
+    %h1 Systems
+    #nagios-status.status
+      .identifier Nagios
+      .info
+        Systems:
+        %span.system-count
+        %br/
+        Problems:
+        %span.problem-count
+        %br/
+        %span.problems
 
   #third.column
     %embed.clock{ :src => "http://www.clocklink.com/clocks/5005-blue.swf?TimeZone=AEDT&", :width => 225, :height => 65, :wmode => "transparent", :type => "application/x-shockwave-flash" }/
@@ -22,9 +34,16 @@
   .project-name
   .message build failed.
   .message
-    Someone
+    Fix it
     %span.author
-  .message go and fix it!!!
+    !
+
+#nagios-failure-overlay.nagios-failure.overlay
+#nagios-failure-message.nagios-failure.overlay-message
+  .system-name
+  .message has a problem.
+  .message
+    Go Jonny go!
 
 #standup-overlay.standup.overlay
 #standup-message.standup.overlay-message

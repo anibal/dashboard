@@ -22,36 +22,49 @@ body {
   margin: 0 5px;
   width: 310px !important;
 }
+h1 {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  font-size: 18pt;
+  color: #475E96;
+  text-shadow: #ccc 3px 3px;
+}
 
-.project-status {
-  width: 205px;
-  height: 65px;
+.status {
+  width: 275px;
+  height: 105px;
   margin: 10px auto;
-  background: url(/images/project-status.png) no-repeat 0 0;
+
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 90%, from(rgba(108, 191, 255, 0.9)), to(#45CC00));
+  background-image: -moz-linear-gradient(top, rgba(108, 191, 255, 0.9) 100%, #45CC00 0%);
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  -webkit-box-shadow: rgba(66, 66, 66, 0.5) 4px 4px 4px;
+  -moz-box-shadow: rgba(66, 66, 66, 0.5) 4px 4px 4px;
 }
-.project-status.building {
-  background: url(/images/project-status.png) no-repeat 0 -65px;
+.status.building {
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 90%, from(rgba(108, 191, 255, 0.9)), to(#EEF200));
+  background-image: -moz-linear-gradient(top, rgba(108, 191, 255, 0.9) 0%, rgba(#EEF200) 100%);
 }
-.project-status.failure {
-  background: url(/images/project-status.png) no-repeat 0 -130px;
+.status.failure {
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 90%, from(rgba(108, 191, 255, 0.9)), to(#C73500));
+  background-image: -moz-linear-gradient(top, rgba(108, 191, 255, 0.9) 0%, rgba(#C73500) 100%);
 }
-.project-status .identifier,
-.project-status .info {
-  float: left;
-}
-.project-status .identifier {
+.status .identifier {
   width: 65px;
   height: 27px;
-  font-size: 18pt;
+  font-size: 14pt;
   font-weight: bold;
-  padding-top: 20px;
-  margin: 0 5px;
+  margin: 0 20px;
+  padding-top: 5px;
   text-align: center;
+  text-shadow: #eee 1px 1px;
 }
-.project-status .info {
-  width: 120px;
+.status .info {
   font-size: 10pt;
   color: #fff;
+  margin: 0 20px;
   padding: 5px;
   line-height: 18px;
 }
@@ -116,6 +129,9 @@ body {
   z-index: 9;
 }
 #ci-failure-overlay {
+  left: 5px;
+  width: 315px;
+  height: 501px;
   background-color: #b00;
 }
 #standup-overlay {
@@ -136,10 +152,15 @@ body {
   padding: 20px;
 }
 #ci-failure-message {
+  left: 10px;
+  width: 300px;
   top: 60px;
 }
 #ci-failure-message .project-name {
   font-weight: bold;
+}
+#ci-failure-message .author {
+  font-style: italic;
 }
 #standup-message,
 #monday-message {
