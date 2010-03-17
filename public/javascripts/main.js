@@ -1,13 +1,22 @@
+var knownFailures = [];
 function fetchCIStatus() {
   $.getJSON("/ci_status", function(data) {
-    $(".project-status").remove();
+    $(".project").remove();
 
-    var failures = [];
+    var newFailure = false;
     _(data).each(function(project) {
-      if (project.status == "failure") failures[failures.length] = project;
+      if (project.status == "failure" && !_(knownFailures).include(project)) {
+        newFailure = true;
+        showCIOverlay(project);
+      }
+      else if (project.status != "failure" && _(knownFailures).include(project)) {
+        knownFailures = _(knownFailures).without([project]);
+      }
+      if (!newFailure) $(".ci-failure").hide();
+
       $("#first").append(' \
-        <div class="project-status ' + project.status + '"> \
-          <div class="identifier">' + project.identifier + '</div> \
+        <div class="project status ' + project.status + '"> \
+          <div class="identifier">' + project.name + '</div> \
           <div class="info"> \
             ' + project.label + '<br /> \
             ' + project.author + '<br /> \
@@ -15,30 +24,26 @@ function fetchCIStatus() {
           </div> \
         </div>');
     });
-
-    if (!_(failures).isEmpty()) {
-      $(".ci-failure").show();
-
-      var first = failures.shift();
-
-      var failingProjects = _(failures).inject(first.name + " (" + first.label + ")", function(res, project) {
-        return (res + ", " + project.name + " (" + project.label + ")")
-      });
-      $("#ci-failure-message .project-name").html(failingProjects);
-      $("#ci-failure-message .project-name").effect("pulsate", { times: 10 }, 2000);
-
-      var projectAuthors ="(" + _(failures).inject(first.author, function(res, project) {
-        return (res + ", " + project.author)
-      }) + ")";
-      $("#ci-failure-message .author").html(projectAuthors);
-    }
-    else {
-      $(".ci-failure").hide();
-    }
   });
 
   setTimeout("fetchCIStatus();", 30000);
-}
+};
+
+function showCIOverlay(project) {
+  knownFailures.push(project);
+  $(".ci-failure").show();
+
+  $("#ci-failure-message .project-name").html(project.name);
+  $("#ci-failure-message .project-name").effect("pulsate", { times: 10 }, 2000);
+  $("#ci-failure-message .author").html(project.author);
+};
+
+
+    }
+    else {
+    }
+  });
+
 
 function updateMpdSong() {
   $("#current").load("/mpd_song");
