@@ -18,7 +18,12 @@ function fetchProjectStatus() {
 
       $("#first").append(' \
         <div class="project status ' + project.ci.status + '"> \
-          <div class="identifier">' + project.name + '</div> \
+          <div class="identifier"> \
+            ' + project.name + ' \
+            <div class="points"> \
+              ' + project.pivotal.points + '/' + project.pivotal.goal + ' \
+            </div> \
+          </div> \
           <div class="info"> \
             <div class="ci"> \
               <div class="message">' + project.ci.message + '</div> \

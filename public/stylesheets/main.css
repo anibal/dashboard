@@ -47,7 +47,7 @@ h1 {
   font-size: 14pt;
   font-weight: bold;
   margin-bottom: 2px;
-  padding: 5px 20px 0 20px;
+  padding: 5px 8px 0 8px;
   background-color: #83C500;
   -webkit-border-radius: 12px 12px 0 0;
   -moz-border-radius: 12px 12px 0 0;
@@ -58,6 +58,11 @@ h1 {
 }
 .status.failure .identifier {
   background-color: #EF4136;
+}
+.status .identifier .points {
+  width: 80px;
+  text-align: right;
+  float: right;
 }
 .status .info {
   height: 59px;
@@ -88,7 +93,7 @@ h1 {
   margin: 10px 40px;
 }
 .weather {
-  width: 185px;
+  width: 205px;
   height: 52px;
   margin: 10px auto;
 }
