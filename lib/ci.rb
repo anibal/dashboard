@@ -2,7 +2,7 @@ class CI
   class << self
     def status_for(name, status)
       doc = open(CI_URL) { |f| Hpricot::XML(f) }
-      element = doc.search("//Project[@name = '#{name}']").first
+      element = doc.at("//Project[@name = '#{name}']")
 
       status.merge!(
         :status  => (element.attributes["activity"] == "Building" ? "building" : element.attributes["lastBuildStatus"].downcase),
