@@ -9,12 +9,17 @@ configure :development do
     "project1" => {
       :name => "Project 1",
       :identifier => "P1",
-      :status => "",
-      :label => "",
-      :author => "",
-      :time => ""
+      :ci => { },
+      :pivotal => {
+        :id => nil
+      }
     }
   }
+
+  NAGIOS_URL = "http://nagios.trike.com.au/nagios/cgi-bin/status.cgi"
+
+  PIVOTAL_URL = "http://www.pivotaltracker.com/services/v3"
+  PIVOTAL_TOKEN = ""
 end
 
 # -----------------------------------------------------------------------------------
@@ -28,10 +33,15 @@ configure :production do
     "project1" => {
       :name => "Project 1",
       :identifier => "P1",
-      :status => "",
-      :label => "",
-      :author => "",
-      :time => ""
+      :ci => { },
+      :pivotal => {
+        :id => nil
+      }
     }
   }
+
+  NAGIOS_URL = "http://nagios.trike.com.au/nagios/cgi-bin/status.cgi"
+
+  PIVOTAL_URL = "http://www.pivotaltracker.com/services/v3"
+  PIVOTAL_TOKEN = ""
 end
