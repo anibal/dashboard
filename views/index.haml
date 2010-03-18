@@ -7,7 +7,7 @@
     #nagios-status.status
       .identifier Nagios
       .info
-        Systems:
+        Services:
         %span.system-count
         %br/
         Problems:
@@ -21,7 +21,7 @@
       .image
         %img{ :src => @weather.image_url }
       .info
-        .temp= "#{@weather.condition.temp}°C"
+        .temp= "#{@weather.condition.temp}°C (#{@weather.forcecasts.first.high}°C)"
         .text= @weather.condition.text
     %iframe{ :src => "http://www.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showDate=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;mode=AGENDA&amp;height=496&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=dnv17juvgme52i520fj9pahf6g%40group.calendar.google.com&amp;color=%230D7813&amp;src=fjch0inl5i4uqjs8t1kvqaoduk%40group.calendar.google.com&amp;color=%23BE6D00&amp;ctz=Australia%2FSydney", :frameborder => 0, :scrolling => "no", :width => 310, :height => 331 }
 
