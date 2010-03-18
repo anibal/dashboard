@@ -17,7 +17,7 @@ function fetchProjectStatus() {
       if (!newFailure) $(".ci-failure").hide();
 
       $("#first").append(' \
-        <div class="project status ' + project.ci.status + '"> \
+        <div class="project status ' + project.ci.status + ' ' + project.ci.activity + '"> \
           <div class="identifier"> \
             ' + project.name + ' \
             <div class="points"> \
