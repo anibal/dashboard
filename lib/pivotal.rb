@@ -21,7 +21,7 @@ class Pivotal
     end
 
     def points_total(estimates)
-      estimates.compact.map(&:innerHTML).map(&:to_i).inject { |sum, estimate| sum + estimate } || 0
+      estimates.compact.map { |e| e.innerHTML.to_i }.inject { |sum, estimate| sum + estimate } || 0
     end
   end
 end
