@@ -30,7 +30,8 @@ function fetchProjectStatus() {
               <div>by <i>' + project.ci.author + '</i>, ' + project.ci.time + '</div> \
             </div> \
             <div> \
-              <span class="attribute">Velocity: ' + project.pivotal.velocity + '</span> \
+              <span class="attribute">V: ' + project.pivotal.velocity + '</span> | \
+              <span class="attribute">Av: ' + project.pivotal.average + '</span> \
             </div> \
           </div> \
         </div>');
