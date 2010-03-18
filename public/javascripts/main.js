@@ -20,7 +20,10 @@ function fetchProjectStatus() {
         <div class="project status ' + project.ci.status + '"> \
           <div class="identifier">' + project.name + '</div> \
           <div class="info"> \
-            <div class="ci">' + project.ci.label + ' by <i>' + project.ci.author + '</i>, ' + project.ci.time + '</div> \
+            <div class="ci"> \
+              <div class="message">' + project.ci.message + '</div> \
+              <div>by <i>' + project.ci.author + '</i>, ' + project.ci.time + '</div> \
+            </div> \
             <div> \
               <span class="attribute">Velocity: ' + project.pivotal.velocity + '</span> \
             </div> \

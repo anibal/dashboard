@@ -60,9 +60,9 @@ h1 {
   background-color: #EF4136;
 }
 .status .info {
-  height: 55px;
+  height: 59px;
   font-size: 10pt;
-  padding: 8px 15px;
+  padding: 6px 15px;
   line-height: 18px;
   font-weight: bold;
   -webkit-border-radius: 0 0 12px 12px;
@@ -74,6 +74,11 @@ h1 {
   border-bottom: 1px solid #eee;
   margin-bottom: 3px;
   padding-bottom: 3px;
+}
+.status .info .ci .message {
+  font-weight: normal;
+  height: 18px;
+  overflow: hidden;
 }
 .status .problems {
   color: #EF4136;

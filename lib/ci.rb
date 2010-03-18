@@ -14,7 +14,7 @@ class CI
     end
 
     def extract_message(message)
-      "test"
+      message =~ /^Revision/ ? message.split("\n")[2] : message.strip
     end
 
     def distance_of_time_in_words(from_time, to_time = 0)
