@@ -1,5 +1,6 @@
 %w[rubygems sinatra haml open-uri hpricot json librmpd yahoo-weather].each { |lib| require lib }
 require 'lib/mpd_proxy'
+require 'lib/pivotal'
 
 require 'lib/config'
 
@@ -43,11 +44,10 @@ end
 # -----------------------------------------------------------------------------------
 get "/" do
   @weather = YahooWeather::Client.new.lookup_location("ASXX0075", "c")
-
   haml :index
 end
 
-get "/ci_status" do
+get "/project_status" do
   doc = open(CI_URL) { |f| Hpricot::XML(f) }
 
   status = PROJECTS
@@ -55,10 +55,12 @@ get "/ci_status" do
     name = project.attributes["name"]
     build_status = (project.attributes["activity"] == "Building" ? "building" : project.attributes["lastBuildStatus"].downcase)
 
-    status[name][:status] = build_status
-    status[name][:label] = project.attributes["lastBuildLabel"]
-    status[name][:author] = project.attributes["lastBuildAuthor"].split(" ")[0]
-    status[name][:time] = time_ago_in_words(Time.parse(project.attributes["lastBuildTime"])) + " ago"
+    status[name][:ci][:status] = build_status
+    status[name][:ci][:label] = project.attributes["lastBuildLabel"]
+    status[name][:ci][:author] = project.attributes["lastBuildAuthor"].split(" ")[0]
+    status[name][:ci][:time] = time_ago_in_words(Time.parse(project.attributes["lastBuildTime"])) + " ago"
+
+    Pivotal.get_status_for name, status[name][:pivotal]
   end
 
   status.to_json

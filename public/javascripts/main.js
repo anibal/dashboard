@@ -1,34 +1,35 @@
 var knownFailures = [];
 var knownProblems = [];
 
-function fetchCIStatus() {
-  $.getJSON("/ci_status", function(data) {
+function fetchProjectStatus() {
+  $.getJSON("/project_status", function(data) {
     $(".project").remove();
 
     var newFailure = false;
     _(data).each(function(project) {
-      if (project.status == "failure" && !_(knownFailures).include(project)) {
+      if (project.ci.status == "failure" && !_(knownFailures).include(project)) {
         newFailure = true;
         showCIOverlay(project);
       }
-      else if (project.status != "failure" && _(knownFailures).include(project)) {
+      else if (project.ci.status != "failure" && _(knownFailures).include(project)) {
         knownFailures = _(knownFailures).without([project]);
       }
       if (!newFailure) $(".ci-failure").hide();
 
       $("#first").append(' \
-        <div class="project status ' + project.status + '"> \
+        <div class="project status ' + project.ci.status + '"> \
           <div class="identifier">' + project.name + '</div> \
           <div class="info"> \
-            ' + project.label + '<br /> \
-            ' + project.author + '<br /> \
-            ' + project.time + ' \
+            <div class="ci">' + project.ci.label + ' by <i>' + project.ci.author + '</i>, ' + project.ci.time + '</div> \
+            <div> \
+              <span class="attribute">Velocity: ' + project.pivotal.velocity + '</span> \
+            </div> \
           </div> \
         </div>');
     });
   });
 
-  setTimeout("fetchCIStatus();", 30000);
+  setTimeout("fetchProjectStatus();", 30000);
 };
 
 function showCIOverlay(project) {
@@ -105,7 +106,7 @@ function reload() {
 };
 
 $(function() {
-  fetchCIStatus();
+  fetchProjectStatus();
   fetchNagiosStatus();
 
   updateMpdSong();

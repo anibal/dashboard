@@ -70,6 +70,11 @@ h1 {
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#C8C8CA), to(#E8E9E8));
   background-image: -moz-linear-gradient(top, #C8C8CA 100%, #E8E9E8 0%);
 }
+.status .info .ci {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 3px;
+  padding-bottom: 3px;
+}
 .status .problems {
   color: #EF4136;
 }
