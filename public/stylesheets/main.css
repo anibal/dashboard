@@ -93,7 +93,7 @@ h1 {
   margin: 10px 40px;
 }
 .weather {
-  width: 205px;
+  width: 245px;
   height: 52px;
   margin: 10px auto;
 }
@@ -106,7 +106,7 @@ h1 {
   margin: 0 5px;
 }
 .weather .info {
-  width: 100px;
+  width: 160px;
 }
 .weather .temp {
   font-size: 17pt;
