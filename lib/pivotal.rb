@@ -8,20 +8,15 @@ class Pivotal
 
         # current iteration
         doc = open("#{PIVOTAL_URL}/projects/#{status[:id]}/iterations/current", { "X-TrackerToken" => PIVOTAL_TOKEN }) { |f| Hpricot::XML(f) }
-        status.merge!(
-          :points => points_total(doc.search("//story").select { |story| story.at("current_state").innerHTML == "accepted" }.map { |story| story.at("estimate") }),
-          :goal => points_total(doc.search("//estimate"))
-        )
+        status[:points] = points_total(doc.search("//story").select { |story| story.at("current_state").innerHTML == "accepted" }.map { |story| story.at("estimate") })
 
+        # last 4 iterations
         doc = open("#{PIVOTAL_URL}/projects/#{status[:id]}/iterations/done?offset=-4", { "X-TrackerToken" => PIVOTAL_TOKEN }) { |f| Hpricot::XML(f) }
-        status.merge!(
-          :average => (points_total(doc.search("//estimate")) / 4.0).round
-        )
+        status[:average] = (points_total(doc.search("//estimate")) / 4.0).round
       else
         status.merge!(
-          :velocity => "N/A",
+          :velocity => 0,
           :points => 0,
-          :goal => 0,
           :average => "N/A"
         )
       end

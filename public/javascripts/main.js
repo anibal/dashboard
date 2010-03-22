@@ -21,7 +21,7 @@ function fetchProjectStatus() {
           <div class="identifier"> \
             ' + project.name + ' \
             <div class="points"> \
-              ' + project.pivotal.points + '/' + project.pivotal.goal + ' \
+              ' + project.pivotal.points + '/' + project.pivotal.velocity + ' \
             </div> \
           </div> \
           <div class="info"> \
@@ -30,7 +30,6 @@ function fetchProjectStatus() {
               <div>by <i>' + project.ci.author + '</i>, ' + project.ci.time + '</div> \
             </div> \
             <div> \
-              <span class="attribute">V: ' + project.pivotal.velocity + '</span> | \
               <span class="attribute">Av: ' + project.pivotal.average + '</span> \
             </div> \
           </div> \
