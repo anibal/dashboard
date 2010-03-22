@@ -7,15 +7,16 @@ require 'lib/config'
 # -----------------------------------------------------------------------------------
 get "/" do
   @weather = YahooWeather::Client.new.lookup_location("ASXX0075", "c")
+
+  @projects = PROJECTS
+  @projects.each { |name, attributes| Pivotal.status_for(name, attributes[:pivotal]) }
+
   haml :index
 end
 
 get "/project_status" do
   status = PROJECTS
-  status.each do |name, attributes|
-    CI.status_for name, attributes[:ci]
-    Pivotal.status_for name, attributes[:pivotal]
-  end
+  status.each { |name, attributes| CI.status_for(name, attributes[:ci]) }
   status.to_json
 end
 

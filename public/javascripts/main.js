@@ -1,43 +1,30 @@
 var knownFailures = [];
 var knownProblems = [];
 
-function fetchProjectStatus() {
+function fetchCIStatus() {
   $.getJSON("/project_status", function(data) {
-    $(".project").remove();
 
     var newFailure = false;
-    _(data).each(function(project) {
-      if (project.ci.status == "failure" && !_(knownFailures).include(project)) {
+    _(data).each(function(attributes, project) {
+      var ciAttr = attributes.ci;
+
+      if (ciAttr.status == "failure" && !_(knownFailures).include(project)) {
         newFailure = true;
-        showCIOverlay(project);
+        showCIOverlay(attributes);
       }
-      else if (project.ci.status != "failure" && _(knownFailures).include(project)) {
-        knownFailures = _(knownFailures).without([project]);
+      else if (ciAttr.status != "failure" && _(knownFailures).include(attributes)) {
+        knownFailures = _(knownFailures).without([attributes]);
       }
       if (!newFailure) $(".ci-failure").hide();
 
-      $("#first").append(' \
-        <div class="project status ' + project.ci.status + ' ' + project.ci.activity + '"> \
-          <div class="identifier"> \
-            ' + project.name + ' \
-            <div class="points"> \
-              ' + project.pivotal.points + '/' + project.pivotal.velocity + ' \
-            </div> \
-          </div> \
-          <div class="info"> \
-            <div class="ci"> \
-              <div class="message">' + project.ci.message + '</div> \
-              <div>by <i>' + project.ci.author + '</i>, ' + project.ci.time + '</div> \
-            </div> \
-            <div> \
-              <span class="attribute">Av: ' + project.pivotal.average + '</span> \
-            </div> \
-          </div> \
-        </div>');
+      var projectElement = $(".project[ref = " + project + "]");
+      projectElement.attr("class", "project status " + ciAttr.status + " " + ciAttr.activity);
+      projectElement.find(".ci .message").html(ciAttr.message);
+      projectElement.find(".ci .author").html("by <i>" + ciAttr.author + "</i> " + ciAttr.time);
     });
   });
 
-  setTimeout("fetchProjectStatus();", 30000);
+  setTimeout("fetchCIStatus();", 30000);
 };
 
 function showCIOverlay(project) {
@@ -114,7 +101,7 @@ function reload() {
 };
 
 $(function() {
-  fetchProjectStatus();
+  fetchCIStatus();
   fetchNagiosStatus();
 
   updateMpdSong();

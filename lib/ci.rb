@@ -28,7 +28,7 @@ class CI
     def distance_of_time_in_words(from_time, to_time = 0)
       distance = distance_in_minutes(from_time, to_time)
       case distance
-        when 0               then "< 1 minute"
+        when 0               then "less than a minute"
         when 1               then "1 minute"
         when 2..44           then "#{distance} minutes"
         when 45..89          then "1 hour"

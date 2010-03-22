@@ -1,6 +1,17 @@
 #content
   #first.column
     %h1 Projects
+    - @projects.each do |project, attributes|
+      .project.status.inactive{ :ref => project }
+        .identifier
+          = attributes[:name]
+          .points= "#{attributes[:pivotal][:points]}/#{attributes[:pivotal][:velocity]}"
+        .info
+          .ci
+            .message
+            .author
+          .div
+            .attribute.average= "Av: #{attributes[:pivotal][:average]}"
 
   #second.column
     %h1 Systems

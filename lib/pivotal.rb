@@ -15,9 +15,9 @@ class Pivotal
         status[:average] = (points_total(doc.search("//estimate")) / 4.0).round
       else
         status.merge!(
-          :velocity => 0,
-          :points => 0,
-          :average => "N/A"
+          :velocity => "-",
+          :points   => "-",
+          :average  => "-"
         )
       end
     end
