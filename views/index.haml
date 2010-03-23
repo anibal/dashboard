@@ -2,7 +2,7 @@
   #first.column
     %h1 Projects
     - @projects.each do |project, attributes|
-      .project.status.active{ :ref => project }
+      .project.status.inactive{ :ref => project }
         .identifier
           = attributes[:name]
           .points= "#{attributes[:pivotal][:current]}/#{attributes[:pivotal][:velocity]}"
