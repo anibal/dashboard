@@ -1,24 +1,34 @@
 class Pivotal
 
   class << self
-    def status_for(name, status)
+    def status_for(status)
       if status[:id]
         doc = open("#{PIVOTAL_URL}/projects/#{status[:id]}", { "X-TrackerToken" => PIVOTAL_TOKEN }) { |f| Hpricot::XML(f) }
         status[:velocity] = doc.at("current_velocity").innerHTML
 
         # current iteration
         doc = open("#{PIVOTAL_URL}/projects/#{status[:id]}/iterations/current", { "X-TrackerToken" => PIVOTAL_TOKEN }) { |f| Hpricot::XML(f) }
-        status[:points] = points_total(doc.search("//story").select { |story| story.at("current_state").innerHTML == "accepted" }.map { |story| story.at("estimate") })
+        status[:current] = points_total(doc.search("//story").select { |story| story.at("current_state").innerHTML == "accepted" }.map { |story| story.at("estimate") })
 
         # last 4 iterations
         doc = open("#{PIVOTAL_URL}/projects/#{status[:id]}/iterations/done?offset=-4", { "X-TrackerToken" => PIVOTAL_TOKEN }) { |f| Hpricot::XML(f) }
-        status[:average] = (points_total(doc.search("//estimate")) / 4.0).round
+        points = points_total(doc.search("//estimate"))
+        status.merge!(
+          :points => [points, 1].max,
+          :average => (points / 4.0).round
+        )
+
+        from = Date.parse(doc.search("//iteration:first").at("start").innerHTML)
+        to = Date.parse(doc.search("//iteration:last").at("finish").innerHTML)
+        [from, to]
       else
         status.merge!(
           :velocity => "-",
-          :points   => "-",
+          :current  => "-",
+          :points   => 1,
           :average  => "-"
         )
+        [nil, nil]
       end
     end
 
