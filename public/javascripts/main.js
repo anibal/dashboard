@@ -33,7 +33,7 @@ function showCIOverlay(project) {
 
   $("#ci-failure-message .project-name").html(project.name);
   $("#ci-failure-message .project-name").effect("pulsate", { times: 10 }, 2000);
-  $("#ci-failure-message .author").html(project.author);
+  $("#ci-failure-message .author").html(project.ci.author);
 };
 
 function fetchNagiosStatus() {
