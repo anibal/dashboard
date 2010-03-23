@@ -12,10 +12,10 @@
             .author
           .div
             .attribute= "Av.P: #{attributes[:pivotal][:average]}"
-            .attribute.separator= "|"
-            .attribute= "Av.h: #{attributes[:st][:average]}"
-            .attribute.separator= "|"
-            .attribute= "h/P: #{(attributes[:st][:hours].to_f / attributes[:pivotal][:points] * 100).round / 100.0}"
+            / .attribute.separator= "|"
+            / .attribute= "Av.h: #{attributes[:st][:average]}"
+            / .attribute.separator= "|"
+            / .attribute= "h/P: #{(attributes[:st][:hours].to_f / attributes[:pivotal][:points] * 100).round / 100.0}"
 
   #second.column
     %h1 Systems

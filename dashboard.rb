@@ -11,7 +11,7 @@ get "/" do
   @projects = PROJECTS
   @projects.each do |name, attributes|
     from, to = Pivotal.status_for(attributes[:pivotal])
-    ST.status_for attributes[:st], from, to
+    # ST.status_for attributes[:st], from, to
   end
 
   haml :index
