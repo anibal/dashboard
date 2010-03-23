@@ -2,16 +2,20 @@
   #first.column
     %h1 Projects
     - @projects.each do |project, attributes|
-      .project.status.inactive{ :ref => project }
+      .project.status.active{ :ref => project }
         .identifier
           = attributes[:name]
-          .points= "#{attributes[:pivotal][:points]}/#{attributes[:pivotal][:velocity]}"
+          .points= "#{attributes[:pivotal][:current]}/#{attributes[:pivotal][:velocity]}"
         .info
           .ci
             .message
             .author
           .div
-            .attribute.average= "Av: #{attributes[:pivotal][:average]}"
+            .attribute= "Av.P: #{attributes[:pivotal][:average]}"
+            .attribute.separator= "|"
+            .attribute= "Av.h: #{attributes[:st][:average]}"
+            .attribute.separator= "|"
+            .attribute= "h/P: #{(attributes[:st][:hours].to_f / attributes[:pivotal][:points] * 100).round / 100.0}"
 
   #second.column
     %h1 Systems

@@ -1,5 +1,5 @@
 %w[rubygems sinatra haml open-uri hpricot json librmpd yahoo-weather].each { |lib| require lib }
-%w[ext/fixnum mpd_proxy ci pivotal].each { |lib| require "lib/#{lib}" }
+%w[ext/fixnum mpd_proxy ci pivotal st].each { |lib| require "lib/#{lib}" }
 require 'lib/config'
 
 # -----------------------------------------------------------------------------------
@@ -9,7 +9,10 @@ get "/" do
   @weather = YahooWeather::Client.new.lookup_location("ASXX0075", "c")
 
   @projects = PROJECTS
-  @projects.each { |name, attributes| Pivotal.status_for(name, attributes[:pivotal]) }
+  @projects.each do |name, attributes|
+    from, to = Pivotal.status_for(attributes[:pivotal])
+    ST.status_for attributes[:st], from, to
+  end
 
   haml :index
 end

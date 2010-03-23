@@ -96,6 +96,12 @@ h1 {
   height: 18px;
   overflow: hidden;
 }
+.status .info .attribute {
+  float: left;
+}
+.status .info .attribute.separator {
+  margin: 0 4px;
+}
 .status .problems {
   color: #EF4136;
 }
