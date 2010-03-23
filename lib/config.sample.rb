@@ -8,11 +8,11 @@ configure :development do
   PROJECTS = {
     "project1" => {
       :name => "Project 1",
-      :identifier => "P1",
       :ci => { },
       :pivotal => {
         :id => nil
-      }
+      },
+      :st => { }
     }
   }
 
@@ -20,6 +20,10 @@ configure :development do
 
   PIVOTAL_URL = "http://www.pivotaltracker.com/services/v3"
   PIVOTAL_TOKEN = ""
+
+  SLIMTIMER_USER = ""
+  SLIMTIMER_PW = ""
+  SLIMTIMER_TOKEN = ""
 end
 
 # -----------------------------------------------------------------------------------
@@ -32,11 +36,11 @@ configure :production do
   PROJECTS = {
     "project1" => {
       :name => "Project 1",
-      :identifier => "P1",
       :ci => { },
       :pivotal => {
         :id => nil
-      }
+      },
+      :st => { }
     }
   }
 
@@ -44,4 +48,8 @@ configure :production do
 
   PIVOTAL_URL = "http://www.pivotaltracker.com/services/v3"
   PIVOTAL_TOKEN = ""
+
+  SLIMTIMER_USER = ""
+  SLIMTIMER_PW = ""
+  SLIMTIMER_TOKEN = ""
 end
