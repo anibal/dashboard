@@ -11,8 +11,7 @@ configure :development do
       :ci => { },
       :pivotal => {
         :id => nil
-      },
-      :st => { }
+      }
     }
   }
 
@@ -20,10 +19,6 @@ configure :development do
 
   PIVOTAL_URL = "http://www.pivotaltracker.com/services/v3"
   PIVOTAL_TOKEN = ""
-
-  SLIMTIMER_USER = ""
-  SLIMTIMER_PW = ""
-  SLIMTIMER_TOKEN = ""
 end
 
 # -----------------------------------------------------------------------------------
@@ -39,8 +34,7 @@ configure :production do
       :ci => { },
       :pivotal => {
         :id => nil
-      },
-      :st => { }
+      }
     }
   }
 
@@ -48,8 +42,4 @@ configure :production do
 
   PIVOTAL_URL = "http://www.pivotaltracker.com/services/v3"
   PIVOTAL_TOKEN = ""
-
-  SLIMTIMER_USER = ""
-  SLIMTIMER_PW = ""
-  SLIMTIMER_TOKEN = ""
 end
