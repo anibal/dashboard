@@ -101,7 +101,7 @@ function reload() {
 };
 
 $(function() {
-  // fetchCIStatus();
+  fetchCIStatus();
   fetchNagiosStatus();
   updateMpdSong();
   setTimeout("reload();", 1800000);
