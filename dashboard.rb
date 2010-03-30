@@ -1,5 +1,5 @@
-%w[rubygems sinatra haml open-uri hpricot json librmpd yahoo-weather].each { |lib| require lib }
-%w[ext/fixnum mpd_proxy ci pivotal st].each { |lib| require "lib/#{lib}" }
+%w[date rubygems sinatra haml open-uri hpricot json librmpd yahoo-weather].each { |lib| require lib }
+%w[ext/fixnum mpd_proxy ci pivotal].each { |lib| require "lib/#{lib}" }
 require 'lib/config'
 
 # -----------------------------------------------------------------------------------
@@ -29,3 +29,10 @@ end
 get "/mpd_song" do
   "#{MpdProxy.current_song} (#{MpdProxy.time.to_time})"
 end
+
+get "/input" do
+  @sprints = Pivotal.sprints(PROJECTS)
+  haml :input
+end
+
+

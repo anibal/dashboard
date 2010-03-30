@@ -1,0 +1,22 @@
+#center-wrap
+  #error
+
+  %form
+    .column.project-wrap
+      %select#project-select{ :name => "project" }
+        %option{ :value => 0 } Select a project...
+        - @sprints.each do |project, attributes|
+          %option{ :value => attributes[:id] }= project
+    .column
+      %div
+        Hours worked:
+        %input{ :name => "hours" }
+      %div
+        Money earned:
+        %input{ :name => "money" }
+  %button#save-hours{ :type => "submit" } Update
+
+  - @sprints.each do |project, attributes|
+    %select.iterations.hidden{ :name => "iteration", :ref => attributes[:id] }
+      - attributes[:iterations].each do |iteration|
+        %option{ :value => iteration[:number] }= "#{iteration[:number]} (#{iteration[:start]} - #{iteration[:finish]})"

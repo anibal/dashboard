@@ -213,3 +213,21 @@ h1 {
   top: 150px;
   color: #000;
 }
+
+/* Input page
+ **************************************************************** */
+#center-wrap {
+  width: 600px;
+  margin: 20px auto;
+}
+#center-wrap #error {
+  color: #f00;
+}
+#center-wrap .column {
+  float: left;
+  width: 280px;
+  margin: 10px;
+}
+#center-wrap select.hidden {
+  display: none;
+}
