@@ -11,7 +11,8 @@ get "/" do
 
   @projects = PROJECTS
   @projects.each do |name, attributes|
-    Pivotal.status_for(attributes[:pivotal])
+    iteration_ids = Pivotal.status_for(attributes[:pivotal])
+    Iteration.status_for(attributes[:pivotal], iteration_ids)
   end
 
   haml :index
@@ -36,4 +37,7 @@ get "/input" do
   haml :input
 end
 
-
+put "/:project_id/iterations/:iteration_id" do |project_id, iteration_id|
+  Iteration.update_iteration(project_id, iteration_id, params)
+  ""
+end

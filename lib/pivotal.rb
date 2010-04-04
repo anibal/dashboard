@@ -22,6 +22,8 @@ class Pivotal
             :points  => [points, 1].max,
             :average => (points / 4.0).round
           )
+
+          doc.search("//number").map { |number| number.innerHTML.to_i }
         rescue NoMethodError
           status.merge!(
             :points => 1,
