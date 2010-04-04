@@ -13,10 +13,10 @@
     .column
       %div
         Hours worked:
-        %input{ :name => "hours" }
+        %input#hours
       %div
         Money earned:
-        %input{ :name => "money" }
+        %input#income
   %button#save-hours{ :type => "submit" } Update
 
   - @sprints.each do |project, attributes|
