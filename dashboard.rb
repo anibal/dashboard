@@ -1,4 +1,4 @@
-%w[date rubygems sinatra haml open-uri hpricot json librmpd yahoo-weather].each { |lib| require lib }
+%w[date rubygems sinatra sinatra/content_for haml open-uri hpricot json librmpd yahoo-weather].each { |lib| require lib }
 %w[ext/fixnum mpd_proxy ci pivotal].each { |lib| require "lib/#{lib}" }
 require 'lib/config'
 
