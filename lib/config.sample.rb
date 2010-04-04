@@ -4,6 +4,8 @@
 configure :development do
   MpdProxy.setup "mpd", 6600
 
+  DataMapper.setup(:default, "mysql://localhost/dashboard_dev")
+
   CI_URL = "http://ci.trike.com.au/XmlStatusReport.aspx"
   PROJECTS = {
     "project1" => {
@@ -26,6 +28,14 @@ end
 # -----------------------------------------------------------------------------------
 configure :production do
   MpdProxy.setup "mpd", 6600, true
+
+  DataMapper.setup(:default, {
+    :adapter  => "mysql",
+    :database => "dashboard_prod",
+    :username => "dashoard_prod",
+    :password => "",
+    :host     => "mysql"
+  })
 
   CI_URL = "http://ci.trike.com.au/XmlStatusReport.aspx"
   PROJECTS = {
