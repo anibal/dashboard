@@ -99,8 +99,14 @@ h1 {
 .status .info .attribute {
   float: left;
 }
+.status .info .attribute.label {
+  color: #888;
+  padding-right: 4px;
+}
 .status .info .attribute.separator {
-  margin: 0 4px;
+  color: #fff;
+  margin: 0 5px;
+  font-weight: normal;
 }
 .status .problems {
   color: #EF4136;
