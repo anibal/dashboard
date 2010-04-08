@@ -10,10 +10,11 @@ function fetchCIStatus() {
 
       if (ciAttr.status == "failure" && !_(knownFailures).include(project)) {
         newFailure = true;
+        knownFailures.push(project);
         showCIOverlay(attributes);
       }
-      else if (ciAttr.status != "failure" && _(knownFailures).include(attributes)) {
-        knownFailures = _(knownFailures).without([attributes]);
+      else if (ciAttr.status != "failure" && _(knownFailures).include(project)) {
+        knownFailures = _(knownFailures).without([project]);
       }
       if (!newFailure) $(".ci-failure").hide();
 
@@ -28,7 +29,6 @@ function fetchCIStatus() {
 };
 
 function showCIOverlay(project) {
-  knownFailures.push(project);
   $(".ci-failure").show();
 
   $("#ci-failure-message .project-name").html(project.name);
@@ -53,6 +53,7 @@ function fetchNagiosStatus() {
     _(data.problems).each(function(problem) {
       if (!_(knownProblems).include(problem)) {
         newProblem = true;
+        knownProblems.push(system);
         showNagiosOverlay(problem);
       }
       else if (_(knownProblems).include(problem)) {
@@ -66,7 +67,6 @@ function fetchNagiosStatus() {
 };
 
 function showNagiosOverlay(system) {
-  knownProblems.push(system);
   $(".nagios-failure").show();
 
   $("#nagios-failure-message .system-name").html(system);
