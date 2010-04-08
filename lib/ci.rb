@@ -44,6 +44,6 @@ class CI
       distance_of_time_in_words from_time, utc_now
     end
 
-    def utc_now; Time.now.utc + (11 * 3600) end
+    def utc_now; Time.now.utc + (10 * 3600) end
   end
 end
