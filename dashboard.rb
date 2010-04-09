@@ -1,5 +1,5 @@
 %w[date rubygems sinatra sinatra/content_for haml dm-core dm-aggregates open-uri hpricot json librmpd yahoo-weather].each { |lib| require lib }
-%w[ext/fixnum mpd_proxy ci pivotal].each { |lib| require "lib/#{lib}" }
+%w[ext/fixnum mpd_proxy ci pivotal nagios].each { |lib| require "lib/#{lib}" }
 require 'models/iteration'
 require 'lib/config'
 
@@ -35,7 +35,7 @@ get "/project_status" do
 end
 
 get "/nagios_status" do
-  { :system_count => 0, :problem_count => 0, :problems => [] }.to_json
+  Nagios.status.to_json
 end
 
 get "/mpd_song" do
