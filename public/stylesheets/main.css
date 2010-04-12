@@ -111,6 +111,17 @@ h1 {
 .status .problems {
   color: #EF4136;
 }
+#nagios-status {
+  max-height: 275px;
+  height: auto;
+}
+#nagios-status .info {
+  height: auto;
+}
+#nagios-status .problems {
+  margin-top: 10px;
+  font-weight: normal;
+}
 
 .clock {
   margin: 10px 40px;
