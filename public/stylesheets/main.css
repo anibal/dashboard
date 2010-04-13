@@ -182,15 +182,11 @@ h1 {
   opacity: 0.8;
   z-index: 9;
 }
-#ci-failure-overlay,
-#nagios-failure-overlay {
+#ci-failure-overlay {
   left: 5px;
   width: 315px;
   height: 501px;
   background-color: #b00;
-}
-#nagios-failure-overlay {
-  left: 320px;
 }
 #standup-overlay {
   background-color: #ff0;
@@ -209,17 +205,12 @@ h1 {
 .overlay-message div {
   padding: 20px;
 }
-#ci-failure-message,
-#nagios-failure-message {
+#ci-failure-message {
   left: 10px;
   width: 300px;
   top: 60px;
 }
-#nagios-failure-message {
-  left: 330px;
-}
-#ci-failure-message .project-name,
-#nagios-failure-message .system-name {
+#ci-failure-message .project-name {
   font-weight: bold;
 }
 #ci-failure-message .author {

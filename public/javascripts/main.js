@@ -1,5 +1,4 @@
 var knownFailures = [];
-var knownProblems = [];
 
 function fetchCIStatus() {
   $.getJSON("/project_status", function(data) {
@@ -48,29 +47,9 @@ function fetchNagiosStatus() {
     else {
       $("#nagios-status").addClass("failure");
     }
-
-    var newProblem = false;
-    _(data.problems).each(function(problem) {
-      if (!_(knownProblems).include(problem)) {
-        newProblem = true;
-        knownProblems.push(system);
-        showNagiosOverlay(problem);
-      }
-      else if (_(knownProblems).include(problem)) {
-        knownProblems = _(knownProblems).without([problem]);
-      }
-      if (!newProblem) $(".nagios-failure").hide();
-    });
   });
 
   setTimeout("fetchNagiosStatus();", 50000);
-};
-
-function showNagiosOverlay(system) {
-  $(".nagios-failure").show();
-
-  $("#nagios-failure-message .system-name").html(system);
-  $("#nagios-failure-message .system-name").effect("pulsate", { times: 10 }, 2000);
 };
 
 function updateMpdSong() {
