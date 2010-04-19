@@ -1,5 +1,6 @@
 - content_for :head do
   %script{ :src => "javascripts/main.js", :type => "text/javascript" }
+  %script{ :src => "javascripts/nagios.js", :type => "text/javascript" }
 
 #content
   #first.column
@@ -25,16 +26,7 @@
 
   #second.column
     %h1 Systems
-    #nagios-status.status
-      .identifier Nagios
-      .info
-        Services:
-        %span.system-count
-        %br/
-        Problems:
-        %span.problem-count
-        %br/
-        .problems
+    = haml :nagios_status, :layout => false
 
   #third.column
     %embed.clock{ :src => "http://www.clocklink.com/clocks/5005-blue.swf?TimeZone=AEDT&", :width => 225, :height => 65, :wmode => "transparent", :type => "application/x-shockwave-flash" }/

@@ -35,23 +35,6 @@ function showCIOverlay(project) {
   $("#ci-failure-message .author").html(project.ci.author);
 };
 
-function fetchNagiosStatus() {
-  $.getJSON("/nagios_status", function(data) {
-    $("#nagios-status .system-count").html(data.system_count);
-    $("#nagios-status .problem-count").html(data.problem_count);
-    $("#nagios-status .problems").html(data.problems.join("<br />"));
-
-    if (_(data.problems).isEmpty()) {
-      $("#nagios-status").removeClass("failure");
-    }
-    else {
-      $("#nagios-status").addClass("failure");
-    }
-  });
-
-  setTimeout("fetchNagiosStatus();", 50000);
-};
-
 function updateMpdSong() {
   $("#current").load("/mpd_song");
 
@@ -81,7 +64,6 @@ function reload() {
 
 $(function() {
   fetchCIStatus();
-  fetchNagiosStatus();
   updateMpdSong();
   setTimeout("reload();", 1800000);
 });
