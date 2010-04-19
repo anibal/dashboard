@@ -42,6 +42,11 @@ get "/mpd_song" do
   "#{MpdProxy.current_song} (#{MpdProxy.time.to_time})"
 end
 
+get "/nagios" do
+  @status = Nagios.status
+  haml :nagios, :layout => false
+end
+
 get "/input" do
   @sprints = Pivotal.sprints(PROJECTS)
   haml :input

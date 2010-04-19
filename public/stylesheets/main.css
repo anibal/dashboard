@@ -122,6 +122,9 @@ h1 {
   margin-top: 10px;
   font-weight: normal;
 }
+body.nagios #nagios-status {
+  margin: 5px;
+}
 
 .clock {
   margin: 10px 40px;
