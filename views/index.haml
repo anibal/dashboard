@@ -32,7 +32,7 @@
     %embed.clock{ :src => "http://www.clocklink.com/clocks/5005-blue.swf?TimeZone=AEDT&", :width => 225, :height => 65, :wmode => "transparent", :type => "application/x-shockwave-flash" }/
     .weather
       .image
-        %img{ :src => @weather.image_url }
+        %img{ :src => @weather_image }
       .info
         .temp= "#{@weather.condition.temp}°C (#{@weather.forecasts.first.high}°C)"
         .text= @weather.condition.text

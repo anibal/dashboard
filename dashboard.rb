@@ -18,6 +18,7 @@ end
 # -----------------------------------------------------------------------------------
 get "/" do
   @weather = YahooWeather::Client.new.lookup_location("ASXX0075", "c")
+  @weather_image = Hpricot(@weather.description).at("img").attributes["src"]
 
   @projects = PROJECTS
   @projects.each do |name, attributes|
