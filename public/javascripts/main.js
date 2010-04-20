@@ -24,7 +24,7 @@ function fetchCIStatus() {
     });
   });
 
-  setTimeout("fetchCIStatus();", 30000);
+  setTimeout("fetchCIStatus();", 120000);
 };
 
 function showCIOverlay(project) {
