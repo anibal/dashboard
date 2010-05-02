@@ -6,7 +6,7 @@ configure :development do
 
   DataMapper.setup(:default, "mysql://localhost/dashboard_dev")
 
-  CI_URL = "http://ci.trike.com.au/XmlStatusReport.aspx"
+  CI_STATUS_FILE = "tmp/ci_status_last.xml"
   PROJECTS = {
     "project1" => {
       :name => "Project 1",
@@ -37,7 +37,7 @@ configure :production do
     :host     => "mysql"
   })
 
-  CI_URL = "http://ci.trike.com.au/XmlStatusReport.aspx"
+  CI_STATUS_FILE = "tmp/ci_status_last.xml"
   PROJECTS = {
     "project1" => {
       :name => "Project 1",

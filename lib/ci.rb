@@ -1,7 +1,7 @@
 class CI
   class << self
     def status_for(name, status)
-      doc = open(CI_URL) { |f| Hpricot::XML(f) }
+      doc = File.open(CI_STATUS_FILE) { |f| Hpricot::XML(f) }
       element = doc.at("//Project[@name = '#{name}']")
 
       last_commit_time = Time.parse(element.attributes["lastBuildTime"])
