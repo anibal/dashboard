@@ -6,4 +6,8 @@ class Fixnum
     time << "%02d" % (self % 60)
     "-" + time.join(":")
   end
+
+  def to_hours
+    "%.1f" % (self / 3600.0)
+  end
 end
