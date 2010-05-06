@@ -1,5 +1,5 @@
 %w[date rubygems sinatra sinatra/content_for haml dm-core dm-aggregates open-uri hpricot json librmpd yahoo-weather].each { |lib| require lib }
-%w[ext/fixnum mpd_proxy ci pivotal nagios].each { |lib| require "lib/#{lib}" }
+%w[ext/fixnum mpd_proxy ci pivotal pivotal_api nagios].each { |lib| require "lib/#{lib}" }
 %w[iteration slimtimer_task slimtimer_user time_entry time_report].each { |model| require "models/#{model}" }
 require 'lib/config'
 
@@ -60,7 +60,7 @@ end
 
 get "/time_reports" do
   s = Time.local(*params['start'].split('-'))
-  e = Time.local(*params['end'].split('-'))
+  e = Time.local(*(params['end'].split('-') + [23, 59, 59]))
   @time_report = TimeReport.new(s..e)
   haml :time_report
 end
