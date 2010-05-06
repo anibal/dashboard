@@ -24,12 +24,6 @@ class PivotalApi
     get("/iterations/#{group}")["iterations"]
   end
 
-  def stories_in(range)
-    pp iterations('done')
-    raise
-    #iterations('done') + iterations['current']
-  end
-
   def clean_filter(filter)
     if filter.is_a?(Hash)
       filter.collect {|k,v| "#{k}:#{v}"}.join(" ")
