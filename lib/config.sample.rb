@@ -21,6 +21,11 @@ configure :development do
 
   PIVOTAL_URL = "http://www.pivotaltracker.com/services/v3"
   PIVOTAL_TOKEN = ""
+
+  SLIMTIMER_APIKEY = ""
+  SLIMTIMER_USERS = {
+    "email@example.com" => "password"
+  }
 end
 
 # -----------------------------------------------------------------------------------
@@ -52,4 +57,9 @@ configure :production do
 
   PIVOTAL_URL = "http://www.pivotaltracker.com/services/v3"
   PIVOTAL_TOKEN = ""
+
+  SLIMTIMER_APIKEY = ""
+  SLIMTIMER_USERS = {
+    "email@example.com" => "password"
+  }
 end
