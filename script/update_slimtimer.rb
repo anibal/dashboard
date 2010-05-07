@@ -3,6 +3,7 @@
 require 'sinatra'
 
 set :environment, ENV['SINATRA_ENV'] || 'development'
+disable :run
 
 require File.join(File.dirname(__FILE__), '../dashboard')
 require File.join(File.dirname(__FILE__), '../lib/slimtimer_api')
