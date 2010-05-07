@@ -53,10 +53,10 @@ SLIMTIMER_USERS.each do |email, password|
   end
 
   last_entry = TimeEntry.first(:order => [:end_time.desc])
-  start_range = last_entry ? last_entry.end_time : DateTime.new(2010, 5, 1)
-  end_range = [start_range + 24 * 60 * 60, DateTime.now].min
+  start_range = last_entry ? last_entry.end_time : Time.local(2010, 5, 1)
+  end_range = [start_range + 24 * 60 * 60, Time.now].min
 
-  until end_range >= DateTime.now
+  until end_range >= Time.now
     puts "Loading time entries from #{start_range} to #{end_range}"
 
     entries = st.time_entries(start_range.strftime(FULL_DATE_TIME),

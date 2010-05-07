@@ -4,8 +4,8 @@ class TimeEntry
   property :id, Integer, :key => true
   property :slimtimer_task_id, Integer
   property :slimtimer_user_id, Integer
-  property :start_time, DateTime
-  property :end_time, DateTime
+  property :start_time, Time
+  property :end_time, Time
   property :duration_in_seconds, Integer
   property :comments, Text
   property :tags, Text
