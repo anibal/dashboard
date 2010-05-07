@@ -1,4 +1,4 @@
-%table
+%table#timereport
   %caption
     = "#{@time_report.project_name}:"
     = @time_report.period.first.strftime("%F")
@@ -21,11 +21,11 @@
         %td= task[:name]
         %td= task[:pivotal_name]
         %td= task[:story_type]
-        %td= task[:points]
+        %td.number= task[:points]
         %td= task[:status]
-        %td= task[:lifetime_hours]
+        %td.number= task[:lifetime_hours]
         - @time_report.users.each do |user|
-          %td
+          %td.number
             - if time = task[:time_by_user].assoc(user.id)
               = time.last.to_hours
-        %td= task[:time_this_period].to_hours
+        %td.total.number= task[:time_this_period].to_hours

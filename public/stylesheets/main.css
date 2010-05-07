@@ -242,3 +242,27 @@ body.nagios #nagios-status {
 #center-wrap select.hidden {
   display: none;
 }
+
+/* Time report
+ **************************************************************** */
+#timereport {
+  border-collapse: collapse;
+}
+
+#timereport caption {
+  font-size: larger;
+  font-weight: bold;
+}
+
+#timereport tr:nth-child(even) {
+  background-color: #eee;
+}
+
+#timereport td {
+  border-left: 1px solid silver;
+  border-right: 1px solid silver;
+}
+
+#timereport td.number {
+  text-align: right;
+}
