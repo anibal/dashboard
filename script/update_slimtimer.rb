@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'sinatra'
+%w[rubygems sinatra].each {|l| require l }
 
 set :environment, ENV['SINATRA_ENV'] || 'development'
 disable :run

@@ -3,12 +3,14 @@ class Pivotal
   class << self
     def status_for(status)
       if status[:id]
-        doc = open("#{PIVOTAL_URL}/projects/#{status[:id]}", { "X-TrackerToken" => PIVOTAL_TOKEN }) { |f| Hpricot::XML(f) }
+        doc = open("#{PIVOTAL_URL}/projects/#{status[:id]}",
+                   { "X-TrackerToken" => PIVOTAL_TOKEN }) { |f| Hpricot::XML(f) }
         status[:velocity] = doc.at("current_velocity").innerHTML
 
         # current iteration
         begin
-          doc = open("#{PIVOTAL_URL}/projects/#{status[:id]}/iterations/current", { "X-TrackerToken" => PIVOTAL_TOKEN }) { |f| Hpricot::XML(f) }
+          doc = open("#{PIVOTAL_URL}/projects/#{status[:id]}/iterations/current",
+                     { "X-TrackerToken" => PIVOTAL_TOKEN }) { |f| Hpricot::XML(f) }
           status[:current] = points_total(doc.search("//story").select { |story| story.at("current_state").innerHTML == "accepted" }.map { |story| story.at("estimate") })
         rescue NoMethodError
           status[:current] = 0

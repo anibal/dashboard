@@ -2,7 +2,7 @@
 # Development environment
 # -----------------------------------------------------------------------------------
 configure :development do
-  MpdProxy.setup "mpd", 6600
+  MpdProxy.setup "mpd", 6600, true
 
   DataMapper.setup(:default, "mysql://localhost/dashboard_dev")
 
@@ -18,12 +18,12 @@ configure :development do
     }
   }
 
-  NAGIOS_URL = "http://nagios.trike.com.au/nagios/cgi-bin/status.cgi"
+  NAGIOS_URL = "http://nagios.trike.com.au/nagios/cgi-bin/status.cgi?host=all&servicestatustypes=28&hoststatustypes=15"
 
   PIVOTAL_URL = "http://www.pivotaltracker.com/services/v3"
-  PIVOTAL_TOKEN = ""
+  PIVOTAL_TOKEN = "token"
 
-  SLIMTIMER_APIKEY = ""
+  SLIMTIMER_APIKEY = "key"
   SLIMTIMER_USERS = {
     "email@example.com" => "password"
   }
@@ -55,12 +55,12 @@ configure :production do
     }
   }
 
-  NAGIOS_URL = "http://nagios.trike.com.au/nagios/cgi-bin/status.cgi"
+  NAGIOS_URL = "http://nagios.trike.com.au/nagios/cgi-bin/status.cgi?host=all&servicestatustypes=28&hoststatustypes=15"
 
   PIVOTAL_URL = "http://www.pivotaltracker.com/services/v3"
-  PIVOTAL_TOKEN = ""
+  PIVOTAL_TOKEN = "token"
 
-  SLIMTIMER_APIKEY = ""
+  SLIMTIMER_APIKEY = "key"
   SLIMTIMER_USERS = {
     "email@example.com" => "password"
   }

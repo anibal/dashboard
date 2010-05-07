@@ -1,0 +1,25 @@
+= Trike Dashboard
+
+A dashboard, seriously suitable for keeping Trikelings up-to-date on the
+progress of their projects. Works great on a big-ass TV in West Melbourne,
+Australia, but you may find that it works pretty well wherever you are, too.
+
+== Home
+
+http://github.com/tricycle/dashboard
+
+== Kudos
+
+Serious kudos to Tom Sommer (http://github.com/tsommer), and many other
+Trikelings (see http://github.com/tricycle/dashboard).
+
+== Install
+
+Install the gems at +.gems+.
+Dup +config.sample.rb+, only +s/sample\.//+.
+cron the +.rb+ scripts at +script/+ to run regularly.
+Do like you would with any other sinatra (http://www.sinatrarb.com/) app.
+
+== License
+
+http://creativecommons.org/licenses/MIT/
