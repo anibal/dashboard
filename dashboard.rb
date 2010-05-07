@@ -62,5 +62,6 @@ get "/time_reports/:project" do |project|
   s = Time.local(*params['start'].split('-'))
   e = Time.local(*(params['end'].split('-') + [23, 59, 59]))
   @time_report = TimeReport.new(s..e, project)
+  @enable_blueprint = true
   haml :time_report
 end

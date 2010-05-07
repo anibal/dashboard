@@ -1,12 +1,17 @@
 class TimeReport
   SLIMTIMER_TO_PIVOTAL_REGEX = /(\w:\w{3,4}) (\w+)(?: (\d+))$/
 
-  attr_reader :tasks, :users
+  attr_reader :tasks, :users, :project, :period
 
-  def initialize(range, project)
+  def initialize(period, project)
+    @period = period
     @project = PROJECTS[project]
-    query_slimtimer(range)
-    query_pivotal(range)
+    query_slimtimer(period)
+    query_pivotal(period)
+  end
+
+  def project_name
+    @project[:name]
   end
 
   private

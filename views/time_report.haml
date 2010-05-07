@@ -1,4 +1,9 @@
 %table
+  %caption
+    = "#{@time_report.project_name}:"
+    = @time_report.period.first.strftime("%F")
+    through
+    = @time_report.period.last.strftime("%F")
   %thead
     %tr
       %th Task
