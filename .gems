@@ -1,0 +1,11 @@
+# TODO: make this executable
+sinatra
+sinatra-content-for
+haml
+datamapper
+hpricot
+json
+librmpd
+yahoo-weather
+data_objects
+do_mysql
