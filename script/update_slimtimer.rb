@@ -1,5 +1,9 @@
 #!/usr/bin/env ruby
 
+require 'sinatra'
+
+set :environment, ENV['SINATRA_ENV'] || 'development'
+
 require File.join(File.dirname(__FILE__), '../dashboard')
 require File.join(File.dirname(__FILE__), '../lib/slimtimer_api')
 require 'pp'
