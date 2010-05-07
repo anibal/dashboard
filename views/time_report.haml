@@ -2,19 +2,23 @@
   %thead
     %tr
       %th Task
+      %th Pivotal Name
+      %th Story Type
+      %th Pivotal Points
+      %th Pivotal Status
       %th Total Hours
       - @time_report.users.each do |user|
         %th= user.name
-      %th Pivotal Points
-      %th Complete?
   %tbody
     - @time_report.tasks.each do |task|
       %tr
         %td= task[:name]
+        %td= task[:pivotal_name]
+        %td= task[:story_type]
+        %td= task[:points]
+        %td= task[:status]
         %td= task[:lifetime_hours]
         - @time_report.users.each do |user|
           %td
             - if time = task[:time_by_user].assoc(user.id)
               = time.last.to_hours
-        %td
-        %td

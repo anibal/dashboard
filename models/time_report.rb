@@ -29,7 +29,15 @@ class TimeReport
     pivotal = PivotalApi.new(PIVOTAL_TOKEN, @project[:pivotal][:id])
     @tasks.each do |t|
       if t[:name] =~ SLIMTIMER_TO_PIVOTAL_REGEX
-        pp pivotal.stories("id:#{$3}")
+        begin
+          story = pivotal.story($3)
+          t[:points] = story['estimate']
+          t[:story_type] = story['story_type']
+          t[:status] = story['current_state']
+          t[:pivotal_name] = story['name']
+        rescue Exception => e
+          p e
+        end
       end
     end
   end

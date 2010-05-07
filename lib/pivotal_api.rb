@@ -16,8 +16,8 @@ class PivotalApi
     get("/stories", :query => {:filter => clean_filter(filter)})["stories"]
   end
 
-  def story(id, filter = "")
-    get("/stories/#{id}", :query => {:filter => clean_filter(filter)})["story"]
+  def story(id)
+    get("/stories/#{id}")["story"]
   end
 
   def iterations(group = 'done')
