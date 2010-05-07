@@ -2,7 +2,7 @@ class SlimtimerTask
   include DataMapper::Resource
 
   property :id, Integer, :key => true
-  property :name, String
+  property :name, String, :length => 255
   property :hours, Float
 
   has n, :time_entries
