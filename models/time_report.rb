@@ -17,9 +17,11 @@ class TimeReport
     @tasks = SlimtimerTask.all(:time_entries => entries, :name.like => "#{@project[:slimtimer]}%")
     pp @tasks
     @tasks = @tasks.map do |task|
+      times = task.time_entries.ending_in(range).aggregate(:duration_in_seconds.sum, :slimtimer_user_id).map { |a| a.reverse }
       { :name => task.name,
         :lifetime_hours => task.hours,
-        :time_by_user => task.time_entries.ending_in(range).aggregate(:duration_in_seconds.sum, :slimtimer_user_id).map { |a| a.reverse }
+        :time_this_period => times.inject(0) { |sum, a| sum + a[1] },
+        :time_by_user => times
       }
     end
   end

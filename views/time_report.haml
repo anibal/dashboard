@@ -6,9 +6,10 @@
       %th Story Type
       %th Pivotal Points
       %th Pivotal Status
-      %th Total Hours
+      %th Lifetime Hours
       - @time_report.users.each do |user|
         %th= user.name
+      %th Total Hours This Period
   %tbody
     - @time_report.tasks.each do |task|
       %tr
@@ -22,3 +23,4 @@
           %td
             - if time = task[:time_by_user].assoc(user.id)
               = time.last.to_hours
+        %td= task[:time_this_period].to_hours
