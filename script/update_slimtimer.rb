@@ -52,7 +52,7 @@ SLIMTIMER_USERS.each do |email, password|
     u.save
   end
 
-  last_entry = TimeEntry.first(:order => [:end_time.desc])
+  last_entry = u.time_entries.first(:order => [:end_time.desc])
   start_range = last_entry ? last_entry.end_time : Time.local(2010, 5, 1)
   end_range = [start_range + 24 * 60 * 60, Time.now].min
 
