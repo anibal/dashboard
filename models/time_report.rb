@@ -4,16 +4,17 @@ class TimeReport
   attr_reader :tasks, :users
 
   def initialize(range, project)
-    query_slimtimer(range, project)
-    query_pivotal(range, project)
+    @project = PROJECTS[project]
+    query_slimtimer(range)
+    query_pivotal(range)
   end
 
   private
-  def query_slimtimer(range, project)
+  def query_slimtimer(range)
     entries = TimeEntry.ending_in(range)
     @users = SlimtimerUser.all(:time_entries => entries, :order => [ :name.asc ])
 
-    @tasks = SlimtimerTask.all(:time_entries => entries)
+    @tasks = SlimtimerTask.all(:time_entries => entries, :name.like => "#{@project[:slimtimer]}%")
     pp @tasks
     @tasks = @tasks.map do |task|
       { :name => task.name,
@@ -23,9 +24,9 @@ class TimeReport
     end
   end
 
-  def query_pivotal(range, project)
-    return unless project[:pivotal][:id]
-    pivotal = PivotalApi.new(PIVOTAL_TOKEN, project[:pivotal][:id])
+  def query_pivotal(range)
+    return unless @project[:pivotal][:id]
+    pivotal = PivotalApi.new(PIVOTAL_TOKEN, @project[:pivotal][:id])
     @tasks.each do |t|
       if t[:name] =~ SLIMTIMER_TO_PIVOTAL_REGEX
         pp pivotal.stories("id:#{$3}")

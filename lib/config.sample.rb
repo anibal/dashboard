@@ -13,7 +13,8 @@ configure :development do
       :ci => { },
       :pivotal => {
         :id => nil
-      }
+      },
+      :slimtimer => "t:tri projectname"
     }
   }
 
@@ -49,7 +50,8 @@ configure :production do
       :ci => { },
       :pivotal => {
         :id => nil
-      }
+      },
+      :slimtimer => "t:tri projectname"
     }
   }
 

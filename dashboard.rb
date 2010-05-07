@@ -58,9 +58,9 @@ put "/:project_id/iterations/:iteration_id" do |project_id, iteration_id|
   ""
 end
 
-get "/time_reports" do
+get "/time_reports/:project" do |project|
   s = Time.local(*params['start'].split('-'))
   e = Time.local(*(params['end'].split('-') + [23, 59, 59]))
-  @time_report = TimeReport.new(s..e)
+  @time_report = TimeReport.new(s..e, project)
   haml :time_report
 end
