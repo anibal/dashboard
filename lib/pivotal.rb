@@ -1,31 +1,31 @@
 class Pivotal
+  include HTTParty
+  headers({ "X-TrackerToken" => PIVOTAL_TOKEN })
 
   class << self
-    def status_for(status)
+    def status_for(status)  # by ref! - that var will change!
       if status[:id]
-        doc = open("#{PIVOTAL_URL}/projects/#{status[:id]}",
-                   { "X-TrackerToken" => PIVOTAL_TOKEN }) { |f| Hpricot::XML(f) }
-        status[:velocity] = doc.at("current_velocity").innerHTML
+        doc = get("#{PIVOTAL_URL}/projects/#{status[:id]}")
+        status[:velocity] = doc["project"]["current_velocity"]
 
         # current iteration
         begin
-          doc = open("#{PIVOTAL_URL}/projects/#{status[:id]}/iterations/current",
-                     { "X-TrackerToken" => PIVOTAL_TOKEN }) { |f| Hpricot::XML(f) }
-          status[:current] = points_total(doc.search("//story").select { |story| story.at("current_state").innerHTML == "accepted" }.map { |story| story.at("estimate") })
+          doc = get("#{PIVOTAL_URL}/projects/#{status[:id]}/iterations/current")
+          status[:current] = points_total(doc["iterations"].first["stories"].select {|s| s["current_state"] == "accepted" }.collect {|s| s["estimate"] })
         rescue NoMethodError
           status[:current] = 0
         end
 
         # last 4 iterations
         begin
-          doc = open("#{PIVOTAL_URL}/projects/#{status[:id]}/iterations/done?offset=-4", { "X-TrackerToken" => PIVOTAL_TOKEN }) { |f| Hpricot::XML(f) }
-          points = points_total(doc.search("//estimate"))
+          doc = get("#{PIVOTAL_URL}/projects/#{status[:id]}/iterations/done?offset=-4")
+          points = points_total(doc["iterations"].collect {|i| i["stories"] }.flatten.collect {|s| s["estimate"] })
           status.merge!(
             :points  => [points, 1].max,
             :average => (points / 4.0).round
           )
 
-          doc.search("//number").map { |number| number.innerHTML.to_i }
+          doc["iterations"].collect {|i| i["number"] }
         rescue NoMethodError
           status.merge!(
             :points => 1,
@@ -43,7 +43,7 @@ class Pivotal
     end
 
     def points_total(estimates)
-      estimates.compact.map { |e| e.innerHTML.to_i }.inject { |sum, estimate| sum + estimate } || 0
+      estimates.compact.inject { |sum, estimate| sum + estimate.to_i } || 0
     end
 
     def sprints(projects)
@@ -53,14 +53,14 @@ class Pivotal
         pivotal_id = attributes[:pivotal][:id]
         next unless pivotal_id
 
-        doc = open("#{PIVOTAL_URL}/projects/#{pivotal_id}/iterations/done", { "X-TrackerToken" => PIVOTAL_TOKEN }) { |f| Hpricot::XML(f) }
+        doc = get("#{PIVOTAL_URL}/projects/#{pivotal_id}/iterations/done")
         res.merge!(attributes[:name] => {
           :id => pivotal_id,
-          :iterations => doc.search("//iteration").map { |iteration|
+          :iterations => doc["iterations"].collect { |iteration|
             {
-              :number => iteration.at("number").innerHTML,
-              :start => Date.parse(iteration.at("start").innerHTML),
-              :finish => Date.parse(iteration.at("finish").innerHTML)
+              :number => iteration["number"],
+              :start => Date.parse(iteration["start"]),
+              :finish => Date.parse(iteration["finish"])
             }
           }.reverse
         })
