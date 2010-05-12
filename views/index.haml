@@ -6,7 +6,7 @@
   #first.column
     %h1 Projects
     - @projects.each do |project, attributes|
-      .project.status.inactive{ :ref => project }
+      .project.status.active{ :ref => project }
         .identifier
           = attributes[:name]
           .points= "#{attributes[:pivotal][:current]}/#{attributes[:pivotal][:velocity]}"
@@ -14,15 +14,15 @@
           .ci
             .message
             .author
-          .div
-            .attribute.label Av
-            .attribute= "#{attributes[:pivotal][:average]}/#{attributes[:pivotal][:average_hours]}"
+          .summary
+            .attribute.label Av.P
+            .attribute= "#{attributes[:pivotal][:average]}"
+            .attribute.separator= "|"
+            .attribute.label Av.h
+            .attribute= "#{attributes[:slimtimer][:average_hours]}"
             .attribute.separator= "|"
             .attribute.label h/P
-            .attribute= round(attributes[:pivotal][:hours].to_f / attributes[:pivotal][:points])
-            .attribute.separator= "|"
-            .attribute.label $/P
-            .attribute= round(attributes[:pivotal][:income].to_f / [attributes[:pivotal][:hours], 1].max)
+            .attribute= "%.1f" % (attributes[:slimtimer][:hours].to_f / attributes[:pivotal][:points])
 
   #second.column
     %h1 Systems

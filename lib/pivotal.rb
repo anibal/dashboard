@@ -25,12 +25,13 @@ class Pivotal
             :average => (points / 4.0).round
           )
 
-          doc["iterations"].collect {|i| i["number"] }
+          doc["iterations"].collect { |i| [i["start"], i["finish"]] }
         rescue NoMethodError
           status.merge!(
             :points => 1,
             :average => 0
           )
+          nil
         end
       else
         status.merge!(
@@ -39,6 +40,7 @@ class Pivotal
           :points   => 1,
           :average  => "-"
         )
+        nil
       end
     end
 

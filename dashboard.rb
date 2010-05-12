@@ -1,8 +1,8 @@
 %w[date rubygems sinatra sinatra/content_for haml dm-core dm-aggregates open-uri hpricot json librmpd yahoo-weather httparty].each { |lib| require lib }
-%w[ext/fixnum mpd_proxy ci pivotal_api nagios].each { |lib| require "lib/#{lib}" }
+%w[ext/fixnum mpd_proxy pivotal_api].each { |lib| require "lib/#{lib}" }
 require 'config'
-%w[pivotal].each { |lib| require "lib/#{lib}" }
-%w[iteration slimtimer_task slimtimer_user time_entry time_report].each { |model| require "models/#{model}" }
+%w[ci pivotal slimtimer nagios].each { |lib| require "lib/#{lib}" }
+%w[slimtimer_task slimtimer_user time_entry time_report].each { |model| require "models/#{model}" }
 
 # -----------------------------------------------------------------------------------
 # Helpers
@@ -23,8 +23,8 @@ get "/" do
 
   @projects = PROJECTS
   @projects.each do |name, attributes|
-    iteration_ids = Pivotal.status_for(attributes[:pivotal])
-    Iteration.status_for(attributes[:pivotal], iteration_ids)
+    iteration_dates = Pivotal.status_for(attributes[:pivotal])
+    Slimtimer.status_for attributes[:slimtimer], iteration_dates
   end
 
   haml :index
