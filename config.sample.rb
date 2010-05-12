@@ -14,7 +14,10 @@ configure :development do
       :pivotal => {
         :id => nil
       },
-      :slimtimer => "t:tri projectname"
+      :slimtimer  => {
+        :id => "tri",
+        :main_task => "t:tri type"
+      }
     }
   }
 
@@ -51,7 +54,10 @@ configure :production do
       :pivotal => {
         :id => nil
       },
-      :slimtimer => "t:tri projectname"
+      :slimtimer  => {
+        :id => "tri",
+        :main_task => "t:tri type"
+      }
     }
   }
 
