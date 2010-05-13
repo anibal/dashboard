@@ -47,28 +47,5 @@ class Pivotal
     def points_total(estimates)
       estimates.compact.inject { |sum, estimate| sum + estimate.to_i } || 0
     end
-
-    def sprints(projects)
-      res = {}
-
-      projects.each do |id, attributes|
-        pivotal_id = attributes[:pivotal][:id]
-        next unless pivotal_id
-
-        doc = get("#{PIVOTAL_URL}/projects/#{pivotal_id}/iterations/done")
-        res.merge!(attributes[:name] => {
-          :id => pivotal_id,
-          :iterations => doc["iterations"].collect { |iteration|
-            {
-              :number => iteration["number"],
-              :start => Date.parse(iteration["start"]),
-              :finish => Date.parse(iteration["finish"])
-            }
-          }.reverse
-        })
-      end
-
-      res
-    end
   end
 end
