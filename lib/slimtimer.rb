@@ -11,7 +11,7 @@ class Slimtimer
         end
         iteration_seconds.compact!
 
-        total_hours = (iteration_seconds.inject { |sum, sec| sum + sec } || 0 / 3600)
+        total_hours = ((iteration_seconds.inject { |sum, sec| sum + sec } || 0) / 3600)
         status.merge!(
           :hours         => total_hours,
           :average_hours => (total_hours / [iteration_seconds.size, 1].max)
