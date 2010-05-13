@@ -49,11 +49,6 @@ get "/nagios" do
   haml :nagios, :layout => false
 end
 
-get "/input" do
-  @sprints = Pivotal.sprints(PROJECTS)
-  haml :input
-end
-
 put "/:project_id/iterations/:iteration_id" do |project_id, iteration_id|
   Iteration.update_iteration(project_id, iteration_id, params)
   ""
