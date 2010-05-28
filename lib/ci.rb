@@ -2,17 +2,22 @@ class CI
   class << self
     def status_for(name, status)
       doc = File.open(CI_STATUS_FILE) { |f| Hpricot::XML(f) }
-      element = doc.at("//Project[@name = '#{name}']")
-
-      last_commit_time = Time.parse(element.attributes["lastBuildTime"])
-      status.merge!(
-        :status   => (element.attributes["activity"] == "Building" ? "building" : element.attributes["lastBuildStatus"].downcase),
-        :label    => element.attributes["lastBuildLabel"],
-        :message  => extract_message(element.attributes["lastCommitMessage"]),
-        :author   => element.attributes["lastBuildAuthor"].split(" ")[0],
-        :time     => time_ago_in_words(last_commit_time) + " ago",
-        :activity => (distance_in_minutes(last_commit_time, utc_now) > 10080 ? "inactive" : "active")
-      )
+      unless element = doc.at("//Project[@name = '#{name}']")
+        status.merge!(
+          :status   => "no_ci",
+          :activity => "active"
+        )
+      else
+        last_commit_time = Time.parse(element.attributes["lastBuildTime"])
+        status.merge!(
+          :status   => (element.attributes["activity"] == "Building" ? "building" : element.attributes["lastBuildStatus"].downcase),
+          :label    => element.attributes["lastBuildLabel"],
+          :message  => extract_message(element.attributes["lastCommitMessage"]),
+          :author   => element.attributes["lastBuildAuthor"].split(" ")[0],
+          :time     => time_ago_in_words(last_commit_time) + " ago",
+          :activity => (distance_in_minutes(last_commit_time, utc_now) > 10080 ? "inactive" : "active")
+        )
+      end
     end
 
     def extract_message(message)
