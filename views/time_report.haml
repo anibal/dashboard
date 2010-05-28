@@ -12,6 +12,7 @@
       %th Pivotal Points
       %th Pivotal Status
       %th Lifetime Hours
+      %th Lifetime Hours / Point
       - @time_report.users.each do |user|
         %th= user.name
       %th Total Hours This Period
@@ -24,6 +25,7 @@
         %td.number= task[:points]
         %td= task[:status]
         %td.number= task[:lifetime_hours]
+        %td.number= task[:lifetime_hours] / task[:points] rescue ''
         - @time_report.users.each do |user|
           %td.number
             - if time = task[:time_by_user].assoc(user.id)
