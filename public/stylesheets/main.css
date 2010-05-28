@@ -109,6 +109,12 @@ h1 {
   margin: 0 5px;
   font-weight: normal;
 }
+.status .info .attribute.right {
+  float: right;
+}
+.status .info .attribute.separator.right {
+  margin: 0 1px;
+}
 .status .problems {
   color: #EF4136;
 }

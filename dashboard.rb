@@ -11,6 +11,17 @@ helpers do
   def round(value)
     (value * 10).round / 10.0
   end
+
+  def encode_special_time(time)
+    time.strftime("%Y-%m-%d-%H-%M-%S")
+  end
+
+  def time_report_link(project, start, finish)
+    str = '/time_reports'
+    str << "/#{project}"
+    str << "?start=#{encode_special_time(start)}"
+    str << "&end=#{encode_special_time(finish)}"
+  end
 end
 
 
@@ -25,6 +36,8 @@ get "/" do
   @projects.each do |name, attributes|
     iteration_dates = Pivotal.status_for(attributes[:pivotal])
     Slimtimer.status_for attributes[:slimtimer], iteration_dates
+    attributes[:prev_iteration] = iteration_dates.last
+    attributes[:curr_iteration] = [iteration_dates.last.last, Time.now] rescue nil
   end
 
   haml :index

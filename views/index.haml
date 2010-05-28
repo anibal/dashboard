@@ -23,6 +23,13 @@
             .attribute.separator= "|"
             .attribute.label h/P
             .attribute= "%.1f" % (attributes[:slimtimer][:hours].to_f / attributes[:pivotal][:points])
+            - if attributes[:prev_iteration]
+              .attribute.right
+                %a{ :href => time_report_link(project, *attributes[:prev_iteration]) } P
+              .attribute.right.separator= "|"
+            - if attributes[:curr_iteration]
+              .attribute.right
+                %a{ :href => time_report_link(project, *attributes[:curr_iteration]) } C
 
   #second.column
     %h1 Systems
