@@ -1,6 +1,12 @@
 trikelibs = Dir['config/cap-tasks/*.rb'].reject{ |file| file =~ /(radiant)/ }
 trikelibs.each { |trikelib| load(trikelib)  }
 
+stages_glob = File.join(File.dirname(__FILE__), "deploy", "*.rb")
+stages = Dir[stages_glob].collect { |f| File.basename(f, ".rb") }.sort
+set :stages, stages
+set :default_stage, 'it'
+require 'capistrano/ext/multistage'
+
 set :application, "dashboard"
 set :repository,  "git://github.com/tricycle/dashboard.git"
 
@@ -15,8 +21,6 @@ role :db,  "pepper.trike.com.au", :primary => true # This is where Rails migrati
 
 set :user, "www-data"
 set :engine, "passenger"
-
-set :deploy_to, "/srv/www/#{application}"
 
 after "deploy:update_code", "deploy:update_app_config"
 
