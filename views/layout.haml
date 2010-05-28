@@ -4,6 +4,6 @@
     = haml :common, :layout => false
     = yield_content :head
 
-  %body
+  %body{:class => @body_class}
     #wrap
       = yield

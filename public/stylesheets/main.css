@@ -4,6 +4,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: Verdana, sans-serif;
+}
+body.dashboard {
   overflow: hidden;
 }
 #wrap {
