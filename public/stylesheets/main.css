@@ -100,6 +100,9 @@ h1 {
 .status .info .attribute {
   float: left;
 }
+.status .info .attribute a {
+  color: #888;
+}
 .status .info .attribute.label {
   color: #888;
   padding-right: 4px;
