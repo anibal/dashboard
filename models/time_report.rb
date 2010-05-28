@@ -20,7 +20,6 @@ class TimeReport
     @users = SlimtimerUser.all(:time_entries => entries, :order => [ :name.asc ])
 
     @tasks = SlimtimerTask.all(:time_entries => entries, :name.like => "#{@project[:slimtimer][:main_task]}%")
-    pp @tasks
     @tasks = @tasks.map do |task|
       times = task.time_entries.ending_in(range).aggregate(:duration_in_seconds.sum, :slimtimer_user_id).map { |a| a.reverse }
       { :name => task.name,
