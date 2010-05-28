@@ -29,7 +29,9 @@ end
 # Actions
 # -----------------------------------------------------------------------------------
 get "/" do
-  @body_class = 'dashboard'
+  @body_class = "dashboard"
+  @tv_layout = !!params[:tv]
+
   @weather = YahooWeather::Client.new.lookup_location("ASXX0075", "c")
   @weather_image = Hpricot(@weather.description).at("img").attributes["src"]
 
