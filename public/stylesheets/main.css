@@ -197,6 +197,9 @@ body.nagios #nagios-status {
 #monday-overlay {
   background-color: #fc0;
 }
+#friday-overlay {
+  background-color: #83C500;
+}
 .overlay-message {
   left: 70px;
   width: 800px;
