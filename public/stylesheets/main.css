@@ -60,7 +60,7 @@ h1 {
   background-color: #EDF600;
 }
 .status.failure .identifier {
-  background-color: #EF4136;
+  background-color: #BE6D00;
 }
 .status.inactive .identifier {
   margin: 0;
