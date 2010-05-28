@@ -223,7 +223,8 @@ body.nagios #nagios-status {
   font-style: italic;
 }
 #standup-message,
-#monday-message {
+#monday-message,
+#friday-message {
   top: 150px;
   color: #000;
 }
