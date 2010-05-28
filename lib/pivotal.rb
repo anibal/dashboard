@@ -8,31 +8,11 @@ class Pivotal
         doc = get("#{PIVOTAL_URL}/projects/#{status[:id]}")
         status[:velocity] = doc["project"]["current_velocity"]
 
-        # current iteration
-        begin
-          doc = get("#{PIVOTAL_URL}/projects/#{status[:id]}/iterations/current")
-          status[:current] = points_total(doc["iterations"].first["stories"].select {|s| s["current_state"] == "accepted" }.collect {|s| s["estimate"] })
-        rescue NoMethodError
-          status[:current] = 0
-        end
+        status[:current] = current(status[:id])
+        stats, dates = done(status[:id])
+        status.merge!(stats)
 
-        # last 4 iterations
-        begin
-          doc = get("#{PIVOTAL_URL}/projects/#{status[:id]}/iterations/done?offset=-4")
-          points = points_total(doc["iterations"].collect {|i| i["stories"] }.flatten.collect {|s| s["estimate"] })
-          status.merge!(
-            :points  => [points, 1].max,
-            :average => (points / 4.0).round
-          )
-
-          doc["iterations"].collect { |i| [i["start"], i["finish"]] }
-        rescue NoMethodError
-          status.merge!(
-            :points => 1,
-            :average => 0
-          )
-          nil
-        end
+        dates
       else
         status.merge!(
           :velocity => "-",
@@ -40,8 +20,30 @@ class Pivotal
           :points   => 1,
           :average  => "-"
         )
-        nil
+        []
       end
+    end
+
+    def current(id)
+      doc = get("#{PIVOTAL_URL}/projects/#{id}/iterations/current")
+      points_total(doc["iterations"].first["stories"].select {|s| s["current_state"] == "accepted" }.collect {|s| s["estimate"] })
+    rescue NoMethodError
+      status[:current] = 0
+    end
+
+    def done(id)
+      doc = get("#{PIVOTAL_URL}/projects/#{id}/iterations/done?offset=-4")
+      points = points_total(doc["iterations"].collect {|i| i["stories"] }.flatten.collect {|s| s["estimate"] })
+
+      [{
+        :points  => [points, 1].max,
+        :average => (points / 4.0).round
+      }, doc["iterations"].collect { |i| [i["start"], i["finish"]] }]
+    rescue NoMethodError
+      [{
+        :points => 1,
+        :average => 0
+      }, nil]
     end
 
     def points_total(estimates)
