@@ -33,7 +33,6 @@ h1 {
 
 .status {
   width: 275px;
-  height: 105px;
   margin: 10px auto;
   background-color: #fff;
   border: 2px solid #fff;
@@ -73,7 +72,6 @@ h1 {
   float: right;
 }
 .status .info {
-  height: 59px;
   font-size: 10pt;
   padding: 6px 15px;
   line-height: 18px;
@@ -95,6 +93,9 @@ h1 {
   font-weight: normal;
   height: 18px;
   overflow: hidden;
+}
+.status .summary {
+  height: 1em;
 }
 .status .info .attribute {
   float: left;

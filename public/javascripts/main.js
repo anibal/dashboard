@@ -19,8 +19,13 @@ function fetchCIStatus() {
 
       var projectElement = $(".project[ref = " + project + "]");
       projectElement.attr("class", "project status " + ciAttr.status + " " + ciAttr.activity);
-      projectElement.find(".ci .message").html(ciAttr.message);
-      projectElement.find(".ci .author").html("by <i>" + ciAttr.author + "</i> " + ciAttr.time);
+      if (ciAttr.status == 'no_ci') {
+        projectElement.find(".ci").hide();
+      } else {
+        projectElement.find(".ci").show();
+        projectElement.find(".ci .message").html(ciAttr.message);
+        projectElement.find(".ci .author").html("by <i>" + ciAttr.author + "</i> " + ciAttr.time);
+      }
     });
   });
 
