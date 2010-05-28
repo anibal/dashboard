@@ -55,8 +55,8 @@ put "/:project_id/iterations/:iteration_id" do |project_id, iteration_id|
 end
 
 get "/time_reports/:project" do |project|
-  s = Time.local(*params['start'].split('-'))
-  e = Time.local(*(params['end'].split('-') + [23, 59, 59]))
+  s = Time.local(*params['start'].split('-')) rescue Time.now - 7 * 24 * 3600
+  e = Time.local(*params['end'].split('-')) rescue Time.now
   @time_report = TimeReport.new(s..e, project)
   @enable_blueprint = true
   haml :time_report
