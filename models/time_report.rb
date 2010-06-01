@@ -23,7 +23,7 @@ class TimeReport
     @users = SlimtimerUser.all(:time_entries => entries, :order => [ :name.asc ])
 
     @tasks = if @is_wildcard
-      SlimtimerTask.all(:time_entries => entries)
+      SlimtimerTask.all(:time_entries => entries, :completed => false)
     else
       SlimtimerTask.all(:time_entries => entries, :name.like => "#{@project[:slimtimer][:main_task]}%")
     end
