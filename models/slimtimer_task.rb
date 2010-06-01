@@ -4,6 +4,7 @@ class SlimtimerTask
   property :id, Integer, :key => true
   property :name, String, :length => 255
   property :hours, Float
+  property :completed, Boolean
 
   has n, :time_entries
 
@@ -19,5 +20,6 @@ class SlimtimerTask
     self.id = attributes['id']
     self.name = attributes['name']
     self.hours = attributes['hours']
+    self.completed = !attributes['completed_on'].blank?
   end
 end
