@@ -19,7 +19,7 @@
   %tbody
     - @time_report.tasks.each do |task|
       %tr
-        %td= task[:name]
+        %td.name= task[:name]
         %td= task[:pivotal_name]
         %td= task[:story_type]
         %td.number= task[:points]

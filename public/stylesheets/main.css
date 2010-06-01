@@ -279,6 +279,10 @@ body.nagios #nagios-status {
   border-right: 1px solid silver;
 }
 
+#timereport td.name {
+  white-space: nowrap;
+}
+
 #timereport td.number {
   text-align: right;
 }
