@@ -24,10 +24,10 @@
         %td= task[:story_type]
         %td.number= task[:points]
         %td= task[:status]
-        %td.number= task[:lifetime_hours]
+        %td.number= "%.2f" % task[:lifetime_hours]
         %td.number= task[:lifetime_hours] / task[:points] rescue ''
         - @time_report.users.each do |user|
           %td.number
-            - if time = task[:time_by_user].assoc(user.id)
-              = time.last.to_hours
+            - if time = task[:time_by_user][user.id]
+              = time.to_hours
         %td.total.number= task[:time_this_period].to_hours

@@ -28,14 +28,30 @@ class TimeReport
       SlimtimerTask.all(:time_entries => entries, :name.like => "#{@project[:slimtimer][:main_task]}%")
     end
 
-    @tasks = @tasks.map do |task|
-      times = task.time_entries.ending_in(range).aggregate(:duration_in_seconds.sum, :slimtimer_user_id).map { |a| a.reverse }
-      { :name => task.name,
-        :lifetime_hours => task.hours,
-        :time_this_period => times.inject(0) { |sum, a| sum + a[1] },
-        :time_by_user => times
+    @tasks = @tasks.group_by(&:name).map do |name, tasks|
+      values = {
+        :name => name,
+        :lifetime_hours => 0,
+        :time_this_period => 0,
+        :time_by_user => Hash.new { |h,k| h[k] = 0 }
       }
+      tasks.each do |task|
+        time_entries = task.time_entries.ending_in(range)
+        times = time_entries.aggregate(:duration_in_seconds.sum, :slimtimer_user_id).map(&:reverse)
+        values[:time_this_period] += times.inject(0) { |sum, a| sum + a[1] }
+        times.each do |user_id, time|
+          values[:time_by_user][user_id] += time
+        end
+      end
+      values
     end
+
+    lifetime_hours_by_task_name = Hash[*(SlimtimerTask.all.aggregate(:hours.sum, :name).map(&:reverse).flatten)]
+    @tasks.each do |t|
+      t[:lifetime_hours] = lifetime_hours_by_task_name[t[:name]]
+    end
+
+    @tasks.sort! { |a,b| a[:name] <=> b[:name] }
   end
 
   def query_pivotal(range)
