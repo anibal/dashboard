@@ -1,17 +1,20 @@
 class TimeReport
   SLIMTIMER_TO_PIVOTAL_REGEX = /(\w:\w{3,4}) (\w+)(?: (\d+))$/
+  WILDCARD = 'all'
 
   attr_reader :tasks, :users, :project, :period
 
   def initialize(period, project)
     @period = period
     @project = PROJECTS[project]
+    @is_wildcard = (project == WILDCARD)
+
     query_slimtimer(period)
-    query_pivotal(period)
+    query_pivotal(period) unless @is_wildcard
   end
 
   def project_name
-    @project[:name]
+    @is_wildcard ? 'All projects' : @project[:name]
   end
 
   private
@@ -19,7 +22,12 @@ class TimeReport
     entries = TimeEntry.ending_in(range)
     @users = SlimtimerUser.all(:time_entries => entries, :order => [ :name.asc ])
 
-    @tasks = SlimtimerTask.all(:time_entries => entries, :name.like => "#{@project[:slimtimer][:main_task]}%")
+    @tasks = if @is_wildcard
+      SlimtimerTask.all(:time_entries => entries)
+    else
+      SlimtimerTask.all(:time_entries => entries, :name.like => "#{@project[:slimtimer][:main_task]}%")
+    end
+
     @tasks = @tasks.map do |task|
       times = task.time_entries.ending_in(range).aggregate(:duration_in_seconds.sum, :slimtimer_user_id).map { |a| a.reverse }
       { :name => task.name,
