@@ -220,6 +220,9 @@ body.nagios #nagios-status {
   text-align: center;
   font-size: 30pt;
 }
+.overlay-message img {
+  margin: 20px;
+}
 .overlay-message div {
   padding: 20px;
 }

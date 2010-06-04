@@ -57,7 +57,7 @@ function meetingOverlay() {
   else if (date.getHours() == 10 && date.getMinutes() >= 0 && date.getMinutes() < 10) {
     $(".standup").show();
   }
-  else if (date.getDay() == 5 && date.getHours() == 12 && date.getMinutes() >= 20 && date.getMinutes() < 30) {
+  else if (date.getDay() == 5 && date.getHours() == 12 && date.getMinutes() >= 20) {
     $(".friday").show();
   }
   else {
