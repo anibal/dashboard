@@ -1,6 +1,5 @@
 config.rb
-**/.DS_Store
+.DS_Store
 log/*
 tmp/*
 *.swp
-
