@@ -2,6 +2,7 @@ function fetchNagiosStatus() {
   $.getJSON("/nagios_status", function(data) {
     $("#nagios-status .points").html(data.problem_count + "/" + data.system_count);
     $("#nagios-status .problems").html(data.problems.join("<br />"));
+    $("#nagios-status .problem-overlay").html(data.problem_count);
 
     if (_(data.problems).isEmpty()) {
       $("#nagios-status").removeClass("failure");

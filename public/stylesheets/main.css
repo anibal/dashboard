@@ -128,12 +128,24 @@ h1 {
   max-height: 444px;
 }
 #nagios-status .info {
+  position: relative;
   height: auto;
   max-height: 397px;
+}
+#nagios-status .problem-overlay {
+  position: absolute;
+  bottom: 10px;
+  width: 245px;
+  opacity: 0.25;
+  z-index: 1;
+  color: #EF4136;
+  font-size: 10em;
+  text-align: center;
 }
 #nagios-status .problems {
   margin-top: 10px;
   font-weight: normal;
+  z-index: 2;
 }
 body.nagios #nagios-status {
   margin: 5px;
