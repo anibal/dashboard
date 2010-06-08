@@ -128,6 +128,7 @@ h1 {
   position: absolute;
   bottom: 10px;
   width: 245px;
+  height: 62px;
   opacity: 0.25;
   z-index: 1;
   color: #EF4136;
