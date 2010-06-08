@@ -69,7 +69,7 @@ h1 {
   -moz-border-radius: 12px;
 }
 .status .identifier .points {
-  width: 80px;
+  width: 100px;
   text-align: right;
   float: right;
 }
@@ -124,11 +124,12 @@ h1 {
   color: #EF4136;
 }
 #nagios-status {
-  max-height: 444px;
   height: auto;
+  max-height: 444px;
 }
 #nagios-status .info {
   height: auto;
+  max-height: 397px;
 }
 #nagios-status .problems {
   margin-top: 10px;
