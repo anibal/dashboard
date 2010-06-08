@@ -43,9 +43,6 @@ h1 {
   -webkit-box-shadow: rgba(66, 66, 66, 0.5) 4px 4px 4px;
   -moz-box-shadow: rgba(66, 66, 66, 0.5) 4px 4px 4px;
 }
-.status.inactive {
-  height: 32px;
-}
 .status .identifier {
   height: 27px;
   font-size: 14pt;
@@ -63,11 +60,6 @@ h1 {
 .status.failure .identifier {
   background-color: #EF4136;
 }
-.status.inactive .identifier {
-  margin: 0;
-  -webkit-border-radius: 12px;
-  -moz-border-radius: 12px;
-}
 .status .identifier .points {
   width: 100px;
   text-align: right;
@@ -83,13 +75,13 @@ h1 {
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#C8C8CA), to(#E8E9E8));
   background-image: -moz-linear-gradient(top, #C8C8CA 100%, #E8E9E8 0%);
 }
-.status.inactive .info {
-  display: none;
-}
 .status .info .ci {
   border-bottom: 1px solid #eee;
   margin-bottom: 3px;
   padding-bottom: 3px;
+}
+.status.inactive .info .ci {
+  display: none;
 }
 .status .info .ci .message {
   font-weight: normal;
