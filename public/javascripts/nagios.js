@@ -1,13 +1,18 @@
 function fetchNagiosStatus() {
   $.getJSON("/nagios_status", function(data) {
-    $("#nagios-status .points").html(data.problem_count + "/" + data.system_count);
-    $("#nagios-status .problems").html(data.problems.join("<br />"));
-    $("#nagios-status .problem-overlay").html(data.problem_count);
+    var problemCount = parseInt(data.problem_count);
 
-    if (_(data.problems).isEmpty()) {
-      $("#nagios-status").removeClass("failure");
+    $("#nagios-status .points").html(problemCount + "/" + data.system_count);
+    $("#nagios-status .problems").html(data.problems.join("<br />"));
+
+    $("#nagios-status .problem-overlay").html(problemCount);
+    $("#nagios-status .problem-overlay").hide();
+    if (problemCount > 4) {
+      $("#nagios-status .problem-overlay").show();
     }
-    else {
+
+    $("#nagios-status").removeClass("failure");
+    if (problemCount > 0) {
       $("#nagios-status").addClass("failure");
     }
   });
