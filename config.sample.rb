@@ -4,6 +4,7 @@
 configure :development do
   MpdProxy.setup "mpd", 6600, true
 
+  DataMapper::Logger.new(STDOUT, :debug)
   DataMapper.setup(:default, "mysql://localhost/dashboard_dev")
 
   CI_STATUS_FILE = "tmp/ci_status_last.xml"
@@ -15,8 +16,7 @@ configure :development do
         :id => nil
       },
       :slimtimer  => {
-        :id => "tri",
-        :main_task => "t:tri type"
+        :ids => ["tri"]
       }
     }
   }
@@ -55,8 +55,7 @@ configure :production do
         :id => nil
       },
       :slimtimer  => {
-        :id => "tri",
-        :main_task => "t:tri type"
+        :ids => ["tri", "tro"]
       }
     }
   }

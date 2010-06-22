@@ -3,7 +3,7 @@ class Slimtimer
   class << self
     def status_for(status, iteration_dates)
       if iteration_dates
-        tasks = SlimtimerTask.all(:name.like => "%:#{status[:id]} %")
+        tasks = status[:ids].inject([]) { |set, id| set | SlimtimerTask.all(:name.like => "%:#{id} %") }
 
         iteration_seconds = []
         iteration_dates.each do |dates|
