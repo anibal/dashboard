@@ -2,7 +2,9 @@ class Slimtimer
 
   class << self
     def status_for(status, iteration_dates)
-      tasks = status[:ids].inject([]) { |set, id| set | SlimtimerTask.all(:name.like => "%:#{id} %") }
+      tasks = status[:ids].
+        map { |id| SlimtimerTask.all(:name.like => "%:#{id} %") }.
+        inject { |set, results| set | results }
 
       if iteration_dates && !tasks.empty?
         iteration_seconds = []

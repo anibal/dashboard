@@ -25,7 +25,9 @@ class TimeReport
     @tasks = if @is_wildcard
       SlimtimerTask.all(:time_entries => entries, :completed => false)
     else
-      @project[:slimtimer][:ids].inject([]) { |set, id| set | SlimtimerTask.all(:time_entries => entries, :name.like => "%:#{id} %") }
+      @project[:slimtimer][:ids].
+        map { |id| SlimtimerTask.all(:time_entries => entries, :name.like => "%:#{id} %") }.
+        inject { |set, results| set | results }
     end
 
     @tasks = @tasks.group_by(&:name).map do |name, tasks|
