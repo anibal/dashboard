@@ -295,3 +295,7 @@ body.nagios #nagios-status {
 #timereport td.number {
   text-align: right;
 }
+
+#timereport tr.bugs td {
+  background-color: #C3D9FF;
+}

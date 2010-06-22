@@ -2,7 +2,7 @@ class TimeReport
   SLIMTIMER_TO_PIVOTAL_REGEX = /(\w:\w{3,4}) (\w+)(?: (\d+))$/
   WILDCARD = 'all'
 
-  attr_reader :tasks, :users, :project, :period
+  attr_reader :tasks, :bug_summary, :users, :project, :period
 
   def initialize(period, project)
     @period = period
@@ -25,7 +25,7 @@ class TimeReport
     @tasks = if @is_wildcard
       SlimtimerTask.all(:time_entries => entries, :completed => false)
     else
-      status[:ids].inject([]) { |set, id| set | SlimtimerTask.all(:time_entries => entries, :name.like => "%:#{id} %") }
+      @project[:slimtimer][:ids].inject([]) { |set, id| set | SlimtimerTask.all(:time_entries => entries, :name.like => "%:#{id} %") }
     end
 
     @tasks = @tasks.group_by(&:name).map do |name, tasks|
@@ -52,6 +52,13 @@ class TimeReport
     end
 
     @tasks.sort! { |a,b| a[:name] <=> b[:name] }
+
+    @bug_summary = {
+      :name => "",
+      :lifetime_hours => 0,
+      :time_this_period => 0,
+      :time_by_user => {}
+    }
   end
 
   def query_pivotal(range)
@@ -70,5 +77,21 @@ class TimeReport
         end
       end
     end
+
+    bugs = @tasks.select { |task| task[:story_type] == "bug" }
+
+    user_times = {}
+    bugs.map { |bug| bug[:time_by_user] }.each do |user_id, hours|
+      user_times[user_id] ||= 0
+      user_times[user_id] += hours
+    end
+    @bug_summary = {
+      :name => "Bugs",
+      :lifetime_hours => bugs.map { |bug| bug[:lifetime_hours] }.sum,
+      :time_this_period => bugs.map { |bug| bug[:time_this_period] }.sum,
+      :time_by_user => user_times
+    }
+
+    @tasks
   end
 end

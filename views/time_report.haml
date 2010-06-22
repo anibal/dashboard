@@ -31,3 +31,14 @@
             - if time = task[:time_by_user][user.id]
               = time.to_hours
         %td.total.number= task[:time_this_period].to_hours
+    %tr.bugs
+      %td.name= @time_report.bug_summary[:name]
+      - 4.times do
+        %td
+      %td.number= "%.2f" % @time_report.bug_summary[:lifetime_hours]
+      %td.number
+        - @time_report.users.each do |user|
+          %td.number
+            - if time = @time_report.bug_summary[:time_by_user][user.id]
+              = time.to_hours
+      %td.total.number= @time_report.bug_summary[:time_this_period].to_hours
