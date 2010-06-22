@@ -25,7 +25,7 @@
         %td.number= task[:points]
         %td= task[:status]
         %td.number= "%.2f" % task[:lifetime_hours]
-        %td.number= task[:lifetime_hours] / task[:points] rescue ''
+        %td.number= "%.2f" % (task[:lifetime_hours] / task[:points]) rescue ''
         - @time_report.users.each do |user|
           %td.number
             - if time = task[:time_by_user][user.id]
