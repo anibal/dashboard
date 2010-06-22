@@ -70,6 +70,17 @@ put "/:project_id/iterations/:iteration_id" do |project_id, iteration_id|
   ""
 end
 
+get "/reports" do
+  @projects = PROJECTS
+  @projects.each do |name, attributes|
+    iteration_dates = Pivotal.status_for(attributes[:pivotal])
+    attributes[:prev_iteration] = iteration_dates.last
+    attributes[:curr_iteration] = [iteration_dates.last.last, Time.now] rescue nil
+  end
+
+  haml :reports
+end
+
 get "/time_reports/:project" do |project|
   s = Time.local(*params['start'].split('-')) rescue Time.now - 7 * 24 * 3600
   e = Time.local(*params['end'].split('-')) rescue Time.now

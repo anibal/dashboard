@@ -1,0 +1,6 @@
+- @projects.each do |project, attributes|
+  %h2= attributes[:name]
+  - if attributes[:prev_iteration]
+    %a{ :href => time_report_link(project, *attributes[:prev_iteration]) } Previous
+  - if attributes[:curr_iteration]
+    %a{ :href => time_report_link(project, *attributes[:curr_iteration]) } Current
