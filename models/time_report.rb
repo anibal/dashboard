@@ -82,10 +82,9 @@ class TimeReport
 
     bugs = @tasks.select { |task| task[:story_type] == "bug" }
 
-    user_times = {}
+    user_times = Hash.new { |h,k| h[k] = 0 }
     bugs.map { |bug| bug[:time_by_user] }.each do |user_id, hours|
-      user_times[user_id] ||= 0
-      user_times[user_id] += hours
+      user_times[user_id] += hours if hours
     end
     @bug_summary = {
       :name => "Bugs",
