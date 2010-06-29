@@ -4,8 +4,7 @@
 
 #content
   #first.column
-    - unless @tv_layout
-      %h1 Projects
+    %h1 Projects
     - @projects.each do |project, attributes|
       .project.status.inactive{ :ref => project }
         .identifier
@@ -24,18 +23,9 @@
             .attribute.separator= "|"
             .attribute.label h/P
             .attribute= "%.1f" % (attributes[:slimtimer][:hours].to_f / attributes[:pivotal][:points])
-            - unless @tv_layout
-              - if attributes[:prev_iteration]
-                .attribute.right
-                  %a{ :href => time_report_link(project, *attributes[:prev_iteration]) } P
-                .attribute.right.separator= "|"
-              - if attributes[:curr_iteration]
-                .attribute.right
-                  %a{ :href => time_report_link(project, *attributes[:curr_iteration]) } C
 
   #second.column
-    - unless @tv_layout
-      %h1 Systems
+    %h1 Systems
     = haml :nagios_status, :layout => false
 
   #third.column

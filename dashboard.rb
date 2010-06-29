@@ -30,7 +30,6 @@ end
 # -----------------------------------------------------------------------------------
 get "/" do
   @body_class = "dashboard"
-  @tv_layout = !!params[:tv]
 
   @weather = YahooWeather::Client.new.lookup_location("ASXX0075", "c")
   @weather_image = Hpricot(@weather.description).at("img").attributes["src"]
@@ -39,8 +38,6 @@ get "/" do
   @projects.each do |name, attributes|
     iteration_dates = Pivotal.status_for(attributes[:pivotal])
     Slimtimer.status_for attributes[:slimtimer], iteration_dates
-    attributes[:prev_iteration] = iteration_dates.last
-    attributes[:curr_iteration] = [iteration_dates.last.last, Time.now] rescue nil
   end
 
   haml :index
