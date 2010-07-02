@@ -136,6 +136,7 @@ h1 {
   text-align: center;
 }
 #nagios-status .problems {
+  color: #000;
   margin-top: 10px;
   font-weight: normal;
   z-index: 2;
