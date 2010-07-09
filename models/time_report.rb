@@ -11,6 +11,7 @@ class TimeReport
     query_slimtimer(period)
     query_pivotal(period) unless @project.wildcard?
     decorate_special_case_tasks
+    sort_tasks_by_pivotal_status
   end
 
   def project_name
@@ -106,6 +107,16 @@ class TimeReport
       else
         # We don't care. -- M@
       end
+    end
+  end
+
+  def sort_tasks_by_pivotal_status
+    @tasks.sort! do |a,b|
+      # First order by story type
+      story_type_order = a[:story_type] <=> b[:story_type]
+      # ... then order by status if the story types match
+      # HACK use 'zzzzz' to force blanks to the end
+      story_type_order == 0 ? (a[:status] || 'zzzzz') <=> (b[:status] || 'zzzzz') : story_type_order
     end
   end
 end
