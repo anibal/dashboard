@@ -2,7 +2,17 @@ class Pivotal
   include HTTParty
   headers({ "X-TrackerToken" => PIVOTAL_TOKEN })
 
+  CACHE_EXPIRY = 60 * 15 # 15 minutes
+
   class << self
+    def get(url)
+      @cache ||= {}
+      if @cache[url] && ((@cache[url].first + CACHE_EXPIRY) < Time.now)
+        @cache[url] = nil
+      end
+      (@cache[url] ||= [Time.now, super]).last
+    end
+
     def status_for(status)  # by ref! - that var will change!
       if status[:id]
         doc = get("#{PIVOTAL_URL}/projects/#{status[:id]}")
