@@ -10,6 +10,7 @@ class TimeReport
 
     query_slimtimer(period)
     query_pivotal(period) unless @project.wildcard?
+    decorate_special_case_tasks
   end
 
   def project_name
@@ -92,5 +93,19 @@ class TimeReport
     }
 
     @tasks
+  end
+
+  def decorate_special_case_tasks
+    @tasks.each do |task|
+      if task[:name] =~ /(meetings?|testing|deploying)$/
+        task[:story_type] = 'chore'
+      elsif task[:story_type].nil?
+        # Assume overhead if it doesn't yet have a story type, and isn't
+        # explicitly handled.
+        task[:story_type] = 'overhead'
+      else
+        # We don't care. -- M@
+      end
+    end
   end
 end
