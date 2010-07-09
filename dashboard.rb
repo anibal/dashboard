@@ -2,7 +2,7 @@
 %w[ext/fixnum ext/array mpd_proxy pivotal_api].each { |lib| require "lib/#{lib}" }
 require 'config'
 %w[ci pivotal slimtimer nagios].each { |lib| require "lib/#{lib}" }
-%w[slimtimer_task slimtimer_user time_entry time_report].each { |model| require "models/#{model}" }
+%w[project slimtimer_task slimtimer_user time_entry time_report].each { |model| require "models/#{model}" }
 
 # -----------------------------------------------------------------------------------
 # Helpers
@@ -18,7 +18,7 @@ helpers do
 
   def time_report_link(project, start, finish)
     str = '/time_reports'
-    str << "/#{project}"
+    str << "/#{project.id}"
     str << "?start=#{encode_special_time(start)}"
     str << "&end=#{encode_special_time(finish)}"
   end
@@ -68,13 +68,7 @@ put "/:project_id/iterations/:iteration_id" do |project_id, iteration_id|
 end
 
 get "/reports" do
-  @projects = PROJECTS
-  @projects.each do |name, attributes|
-    iteration_dates = Pivotal.status_for(attributes[:pivotal])
-    attributes[:prev_iteration] = iteration_dates.last
-    attributes[:curr_iteration] = [iteration_dates.last.last, Time.now] rescue nil
-  end
-
+  @projects = Project.all
   haml :reports
 end
 
