@@ -11,11 +11,11 @@
       %th Story Type
       %th Pivotal Points
       %th Pivotal Status
-      %th Lifetime Hours
-      %th Lifetime Hours / Point
       - @time_report.users.each do |user|
         %th= user.name
       %th Total Hours This Period
+      %th Lifetime Hours
+      %th Lifetime Hours / Point
   %tbody
     - @time_report.tasks.each do |task|
       %tr
@@ -24,13 +24,13 @@
         %td= task[:story_type]
         %td.number= task[:points]
         %td= task[:status]
-        %td.number= "%.2f" % task[:lifetime_hours]
-        %td.number= "%.2f" % (task[:lifetime_hours] / task[:points]) rescue ''
         - @time_report.users.each do |user|
           %td.number
             - if time = task[:time_by_user][user.id]
               = time.to_hours
         %td.total.number= task[:time_this_period].to_hours
+        %td.number= "%.2f" % task[:lifetime_hours]
+        %td.number= "%.2f" % (task[:lifetime_hours] / task[:points]) rescue ''
     %tr.bugs
       %td.name= @time_report.bug_summary[:name]
       - 4.times do
