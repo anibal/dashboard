@@ -1,4 +1,6 @@
 class Project
+  WILDCARD_ID = 'all'
+
   def self.all
     @all ||= PROJECTS.map do |id, attributes|
       new id, attributes
@@ -6,6 +8,8 @@ class Project
   end
 
   def self.find(id)
+    return WildCardProject.new if id == WILDCARD_ID
+
     all.find { |project| project.id == id }
   end
 
@@ -14,6 +18,10 @@ class Project
   def initialize(id, attributes)
     @id = id
     @attributes = attributes.clone
+  end
+
+  def wildcard?
+    false
   end
 
   def iteration_dates
@@ -42,5 +50,15 @@ class Project
 
   def has_pivotal_id?
     @attributes[:pivotal] && @attributes[:pivotal][:id]
+  end
+end
+
+class WildCardProject < Project
+  def initialize
+    super(WILDCARD_ID, {})
+  end
+
+  def wildcard?
+    true
   end
 end

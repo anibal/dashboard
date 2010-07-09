@@ -7,14 +7,13 @@ class TimeReport
   def initialize(period, project)
     @period = period
     @project = project
-    @is_wildcard = (project == WILDCARD)
 
     query_slimtimer(period)
-    query_pivotal(period) unless @is_wildcard
+    query_pivotal(period) unless @project.wildcard?
   end
 
   def project_name
-    @is_wildcard ? 'All projects' : @project.name
+    @project.wildcard? ? 'All projects' : @project.name
   end
 
   private
@@ -22,7 +21,7 @@ class TimeReport
     entries = TimeEntry.ending_in(range)
     @users = SlimtimerUser.all(:time_entries => entries, :order => [ :name.asc ])
 
-    @tasks = if @is_wildcard
+    @tasks = if @project.wildcard?
       SlimtimerTask.all(:time_entries => entries, :completed => false)
     else
       @project.slimtimer[:ids].
