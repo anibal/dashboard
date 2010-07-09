@@ -59,5 +59,9 @@ class Pivotal
     def points_total(estimates)
       estimates.compact.inject { |sum, estimate| sum + estimate.to_i } || 0
     end
+
+    def story(project_id, id)
+      get("#{PIVOTAL_URL}/projects/#{project_id}/stories/#{id}")["story"]
+    end
   end
 end

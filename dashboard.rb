@@ -1,5 +1,5 @@
 %w[date rubygems sinatra sinatra/content_for haml dm-core dm-aggregates open-uri hpricot json librmpd yahoo-weather httparty].each { |lib| require lib }
-%w[ext/fixnum ext/array mpd_proxy pivotal_api].each { |lib| require "lib/#{lib}" }
+%w[ext/fixnum ext/array mpd_proxy].each { |lib| require "lib/#{lib}" }
 require 'config'
 %w[ci pivotal slimtimer nagios].each { |lib| require "lib/#{lib}" }
 %w[project slimtimer_task slimtimer_user time_entry time_report].each { |model| require "models/#{model}" }
@@ -72,10 +72,10 @@ get "/reports" do
   haml :reports
 end
 
-get "/time_reports/:project" do |project|
+get "/time_reports/:project" do |project_id|
   s = Time.local(*params['start'].split('-')) rescue Time.now - 7 * 24 * 3600
   e = Time.local(*params['end'].split('-')) rescue Time.now
-  @time_report = TimeReport.new(s..e, project)
+  @time_report = TimeReport.new(s..e, Project.find(project_id))
   @enable_blueprint = true
   haml :time_report
 end

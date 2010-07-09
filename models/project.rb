@@ -1,8 +1,12 @@
 class Project
   def self.all
-    PROJECTS.map do |id, attributes|
+    @all ||= PROJECTS.map do |id, attributes|
       new id, attributes
     end
+  end
+
+  def self.find(id)
+    all.find { |project| project.id == id }
   end
 
   attr_accessor :id, :attributes
@@ -30,5 +34,13 @@ class Project
     else
       super
     end
+  end
+
+  def pivotal_story(id)
+    Pivotal.story(attributes[:pivotal][:id], id)
+  end
+
+  def has_pivotal_id?
+    @attributes[:pivotal] && @attributes[:pivotal][:id]
   end
 end

@@ -6,7 +6,7 @@ class TimeReport
 
   def initialize(period, project)
     @period = period
-    @project = PROJECTS[project]
+    @project = project
     @is_wildcard = (project == WILDCARD)
 
     query_slimtimer(period)
@@ -14,7 +14,7 @@ class TimeReport
   end
 
   def project_name
-    @is_wildcard ? 'All projects' : @project[:name]
+    @is_wildcard ? 'All projects' : @project.name
   end
 
   private
@@ -25,7 +25,7 @@ class TimeReport
     @tasks = if @is_wildcard
       SlimtimerTask.all(:time_entries => entries, :completed => false)
     else
-      @project[:slimtimer][:ids].
+      @project.slimtimer[:ids].
         map { |id| SlimtimerTask.all(:time_entries => entries, :name.like => "%:#{id} %") }.
         inject { |set, results| set | results }
     end
@@ -64,12 +64,11 @@ class TimeReport
   end
 
   def query_pivotal(range)
-    return unless @project[:pivotal][:id]
-    pivotal = PivotalApi.new(PIVOTAL_TOKEN, @project[:pivotal][:id])
+    return unless @project.has_pivotal_id?
     @tasks.each do |t|
       if t[:name] =~ SLIMTIMER_TO_PIVOTAL_REGEX
         begin
-          story = pivotal.story($3)
+          story = @project.pivotal_story($3)
           t[:points] = story['estimate']
           t[:story_type] = story['story_type']
           t[:status] = story['current_state']
