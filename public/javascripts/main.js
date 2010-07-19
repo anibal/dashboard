@@ -6,6 +6,7 @@ function fetchCIStatus() {
     var newFailure = false;
     _(data).each(function(attributes, project) {
       var ciAttr = attributes.ci;
+      $(".project[ref = " + project + "]").attr("class",  "project status inactive " + ciAttr.status);
 
       if (ciAttr.status == "failure" && !_(knownFailures).include(project)) {
         newFailure = true;
