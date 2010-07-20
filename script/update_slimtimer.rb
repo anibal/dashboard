@@ -13,13 +13,38 @@ FULL_DATE_TIME = "%F %T"
 ONE_DAY = 24 * 60 * 60
 TWO_WEEKS = 2 * 7 * ONE_DAY
 
+MAX_TIMEOUTS = 5
+
+# Runs a given block, handling timeouts
+# It will retry the block up to _max_timeouts_ times.
+# If max_timeouts is exceeded, it'll spit out the given _task_ to stderr,
+# and exit the script with an error code.
+def handle_timeouts(max_timeouts, task)
+  timeouts = 0
+  begin
+    yield
+  rescue Timeout::Error
+    timeouts += 1
+    if timeouts > MAX_TIMEOUTS
+      STDERR.puts "Exceeded #{MAX_TIMEOUTS} timeouts on slimtimer during:"
+      STDERR.puts "  #{task}"
+      exit 1
+    else
+      retry
+    end
+  end
+end
+
 SLIMTIMER_USERS.each do |email, password|
   puts "Loading slimtimer data for #{email}"
   st = SlimtimerApi.new(SLIMTIMER_APIKEY, email, password)
   puts "  Slimtimer connected as user id #{st.user_id}"
 
   puts "  Loading tasks"
-  tasks = st.tasks
+  tasks = []
+  handle_timeouts(MAX_TIMEOUTS, "loading tasks for #{email}") do
+    tasks = st.tasks
+  end
   puts "    Got #{tasks.size} tasks; updating"
   SlimtimerTask.update(tasks)
 
@@ -56,19 +81,17 @@ SLIMTIMER_USERS.each do |email, password|
   start_range = last_entry ? last_entry.end_time - TWO_WEEKS : Time.local(2010, 1, 1)
   end_range = [start_range + ONE_DAY, Time.now].min
 
+  failed = 0
   until end_range >= Time.now
-    puts "  Loading time entries from #{start_range} to #{end_range}"
-
-    entries = st.time_entries(start_range.strftime(FULL_DATE_TIME),
+    handle_timeouts(MAX_TIMEOUTS, "retrieving time entries for #{email} on #{start_range}") do
+      puts "  Loading time entries from #{start_range} to #{end_range}"
+      entries = st.time_entries(start_range.strftime(FULL_DATE_TIME),
                               end_range.strftime(FULL_DATE_TIME))
+      puts "    Got #{entries.size} entries"
+      u.update_time_entries(entries)
 
-    puts "    Got #{entries.size} entries"
-
-
-    puts "    Updating time entries"
-    u.update_time_entries(entries)
-
-    start_range = end_range
-    end_range = start_range + 24 * 60 * 60
+      start_range = end_range
+      end_range = start_range + 24 * 60 * 60
+    end
   end
 end
