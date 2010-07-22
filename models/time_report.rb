@@ -136,7 +136,8 @@ private
   def calculate_totals
     @subtotals = []
     @subtotals << Total.new('Bugs', @tasks.select { |t| t[:story_type] == 'bug' })
-    @subtotals << Total.new('Features', @tasks.select { |t| t[:story_type] == 'feature' })
+    @subtotals << Total.new('Delivered/Accepted Features', @tasks.select { |t| t[:story_type] == 'feature' && %w(delivered accepted).include?(t[:status]) })
+    @subtotals << Total.new('Undelivered Features', @tasks.select { |t| t[:story_type] == 'feature' && !%w(delivered accepted).include?(t[:status]) })
     @subtotals << Total.new('Chores', @tasks.select { |t| t[:story_type] == 'chore' })
     @subtotals << Total.new('Overhead', @tasks.select { |t| t[:story_type] == 'overhead' })
 
