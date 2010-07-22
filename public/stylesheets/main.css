@@ -297,6 +297,15 @@ body.nagios #nagios-status {
   text-align: right;
 }
 
-#timereport tr.totals td {
-  background-color: #C3D9FF;
+#timereport tbody.totals td, #timereport tbody.subtotals td {
+  background-color: #D9FFFF;
+}
+
+#timereport tbody.subtotals tr:first-child td {
+  border-top: 1px solid black;
+}
+
+#timereport tbody.totals tr:first-child td {
+  border-top: 3px double black;
+  font-weight: bold;
 }

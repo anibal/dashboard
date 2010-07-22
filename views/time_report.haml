@@ -31,8 +31,9 @@
         %td.total.number= task[:time_this_period].to_hours
         %td.number= "%.2f" % task[:lifetime_hours]
         %td.number= "%.2f" % (task[:lifetime_hours] / task[:points]) rescue ''
+  %tbody.subtotals
     - @time_report.subtotals.each do |type, values|
-      %tr.totals
+      %tr
         %td.name= type
         - 2.times do
           %td
@@ -45,7 +46,8 @@
         %td.number= values[:time_this_period].to_hours
         %td.number= "%.2f" % values[:lifetime_hours]
         %td
-    %tr.totals
+  %tbody.totals
+    %tr
       %td.name= @time_report.totals[:name]
       - 2.times do
         %td
