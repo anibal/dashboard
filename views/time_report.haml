@@ -31,28 +31,20 @@
         %td.total.number= task[:time_this_period].to_hours
         %td.number= "%.2f" % task[:lifetime_hours]
         %td.number= "%.2f" % (task[:lifetime_hours] / task[:points]) rescue ''
-    %tr.bugs
-      %td.name= @time_report.bug_summary[:name]
-      - 4.times do
+    - @time_report.totals.each do |type, values|
+      %tr.totals
+        %td.name= type
+        - 2.times do
+          %td
+        %td.number= values[:points]
         %td
-      %td.number= "%.2f" % @time_report.bug_summary[:lifetime_hours]
-      %td.number
         - @time_report.users.each do |user|
           %td.number
-            - if time = @time_report.bug_summary[:time_by_user][user.id]
+            - if time = values[:time_by_user][user.id]
               = time.to_hours
-      %td.total.number= @time_report.bug_summary[:time_this_period].to_hours
-    %tr.totals
-      %td.name Totals
-      %td
-      %td
-      %td.number= @time_report.totals[:points]
-      %td
-      - @time_report.users.each do |user|
-        %td.number= @time_report.totals[user]
-      %td.number= @time_report.totals[:time_this_period]
-      %td.number= @time_report.totals[:lifetime_hours]
-      %td.number= @time_report.totals[:hours_per_point]
+        %td.number= values[:time_this_period].to_hours
+        %td.number= "%.2f" % values[:lifetime_hours]
+        %td
 
 %p
   Team strength for the period

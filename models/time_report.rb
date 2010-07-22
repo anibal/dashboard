@@ -83,19 +83,6 @@ private
       end
     end
 
-    bugs = @tasks.select { |task| task[:story_type] == "bug" }
-
-    user_times = Hash.new { |h,k| h[k] = 0 }
-    bugs.map { |bug| bug[:time_by_user] }.each do |user_id, hours|
-      user_times[user_id] += hours if hours
-    end
-    @bug_summary = {
-      :name => "Bugs",
-      :lifetime_hours => bugs.map { |bug| bug[:lifetime_hours] }.sum,
-      :time_this_period => bugs.map { |bug| bug[:time_this_period] }.sum,
-      :time_by_user => user_times
-    }
-
     @tasks
   end
 
@@ -115,14 +102,26 @@ private
     end
   end
 
-  def calculate_totals
-    @totals = {
-      :points => 0,
-      #user
-      :time_this_period => 0,
-      :lifetime_hours => 0,
-      :hours_per_point => 0
+  def totals_for_story_type(type)
+    stories = @tasks.select { |task| task[:story_type] == type }
+
+    user_times = Hash.new { |h,k| h[k] = 0 }
+    stories.map { |bug| bug[:time_by_user] }.each do |user_id, hours|
+      user_times[user_id] += hours if hours
+    end
+    { :name => type,
+      :points => stories.map { |story| story[:points] || 0 }.sum,
+      :lifetime_hours => stories.map { |story| story[:lifetime_hours] }.sum,
+      :time_this_period => stories.map { |story| story[:time_this_period] }.sum,
+      :time_by_user => user_times
     }
+  end
+
+  def calculate_totals
+    @totals = {}
+    %w(bug chore feature overhead).each do |type|
+      @totals[type] = totals_for_story_type(type)
+    end
   end
 
   def calculate_team_strength

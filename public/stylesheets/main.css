@@ -297,6 +297,6 @@ body.nagios #nagios-status {
   text-align: right;
 }
 
-#timereport tr.bugs td {
+#timereport tr.totals td {
   background-color: #C3D9FF;
 }
