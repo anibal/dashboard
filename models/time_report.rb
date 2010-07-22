@@ -1,4 +1,35 @@
 class TimeReport
+  class Total
+    def initialize(name, tasks)
+      @name = name
+      @tasks = tasks
+    end
+
+    def [](key)
+      case key
+      when :time_by_user
+        user_times = Hash.new { |h,k| h[k] = 0 }
+        @tasks.each do |task|
+          task[:time_by_user].each do |user_id, hours|
+            user_times[user_id] += hours if hours
+          end
+        end
+        user_times
+      when :name
+        @name
+      when :points
+        @tasks.map { |task| task[:points] || 0 }.sum
+      when :lifetime_hours
+        @tasks.map { |task| task[:lifetime_hours] }.sum
+      when :time_this_period
+        @tasks.map { |task| task[:time_this_period] }.sum
+      else
+        # Someone's an idiot
+        raise "Invalid key for Total#[]: #{key}"
+      end
+    end
+  end
+
   SLIMTIMER_TO_PIVOTAL_REGEX = /(\w:\w{3,4}) (\w+)(?: (\d+))$/
   WILDCARD = 'all'
 
@@ -102,41 +133,14 @@ private
     end
   end
 
-  def totals_for_story_type(type)
-    stories = @tasks.select { |task| task[:story_type] == type }
-
-    user_times = Hash.new { |h,k| h[k] = 0 }
-    stories.each do |story|
-      story[:time_by_user].each do |user_id, hours|
-        user_times[user_id] += hours if hours
-      end
-    end
-    { :name => type,
-      :points => stories.map { |story| story[:points] || 0 }.sum,
-      :lifetime_hours => stories.map { |story| story[:lifetime_hours] }.sum,
-      :time_this_period => stories.map { |story| story[:time_this_period] }.sum,
-      :time_by_user => user_times
-    }
-  end
-
   def calculate_totals
-    @subtotals = {}
-    %w(bug chore feature overhead).each do |type|
-      @subtotals[type] = totals_for_story_type(type)
-    end
-    user_totals = Hash.new { |h,k| h[k] = 0 }
-    @subtotals.each do |type, values|
-      values[:time_by_user].each do |user_id, hours|
-        user_totals[user_id] += hours if hours
-      end
-    end
-    @totals = {
-      :name => "Grand Total",
-      :points => @subtotals.map { |type, values| values[:points] }.sum,
-      :lifetime_hours => @subtotals.map { |type, values| values[:lifetime_hours] }.sum,
-      :time_this_period => @subtotals.map { |type, values| values[:time_this_period] }.sum,
-      :time_by_user => user_totals
-    }
+    @subtotals = []
+    @subtotals << Total.new('Bugs', @tasks.select { |t| t[:story_type] == 'bug' })
+    @subtotals << Total.new('Features', @tasks.select { |t| t[:story_type] == 'feature' })
+    @subtotals << Total.new('Chores', @tasks.select { |t| t[:story_type] == 'chore' })
+    @subtotals << Total.new('Overhead', @tasks.select { |t| t[:story_type] == 'overhead' })
+
+    @totals = Total.new('Grand Total', @subtotals)
   end
 
   def calculate_team_strength
