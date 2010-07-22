@@ -2,7 +2,7 @@ class TimeReport
   SLIMTIMER_TO_PIVOTAL_REGEX = /(\w:\w{3,4}) (\w+)(?: (\d+))$/
   WILDCARD = 'all'
 
-  attr_reader :tasks, :bug_summary, :users, :project, :period
+  attr_reader :tasks, :bug_summary, :users, :project, :period, :totals, :team_strength
 
   def initialize(period, project)
     @period = period
@@ -12,13 +12,16 @@ class TimeReport
     query_pivotal(period) unless @project.wildcard?
     decorate_special_case_tasks
     sort_tasks_by_pivotal_status
+    calculate_totals
+    calculate_team_strength
   end
 
   def project_name
     @project.wildcard? ? 'All projects' : @project.name
   end
 
-  private
+private
+
   def query_slimtimer(range)
     entries = TimeEntry.ending_in(range)
     @users = SlimtimerUser.all(:time_entries => entries, :order => [ :name.asc ])
@@ -118,5 +121,19 @@ class TimeReport
       # HACK use 'zzzzz' to force blanks to the end
       story_type_order == 0 ? (a[:status] || 'zzzzz') <=> (b[:status] || 'zzzzz') : story_type_order
     end
+  end
+
+  def calculate_totals
+    @totals = {
+      :points => 0,
+      #user
+      :time_this_period => 0,
+      :lifetime_hours => 0,
+      :hours_per_point => 0
+    }
+  end
+
+  def calculate_team_strength
+    @team_strength = '40%'
   end
 end

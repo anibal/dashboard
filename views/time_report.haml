@@ -42,3 +42,18 @@
             - if time = @time_report.bug_summary[:time_by_user][user.id]
               = time.to_hours
       %td.total.number= @time_report.bug_summary[:time_this_period].to_hours
+    %tr.totals
+      %td.name Totals
+      %td
+      %td
+      %td.number= @time_report.totals[:points]
+      %td
+      - @time_report.users.each do |user|
+        %td.number= @time_report.totals[user]
+      %td.number= @time_report.totals[:time_this_period]
+      %td.number= @time_report.totals[:lifetime_hours]
+      %td.number= @time_report.totals[:hours_per_point]
+
+%p
+  Team strength for the period
+  = @time_report.team_strength
