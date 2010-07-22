@@ -10,7 +10,7 @@ class TimeReport
 
     query_slimtimer(period)
     query_pivotal(period) unless @project.wildcard?
-    decorate_special_case_tasks
+    mark_unclassified_tasks_as_overhead
     sort_tasks_by_pivotal_status
     calculate_totals
     calculate_team_strength
@@ -99,17 +99,9 @@ private
     @tasks
   end
 
-  def decorate_special_case_tasks
+  def mark_unclassified_tasks_as_overhead
     @tasks.each do |task|
-      if task[:name] =~ /(meetings?|testing|deploying)$/
-        task[:story_type] = 'chore'
-      elsif task[:story_type].nil?
-        # Assume overhead if it doesn't yet have a story type, and isn't
-        # explicitly handled.
-        task[:story_type] = 'overhead'
-      else
-        # We don't care. -- M@
-      end
+      task[:story_type] ||= 'overhead'
     end
   end
 
