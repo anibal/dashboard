@@ -1,8 +1,9 @@
 class TimeReport
   class Total
-    def initialize(name, tasks)
+    def initialize(name, tasks, total_hours = nil)
       @name = name
       @tasks = tasks
+      @total_hours = total_hours
     end
 
     def [](key)
@@ -23,6 +24,10 @@ class TimeReport
         @tasks.map { |task| task[:lifetime_hours] }.sum
       when :time_this_period
         @tasks.map { |task| task[:time_this_period] }.sum
+      when :time_this_period_percent
+        if @total_hours
+          self[:time_this_period].to_f / @total_hours.to_f * 100.0
+        end
       else
         # Someone's an idiot
         raise "Invalid key for Total#[]: #{key}"
@@ -134,14 +139,14 @@ private
   end
 
   def calculate_totals
-    @subtotals = []
-    @subtotals << Total.new('Bugs', @tasks.select { |t| t[:story_type] == 'bug' })
-    @subtotals << Total.new('Delivered/Accepted Features', @tasks.select { |t| t[:story_type] == 'feature' && %w(delivered accepted).include?(t[:status]) })
-    @subtotals << Total.new('Undelivered Features', @tasks.select { |t| t[:story_type] == 'feature' && !%w(delivered accepted).include?(t[:status]) })
-    @subtotals << Total.new('Chores', @tasks.select { |t| t[:story_type] == 'chore' })
-    @subtotals << Total.new('Overhead', @tasks.select { |t| t[:story_type] == 'overhead' })
+    @totals = Total.new('Grand Total', @tasks)
 
-    @totals = Total.new('Grand Total', @subtotals)
+    @subtotals = []
+    @subtotals << Total.new('Bugs', @tasks.select { |t| t[:story_type] == 'bug' }, @totals[:time_this_period])
+    @subtotals << Total.new('Delivered/Accepted Features', @tasks.select { |t| t[:story_type] == 'feature' && %w(delivered accepted).include?(t[:status]) }, @totals[:time_this_period])
+    @subtotals << Total.new('Undelivered Features', @tasks.select { |t| t[:story_type] == 'feature' && !%w(delivered accepted).include?(t[:status]) }, @totals[:time_this_period])
+    @subtotals << Total.new('Chores', @tasks.select { |t| t[:story_type] == 'chore' }, @totals[:time_this_period])
+    @subtotals << Total.new('Overhead', @tasks.select { |t| t[:story_type] == 'overhead' }, @totals[:time_this_period])
   end
 
   def calculate_team_strength
