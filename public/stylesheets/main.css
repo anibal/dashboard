@@ -295,6 +295,7 @@ body.nagios #nagios-status {
 
 #timereport td.number {
   text-align: right;
+  white-space: nowrap;
 }
 
 #timereport tbody.totals td, #timereport tbody.subtotals td {
