@@ -2,7 +2,7 @@ class TimeReport
   SLIMTIMER_TO_PIVOTAL_REGEX = /(\w:\w{3,4}) (\w+)(?: (\d+))$/
   WILDCARD = 'all'
 
-  attr_reader :tasks, :bug_summary, :users, :project, :period, :totals, :team_strength
+  attr_reader :tasks, :bug_summary, :users, :project, :period, :subtotals, :totals, :team_strength
 
   def initialize(period, project)
     @period = period
@@ -106,8 +106,10 @@ private
     stories = @tasks.select { |task| task[:story_type] == type }
 
     user_times = Hash.new { |h,k| h[k] = 0 }
-    stories.map { |bug| bug[:time_by_user] }.each do |user_id, hours|
-      user_times[user_id] += hours if hours
+    stories.each do |story|
+      story[:time_by_user].each do |user_id, hours|
+        user_times[user_id] += hours if hours
+      end
     end
     { :name => type,
       :points => stories.map { |story| story[:points] || 0 }.sum,
@@ -118,10 +120,23 @@ private
   end
 
   def calculate_totals
-    @totals = {}
+    @subtotals = {}
     %w(bug chore feature overhead).each do |type|
-      @totals[type] = totals_for_story_type(type)
+      @subtotals[type] = totals_for_story_type(type)
     end
+    user_totals = Hash.new { |h,k| h[k] = 0 }
+    @subtotals.each do |type, values|
+      values[:time_by_user].each do |user_id, hours|
+        user_totals[user_id] += hours if hours
+      end
+    end
+    @totals = {
+      :name => "Grand Total",
+      :points => @subtotals.map { |type, values| values[:points] }.sum,
+      :lifetime_hours => @subtotals.map { |type, values| values[:lifetime_hours] }.sum,
+      :time_this_period => @subtotals.map { |type, values| values[:time_this_period] }.sum,
+      :time_by_user => user_totals
+    }
   end
 
   def calculate_team_strength
