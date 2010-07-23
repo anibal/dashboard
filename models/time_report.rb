@@ -115,7 +115,7 @@ class TimeReport
   SLIMTIMER_TO_PIVOTAL_REGEX = /(\w:\w{3,4}) (\w+)(?: (\d+))$/
   WILDCARD = 'all'
 
-  attr_reader :tasks, :bug_summary, :users, :project, :period, :subtotals, :totals, :team_strength
+  attr_reader :tasks, :users, :project, :period, :subtotals, :totals, :team_strength
 
   def initialize(period, project)
     @period = period
@@ -170,13 +170,6 @@ private
     end
 
     @tasks.sort! { |a,b| a[:name] <=> b[:name] }
-
-    @bug_summary = {
-      :name => "",
-      :lifetime_hours => 0,
-      :time_this_period => 0,
-      :time_by_user => {}
-    }
   end
 
   def query_pivotal(range)
