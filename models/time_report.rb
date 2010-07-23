@@ -55,6 +55,8 @@ class TimeReport
       case k
       when :name
         @name
+      when :story_type
+        story_type
       when :actual_points
         actual_points
       else
@@ -64,6 +66,10 @@ class TimeReport
 
     def []=(k,v)
       @attributes[k] = v
+    end
+
+    def story_type
+      @attributes[:story_type] || 'overhead'
     end
 
     def actual_points
@@ -141,7 +147,6 @@ class TimeReport
 
     query_slimtimer(period)
     query_pivotal(period) unless @project.wildcard?
-    mark_unclassified_tasks_as_overhead
     sort_tasks_by_pivotal_status
     calculate_totals
     calculate_team_strength
@@ -205,12 +210,6 @@ private
     end
 
     @tasks
-  end
-
-  def mark_unclassified_tasks_as_overhead
-    @tasks.each do |task|
-      task[:story_type] ||= 'overhead'
-    end
   end
 
   def sort_tasks_by_pivotal_status
