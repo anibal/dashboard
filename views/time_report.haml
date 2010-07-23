@@ -21,8 +21,18 @@
   %tbody
     - @time_report.rows.each do |row|
       %tr{ :class => row.classes }
-        - row.each do |value, *classes|
-          %td{ :class => classes.join(' ') }= value
+        %td=               row.formatted_value_for :name
+        %td=               row.formatted_value_for :pivotal_name
+        %td=               row.formatted_value_for :story_type
+        %td=               row.formatted_value_for :status
+        %td.points.number= row.formatted_value_for :points
+        %td.points.number= row.formatted_value_for :actual_points
+        %td.number=        row.formatted_value_for :time_this_period_percent
+        - @time_report.users.each do |user|
+          %td.number= row.formatted_value_for user.id
+        %td.number=        row.formatted_value_for :time_this_period
+        %td.number=        row.formatted_value_for :lifetime_hours
+        %td.number=        row.formatted_value_for :lifetime_hours_per_point
   %tbody.subtotals
     - @time_report.subtotals.each do |total|
       %tr

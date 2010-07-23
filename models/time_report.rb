@@ -9,31 +9,46 @@ class TimeReport
       @values.points_estimate_quality
     end
 
-    def each
-      yield @values[:name]
-      yield @values[:pivotal_name]
-      yield @values[:story_type]
-      yield @values[:status]
-      yield @values[:points], 'points', 'number'
-      if @values.blowout?
-        yield '&inf;', 'points'
-      else
-        yield @values[:actual_points], 'points', 'number'
+    def has_column?(name)
+      case name
+      when Symbol, String
+        !@values[name].nil?
+      when Numeric
+        @values[:time_by_user] && !@values[:time_by_user][name].nil?
       end
-      yield @values[:time_this_period_percent], 'number'
-      @user_ids.each do |id|
-        if @values[:time_by_user].respond_to?(:[]) && @values[:time_by_user][id]
-          yield @values[:time_by_user][id].to_hours, 'number'
-        else
-          yield nil
+    end
+
+    def value_for(column)
+      case column
+      when Symbol, String
+        @values[column]
+      when Numeric
+        @values[:time_by_user][column]
+      end
+    end
+
+    def formatted_value_for(column)
+      return nil unless has_column? column
+
+      value = value_for(column)
+
+      case column
+      when Numeric
+        value.to_hours
+      when :actual_points
+        if value == :blowout then "&inf;"
+        else value
         end
-      end
-      yield @values[:time_this_period].to_hours, 'number'
-      yield "%.1f" % @values[:lifetime_hours], 'number'
-      if @values[:lifetime_hours] && @values[:points] && @values[:points] > 0
-        yield %"%.1f" % (@values[:lifetime_hours] / @values[:points]), 'number'
+      when :time_this_period_percent
+        "%.0f %%" % value
+      when :time_this_period
+        value.to_hours
+      when :lifetime_hours
+        "%.1f" % value
+      when :lifetime_hours_per_point
+        "%.1f" % value
       else
-        yield nil
+        value
       end
     end
   end
@@ -98,6 +113,8 @@ class TimeReport
         story_type
       when :actual_points
         actual_points
+      when :lifetime_hours_per_point
+        lifetime_hours_per_point
       else
         @attributes[k]
       end
@@ -109,6 +126,12 @@ class TimeReport
 
     def story_type
       @attributes[:story_type] || 'overhead'
+    end
+
+    def lifetime_hours_per_point
+      if @attributes[:lifetime_hours] && @attributes[:points] && @attributes[:points] > 0
+        @attributes[:lifetime_hours] / @attributes[:points]
+      end
     end
 
     def actual_points
