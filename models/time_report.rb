@@ -13,8 +13,8 @@ class TimeReport
       yield @values[:name]
       yield @values[:pivotal_name]
       yield @values[:story_type]
-      yield @values[:points], 'points', 'number'
       yield @values[:status]
+      yield @values[:points], 'points', 'number'
       if @values.blowout?
         yield '&inf;', 'points'
       else

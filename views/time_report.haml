@@ -9,8 +9,8 @@
       %th Task
       %th Pivotal Name
       %th Story Type
-      %th Pivotal Points
       %th Pivotal Status
+      %th Estimated Points
       %th True Points
       %th % of Total Hours This Period
       - @time_report.users.each do |user|
@@ -29,8 +29,8 @@
         %td.name= total[:name]
         - 2.times do
           %td
-        %td.number= total[:points]
         %td
+        %td.number= total[:points]
         %td
         - if total[:time_this_period_percent]
           %td.number= "%.0f %%" % total[:time_this_period_percent]
@@ -48,8 +48,8 @@
       %td.name= @time_report.totals[:name]
       - 2.times do
         %td
-      %td.number= @time_report.totals[:points]
       %td
+      %td.number= @time_report.totals[:points]
       %td
       %td
       - @time_report.users.each do |user|
