@@ -298,15 +298,15 @@ body.nagios #nagios-status {
   white-space: nowrap;
 }
 
-#timereport tbody.totals td, #timereport tbody.subtotals td {
+#timereport tbody.total td, #timereport tbody.subtotal td {
   background-color: #D9FFFF;
 }
 
-#timereport tbody.subtotals tr:first-child td {
+#timereport tbody.subtotal tr:first-child td {
   border-top: 1px solid black;
 }
 
-#timereport tbody.totals tr:first-child td {
+#timereport tbody.total tr:first-child td {
   border-top: 3px double black;
   font-weight: bold;
 }

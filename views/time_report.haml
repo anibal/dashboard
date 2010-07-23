@@ -18,57 +18,22 @@
       %th Total Hours This Period
       %th Lifetime Hours
       %th Lifetime Hours / Point
-  %tbody
-    - @time_report.rows.each do |row|
-      %tr{ :class => row.classes }
-        %td=               row.formatted_value_for :name
-        %td=               row.formatted_value_for :pivotal_name
-        %td=               row.formatted_value_for :story_type
-        %td=               row.formatted_value_for :status
-        %td.points.number= row.formatted_value_for :points
-        %td.points.number= row.formatted_value_for :actual_points
-        %td.number=        row.formatted_value_for :time_this_period_percent
-        - @time_report.users.each do |user|
-          %td.number= row.formatted_value_for user.id
-        %td.number=        row.formatted_value_for :time_this_period
-        %td.number=        row.formatted_value_for :lifetime_hours
-        %td.number=        row.formatted_value_for :lifetime_hours_per_point
-  %tbody.subtotals
-    - @time_report.subtotals.each do |total|
-      %tr
-        %td.name= total[:name]
-        - 2.times do
-          %td
-        %td
-        %td.number= total[:points]
-        %td
-        - if total[:time_this_period_percent]
-          %td.number= "%.0f %%" % total[:time_this_period_percent]
-        - else
-          %td.number &mdash;
-        - @time_report.users.each do |user|
-          %td.number
-            - if time = total[:time_by_user][user.id]
-              = time.to_hours
-        %td.number= total[:time_this_period].to_hours
-        %td.number= "%.1f" % total[:lifetime_hours]
-        %td
-  %tbody.totals
-    %tr
-      %td.name= @time_report.totals[:name]
-      - 2.times do
-        %td
-      %td
-      %td.number= @time_report.totals[:points]
-      %td
-      %td
-      - @time_report.users.each do |user|
-        %td.number
-          - if time = @time_report.totals[:time_by_user][user.id]
-            = time.to_hours
-      %td.number= @time_report.totals[:time_this_period].to_hours
-      %td.number= "%.1f" % @time_report.totals[:lifetime_hours]
-      %td
+  - ['', 'subtotal', 'total'].each do |rowtype|
+    %tbody{:class => rowtype}
+      - @time_report.send(rowtype == "" ? "rows" : rowtype + "_rows").each do |row|
+        %tr{ :class => row.classes }
+          %td=               row.formatted_value_for :name
+          %td=               row.formatted_value_for :pivotal_name
+          %td=               row.formatted_value_for :story_type
+          %td=               row.formatted_value_for :status
+          %td.points.number= row.formatted_value_for :points
+          %td.points.number= row.formatted_value_for :actual_points
+          %td.number=        row.formatted_value_for :time_this_period_percent
+          - @time_report.users.each do |user|
+            %td.number= row.formatted_value_for user.id
+          %td.number=        row.formatted_value_for :time_this_period
+          %td.number=        row.formatted_value_for :lifetime_hours
+          %td.number=        row.formatted_value_for :lifetime_hours_per_point
 
 %p
   Team strength for the period

@@ -6,7 +6,7 @@ class TimeReport
     end
 
     def classes
-      @values.points_estimate_quality
+      @values.points_estimate_quality if @values.respond_to? :points_estimate_quality
     end
 
     def has_column?(name)
@@ -79,8 +79,7 @@ class TimeReport
           self[:time_this_period].to_f / @total_hours.to_f * 100.0
         end
       else
-        # Someone's an idiot
-        raise "Invalid key for Total#[]: #{key}"
+        nil
       end
     end
   end
@@ -201,7 +200,7 @@ class TimeReport
   SLIMTIMER_TO_PIVOTAL_REGEX = /(\w:\w{3,4}) (\w+)(?: (\d+))$/
   WILDCARD = 'all'
 
-  attr_reader :rows, :tasks, :users, :project, :period, :subtotals, :totals, :team_strength
+  attr_reader :rows, :users, :project, :period, :subtotal_rows, :total_rows, :team_strength
 
   def initialize(period, project)
     @period = period
@@ -215,6 +214,8 @@ class TimeReport
 
     user_ids = @users.map &:id
     @rows = @tasks.map { |t| Row.new(t, user_ids) }
+    @subtotal_rows = @subtotals.map { |t| Row.new(t, user_ids) }
+    @total_rows = [Row.new(@totals, user_ids)]
   end
 
   def project_name
