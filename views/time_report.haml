@@ -19,25 +19,10 @@
       %th Lifetime Hours
       %th Lifetime Hours / Point
   %tbody
-    - @time_report.tasks.each do |task|
-      %tr{ :class => task.points_estimate_quality }
-        %td.name= task[:name]
-        %td= task[:pivotal_name]
-        %td= task[:story_type]
-        %td.points.number= task[:points]
-        %td= task[:status]
-        - if task.blowout?
-          %td.points.blowout &infin;
-        - else
-          %td.points.number= task[:actual_points]
-        %td.number= task[:time_this_period_percent]
-        - @time_report.users.each do |user|
-          %td.number
-            - if time = task[:time_by_user][user.id]
-              = time.to_hours
-        %td.total.number= task[:time_this_period].to_hours
-        %td.number= "%.1f" % task[:lifetime_hours]
-        %td.number= "%.1f" % (task[:lifetime_hours] / task[:points]) rescue ''
+    - @time_report.rows.each do |row|
+      %tr{ :class => row.classes }
+        - row.each do |value, *classes|
+          %td{ :class => classes.join(' ') }= value
   %tbody.subtotals
     - @time_report.subtotals.each do |total|
       %tr

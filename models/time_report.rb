@@ -1,4 +1,43 @@
 class TimeReport
+  class Row
+    def initialize(values, user_ids)
+      @values = values
+      @user_ids = user_ids
+    end
+
+    def classes
+      @values.points_estimate_quality
+    end
+
+    def each
+      yield @values[:name]
+      yield @values[:pivotal_name]
+      yield @values[:story_type]
+      yield @values[:points], 'points', 'number'
+      yield @values[:status]
+      if @values.blowout?
+        yield '&inf;', 'points'
+      else
+        yield @values[:actual_points], 'points', 'number'
+      end
+      yield @values[:time_this_period_percent], 'number'
+      @user_ids.each do |id|
+        if @values[:time_by_user].respond_to?(:[]) && @values[:time_by_user][id]
+          yield @values[:time_by_user][id].to_hours, 'number'
+        else
+          yield nil
+        end
+      end
+      yield @values[:time_this_period].to_hours, 'number'
+      yield "%.1f" % @values[:lifetime_hours], 'number'
+      if @values[:lifetime_hours] && @values[:points] && @values[:points] > 0
+        yield %"%.1f" % (@values[:lifetime_hours] / @values[:points]), 'number'
+      else
+        yield nil
+      end
+    end
+  end
+
   class Total
     def initialize(name, tasks, total_hours = nil)
       @name = name
@@ -139,7 +178,7 @@ class TimeReport
   SLIMTIMER_TO_PIVOTAL_REGEX = /(\w:\w{3,4}) (\w+)(?: (\d+))$/
   WILDCARD = 'all'
 
-  attr_reader :tasks, :users, :project, :period, :subtotals, :totals, :team_strength
+  attr_reader :rows, :tasks, :users, :project, :period, :subtotals, :totals, :team_strength
 
   def initialize(period, project)
     @period = period
@@ -150,6 +189,9 @@ class TimeReport
     sort_tasks_by_pivotal_status
     calculate_totals
     calculate_team_strength
+
+    user_ids = @users.map &:id
+    @rows = @tasks.map { |t| Row.new(t, user_ids) }
   end
 
   def project_name
