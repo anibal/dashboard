@@ -36,8 +36,8 @@
             - if time = task[:time_by_user][user.id]
               = time.to_hours
         %td.total.number= task[:time_this_period].to_hours
-        %td.number= "%.2f" % task[:lifetime_hours]
-        %td.number= "%.2f" % (task[:lifetime_hours] / task[:points]) rescue ''
+        %td.number= "%.1f" % task[:lifetime_hours]
+        %td.number= "%.1f" % (task[:lifetime_hours] / task[:points]) rescue ''
   %tbody.subtotals
     - @time_report.subtotals.each do |total|
       %tr
@@ -47,13 +47,16 @@
         %td.number= total[:points]
         %td
         %td
-        %td.number= "%.2f %%" % total[:time_this_period_percent]
+        - if total[:time_this_period_percent]
+          %td.number= "%.0f %%" % total[:time_this_period_percent]
+        - else
+          %td.number &mdash;
         - @time_report.users.each do |user|
           %td.number
             - if time = total[:time_by_user][user.id]
               = time.to_hours
         %td.number= total[:time_this_period].to_hours
-        %td.number= "%.2f" % total[:lifetime_hours]
+        %td.number= "%.1f" % total[:lifetime_hours]
         %td
   %tbody.totals
     %tr
@@ -69,7 +72,7 @@
           - if time = @time_report.totals[:time_by_user][user.id]
             = time.to_hours
       %td.number= @time_report.totals[:time_this_period].to_hours
-      %td.number= "%.2f" % @time_report.totals[:lifetime_hours]
+      %td.number= "%.1f" % @time_report.totals[:lifetime_hours]
       %td
 
 %p
