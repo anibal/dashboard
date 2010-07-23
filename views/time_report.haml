@@ -11,6 +11,7 @@
       %th Story Type
       %th Pivotal Points
       %th Pivotal Status
+      %th True Points
       %th % of Total Hours This Period
       - @time_report.users.each do |user|
         %th= user.name
@@ -25,6 +26,10 @@
         %td= task[:story_type]
         %td.number= task[:points]
         %td= task[:status]
+        - if task.blowout?
+          %td.blowout &infin;
+        - else
+          %td.number= task[:actual_points]
         %td.number= task[:time_this_period_percent]
         - @time_report.users.each do |user|
           %td.number
@@ -41,6 +46,7 @@
           %td
         %td.number= total[:points]
         %td
+        %td
         %td.number= "%.2f %%" % total[:time_this_period_percent]
         - @time_report.users.each do |user|
           %td.number
@@ -55,6 +61,7 @@
       - 2.times do
         %td
       %td.number= @time_report.totals[:points]
+      %td
       %td
       %td
       - @time_report.users.each do |user|

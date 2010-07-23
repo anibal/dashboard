@@ -32,14 +32,21 @@ class TimeReport
   end
 
   class Task
+    TARGET_HOURS_PER_POINT = 5.0
+    POINTS_SCALE = [1,2,3,5,8,13]
+    FUDGE_FACTOR = 0.1
+
     def initialize(name, attributes = {})
       @name = name
       @attributes = attributes
     end
 
     def [](k)
-      if k == :name
+      case k
+      when :name
         @name
+      when :actual_points
+        actual_points
       else
         @attributes[k]
       end
@@ -48,6 +55,20 @@ class TimeReport
     def []=(k,v)
       @attributes[k] = v
     end
+
+    def actual_points
+      return nil unless self[:story_type] == 'feature' && %w(delivered accepted).include?(self[:status])
+      hours = self[:lifetime_hours] || 0
+      points = hours / TARGET_HOURS_PER_POINT
+      snap_to_points_scale(points)
+    end
+
+    def snap_to_points_scale(points)
+      snapped = POINTS_SCALE.select { |v| v * (1 + FUDGE_FACTOR) > points }.min
+      snapped || :blowout
+    end
+
+    def blowout?; actual_points == :blowout; end
   end
 
   class UserTimeList
