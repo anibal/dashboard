@@ -34,7 +34,7 @@ class TimeReport
   class Task
     TARGET_HOURS_PER_POINT = 5.0
     POINTS_SCALE = [1,2,3,5,8,13]
-    FUDGE_FACTOR = 0.1
+    FUDGE_FACTOR = 0.2
 
     def initialize(name, attributes = {})
       @name = name
