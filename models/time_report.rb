@@ -35,6 +35,25 @@ class TimeReport
     end
   end
 
+  class Task
+    def initialize(name, attributes = {})
+      @name = name
+      @attributes = attributes
+    end
+
+    def [](k)
+      if k == :name
+        @name
+      else
+        @attributes[k]
+      end
+    end
+
+    def []=(k,v)
+      @attributes[k] = v
+    end
+  end
+
   SLIMTIMER_TO_PIVOTAL_REGEX = /(\w:\w{3,4}) (\w+)(?: (\d+))$/
   WILDCARD = 'all'
 
@@ -72,7 +91,6 @@ private
 
     @tasks = @tasks.group_by(&:name).map do |name, tasks|
       values = {
-        :name => name,
         :lifetime_hours => 0,
         :time_this_period => 0,
         :time_by_user => Hash.new { |h,k| h[k] = 0 }
@@ -85,7 +103,7 @@ private
           values[:time_by_user][user_id] += time
         end
       end
-      values
+      Task.new(name, values)
     end
 
     lifetime_hours_by_task_name = Hash[*(SlimtimerTask.all.aggregate(:hours.sum, :name).map(&:reverse).flatten)]
