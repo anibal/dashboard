@@ -9,13 +9,9 @@ class TimeReport
     def [](key)
       case key
       when :time_by_user
-        user_times = Hash.new { |h,k| h[k] = 0 }
-        @tasks.each do |task|
-          task[:time_by_user].each do |user_id, hours|
-            user_times[user_id] += hours if hours
-          end
-        end
-        user_times
+        @tasks.map { |task| task[:time_by_user] }.inject(UserTimeList.new) { |sum, val|
+          sum ? sum + val : val
+        }
       when :name
         @name
       when :points
@@ -51,6 +47,38 @@ class TimeReport
 
     def []=(k,v)
       @attributes[k] = v
+    end
+  end
+
+  class UserTimeList
+    include Enumerable
+
+    def initialize(time_by_user = {})
+      @time_by_user = time_by_user
+    end
+
+    def [](user_id)
+      @time_by_user[user_id] || 0
+    end
+
+    def []=(user_id, time)
+      @time_by_user[user_id] = time
+    end
+
+    def user_ids
+      @time_by_user.keys
+    end
+
+    def each(&block)
+      @time_by_user.each &block
+    end
+
+    def +(other)
+      list = UserTimeList.new
+      (user_ids + other.user_ids).uniq.each do |user_id|
+        list[user_id] = self[user_id] + other[user_id]
+      end
+      list
     end
   end
 
@@ -93,7 +121,7 @@ private
       values = {
         :lifetime_hours => 0,
         :time_this_period => 0,
-        :time_by_user => Hash.new { |h,k| h[k] = 0 }
+        :time_by_user => UserTimeList.new
       }
       tasks.each do |task|
         time_entries = task.time_entries.ending_in(range)
