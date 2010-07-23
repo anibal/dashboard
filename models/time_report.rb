@@ -63,6 +63,15 @@ class TimeReport
       snap_to_points_scale(points)
     end
 
+    def points_estimate_quality
+      return '' if actual_points.nil?
+      if    blowout?                       then 'blowout'
+      elsif self[:points] == actual_points then 'accurate'
+      elsif self[:points] > actual_points  then 'overestimate'
+      elsif self[:points] < actual_points  then 'underestimate'
+      end
+    end
+
     def snap_to_points_scale(points)
       snapped = POINTS_SCALE.select { |v| v * (1 + FUDGE_FACTOR) > points }.min
       snapped || :blowout

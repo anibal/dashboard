@@ -20,16 +20,16 @@
       %th Lifetime Hours / Point
   %tbody
     - @time_report.tasks.each do |task|
-      %tr
+      %tr{ :class => task.points_estimate_quality }
         %td.name= task[:name]
         %td= task[:pivotal_name]
         %td= task[:story_type]
-        %td.number= task[:points]
+        %td.points.number= task[:points]
         %td= task[:status]
         - if task.blowout?
-          %td.blowout &infin;
+          %td.points.blowout &infin;
         - else
-          %td.number= task[:actual_points]
+          %td.points.number= task[:actual_points]
         %td.number= task[:time_this_period_percent]
         - @time_report.users.each do |user|
           %td.number

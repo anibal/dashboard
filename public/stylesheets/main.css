@@ -310,3 +310,13 @@ body.nagios #nagios-status {
   border-top: 3px double black;
   font-weight: bold;
 }
+
+#timereport tr.accurate td.points {
+  background-color: #ccffcc;
+}
+#timereport tr.underestimate td.points {
+  background-color: #ffcccc;
+}
+#timereport tr.overestimate td.points {
+  background-color: #ccccff;
+}
