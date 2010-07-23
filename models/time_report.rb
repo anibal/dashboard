@@ -208,14 +208,17 @@ private
   end
 
   def calculate_totals
+    chores = Total.new('Chores', @tasks.select { |t| t[:story_type] == 'chore' })
     @totals = Total.new('Grand Total', @tasks)
 
+    total_hours = @totals[:time_this_period] - chores[:time_this_period]
+
     @subtotals = []
-    @subtotals << Total.new('Bugs', @tasks.select { |t| t[:story_type] == 'bug' }, @totals[:time_this_period])
-    @subtotals << Total.new('Delivered/Accepted Features', @tasks.select { |t| t[:story_type] == 'feature' && %w(delivered accepted).include?(t[:status]) }, @totals[:time_this_period])
-    @subtotals << Total.new('Undelivered Features', @tasks.select { |t| t[:story_type] == 'feature' && !%w(delivered accepted).include?(t[:status]) }, @totals[:time_this_period])
-    @subtotals << Total.new('Chores', @tasks.select { |t| t[:story_type] == 'chore' }, @totals[:time_this_period])
-    @subtotals << Total.new('Overhead', @tasks.select { |t| t[:story_type] == 'overhead' }, @totals[:time_this_period])
+    @subtotals << Total.new('Bugs', @tasks.select { |t| t[:story_type] == 'bug' }, total_hours)
+    @subtotals << Total.new('Delivered/Accepted Features', @tasks.select { |t| t[:story_type] == 'feature' && %w(delivered accepted).include?(t[:status]) }, total_hours)
+    @subtotals << Total.new('Undelivered Features', @tasks.select { |t| t[:story_type] == 'feature' && !%w(delivered accepted).include?(t[:status]) }, total_hours)
+    @subtotals << Total.new('Overhead', @tasks.select { |t| t[:story_type] == 'overhead' }, total_hours)
+    @subtotals << chores
   end
 
   def calculate_team_strength
