@@ -36,9 +36,19 @@ class TimeReport
     POINTS_SCALE = [1,2,3,5,8,13]
     FUDGE_FACTOR = 0.2
 
+    include Comparable
+
     def initialize(name, attributes = {})
       @name = name
       @attributes = attributes
+    end
+
+    def <=>(other)
+      # First order by story type
+      story_type_order = self[:story_type] <=> other[:story_type]
+      # ... then order by status if the story types match
+      # HACK use 'zzzzz' to force blanks to the end
+      story_type_order == 0 ? (self[:status] || 'zzzzz') <=> (other[:status] || 'zzzzz') : story_type_order
     end
 
     def [](k)
@@ -168,8 +178,6 @@ private
     @tasks.each do |t|
       t[:lifetime_hours] = lifetime_hours_by_task_name[t[:name]]
     end
-
-    @tasks.sort! { |a,b| a[:name] <=> b[:name] }
   end
 
   def query_pivotal(range)
@@ -198,13 +206,7 @@ private
   end
 
   def sort_tasks_by_pivotal_status
-    @tasks.sort! do |a,b|
-      # First order by story type
-      story_type_order = a[:story_type] <=> b[:story_type]
-      # ... then order by status if the story types match
-      # HACK use 'zzzzz' to force blanks to the end
-      story_type_order == 0 ? (a[:status] || 'zzzzz') <=> (b[:status] || 'zzzzz') : story_type_order
-    end
+    @tasks.sort!
   end
 
   def calculate_totals
