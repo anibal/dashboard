@@ -88,6 +88,14 @@ class TimeReport
     end
 
     def blowout?; actual_points == :blowout; end
+
+    def bug?;      self[:story_type] == 'bug'; end
+    def chore?;    self[:story_type] == 'chore'; end
+    def feature?;  self[:story_type] == 'feature'; end
+    def overhead?; self[:story_type] == 'overhead'; end
+
+    def delivered?; feature? && %w(delivered accepted).include?(self[:status]); end
+    def undelivered?; !delivered?; end
   end
 
   class UserTimeList
@@ -216,10 +224,10 @@ private
     total_hours = @totals[:time_this_period] - chores[:time_this_period]
 
     @subtotals = []
-    @subtotals << Total.new('Bugs', @tasks.select { |t| t[:story_type] == 'bug' }, total_hours)
-    @subtotals << Total.new('Delivered/Accepted Features', @tasks.select { |t| t[:story_type] == 'feature' && %w(delivered accepted).include?(t[:status]) }, total_hours)
-    @subtotals << Total.new('Undelivered Features', @tasks.select { |t| t[:story_type] == 'feature' && !%w(delivered accepted).include?(t[:status]) }, total_hours)
-    @subtotals << Total.new('Overhead', @tasks.select { |t| t[:story_type] == 'overhead' }, total_hours)
+    @subtotals << Total.new('Bugs', @tasks.select { |t| t.bug? }, total_hours)
+    @subtotals << Total.new('Delivered/Accepted Features', @tasks.select { |t| t.feature? && t.delivered? }, total_hours)
+    @subtotals << Total.new('Undelivered Features', @tasks.select { |t| t.feature? && t.undelivered? }, total_hours)
+    @subtotals << Total.new('Overhead', @tasks.select { |t| t.overhead? }, total_hours)
     @subtotals << chores
   end
 
