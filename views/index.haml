@@ -18,12 +18,7 @@
             .attribute.label Av.P
             .attribute= "#{attributes[:pivotal][:average]}"
             .attribute.separator= "|"
-            .attribute.label Av.h
-            .attribute= "#{attributes[:slimtimer][:average_hours]}"
-            .attribute.separator= "|"
-            .attribute.label h/P
-            .attribute= "%.1f" % (attributes[:slimtimer][:hours].to_f / attributes[:pivotal][:points])
-
+            .attribute.stats.right= haml :stats, :locals => { :stats => attributes[:activity] }, :layout => false
   #second.column
     %h1 Systems
     = haml :nagios_status, :layout => false

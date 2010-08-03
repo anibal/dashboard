@@ -1,0 +1,7 @@
+- max = stats.max
+
+%table
+  %tr
+    - stats.each do |val|
+      %td
+        .bar{ :style => "height: #{height_for(val, max)}px;"}

@@ -1,7 +1,7 @@
 %w[date rubygems sinatra sinatra/content_for haml dm-core dm-aggregates open-uri hpricot json librmpd yahoo-weather httparty].each { |lib| require lib }
 %w[ext/fixnum ext/array mpd_proxy].each { |lib| require "lib/#{lib}" }
 require 'config'
-%w[ci pivotal slimtimer nagios].each { |lib| require "lib/#{lib}" }
+%w[ci pivotal slimtimer nagios stats].each { |lib| require "lib/#{lib}" }
 %w[project slimtimer_task slimtimer_user time_entry time_report].each { |model| require "models/#{model}" }
 
 # -----------------------------------------------------------------------------------
@@ -22,6 +22,10 @@ helpers do
     str << "?start=#{encode_special_time(start)}"
     str << "&end=#{encode_special_time(finish)}"
   end
+
+  def height_for(val, max)
+    [(20 * (val.to_f / max)).to_i, 1].max
+  end
 end
 
 
@@ -36,8 +40,8 @@ get "/" do
 
   @projects = PROJECTS
   @projects.each do |name, attributes|
-    iteration_dates = Pivotal.status_for(attributes[:pivotal])
-    Slimtimer.status_for attributes[:slimtimer], iteration_dates
+    Pivotal.status_for(attributes[:pivotal])
+    attributes[:activity] = Stats.status_for(name)
   end
 
   haml :index
