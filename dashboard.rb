@@ -1,7 +1,7 @@
 %w[date rubygems sinatra sinatra/content_for haml dm-core dm-aggregates open-uri hpricot json librmpd yahoo-weather httparty].each { |lib| require lib }
 %w[ext/fixnum ext/array mpd_proxy].each { |lib| require "lib/#{lib}" }
 require 'config'
-%w[ci pivotal slimtimer nagios stats].each { |lib| require "lib/#{lib}" }
+%w[ci pivotal nagios stats].each { |lib| require "lib/#{lib}" }
 %w[project slimtimer_task slimtimer_user time_entry time_report].each { |model| require "models/#{model}" }
 
 # -----------------------------------------------------------------------------------
