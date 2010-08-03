@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require File.expand_path(File.join(File.dirname(__FILE__), '..', 'dashboard'))
+require 'fileutils'
+
+shared = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', '..', 'shared'))
+
+Project.all.each do |project|
+  path = File.join(shared, 'projects', project.id)
+  next unless File.exist?(path)
+
+  puts "Fetching stats for #{project.id}"
+  `#{File.join(shared, "gitstats", "gitstats")} #{path} #{File.join(path, "stats")}`
+
+  FileUtils.cp File.join(path, "stats", "activity.html"), File.join(shared, "stats", "#{project.id}.html")
+end
