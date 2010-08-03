@@ -48,7 +48,7 @@ class Pivotal
       [{
         :points  => [points, 1].max,
         :average => (points / 4.0).round
-      }, doc["iterations"].collect { |i| [i["start"], i["finish"]] }]
+      }, doc["iterations"].collect { |i| [i["start"].getlocal, i["finish"].getlocal] }]
     rescue NoMethodError
       [{
         :points => 1,
