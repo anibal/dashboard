@@ -23,6 +23,7 @@ set :user, "www-data"
 set :engine, "passenger"
 
 after "deploy:update_code", "deploy:update_app_config"
+after "deploy:symlink",     "assets:symlink_shared_dirs"
 
 namespace :deploy do
   task :update_app_config do
