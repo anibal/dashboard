@@ -9,8 +9,8 @@ body.dashboard {
   overflow: hidden;
 }
 #wrap {
-  width: 960px;
-  height: 540px;
+  width: 926px;
+  height: 512px;
 }
 
 /* content
@@ -20,9 +20,9 @@ body.dashboard {
 }
 #content .column {
   float: left;
-  height: 496px;
-  margin: 0 5px;
-  width: 310px !important;
+  height: 487px;
+  margin: 0;
+  width: 305px !important;
 }
 h1 {
   text-align: center;
