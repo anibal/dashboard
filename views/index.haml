@@ -18,7 +18,7 @@
             .attribute.label Av.P
             .attribute= "#{attributes[:pivotal][:average]}"
             .attribute.separator= "|"
-            .attribute.stats.right= haml :stats, :locals => { :stats => attributes[:activity] }, :layout => false
+            .attribute.stats.right= haml :stats, :locals => { :stats => attributes[:activity], :max => max_activity_across_projects(@projects) }, :layout => false
   #second.column
     %h1 Systems
     = haml :nagios_status, :layout => false

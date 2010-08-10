@@ -23,6 +23,10 @@ helpers do
     str << "&end=#{encode_special_time(finish)}"
   end
 
+  def max_activity_across_projects(projects)
+    projects.map { |k, v| v[:activity] }.inject([]) { |all, values| all + values }.max
+  end
+
   def height_for(val, max)
     [(20 * (val.to_f / max)).to_i, 1].max
   end
