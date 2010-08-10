@@ -232,7 +232,7 @@ private
       SlimtimerTask.all(:time_entries => entries, :completed => false)
     else
       @project.slimtimer[:ids].
-        map { |id| SlimtimerTask.all(:time_entries => entries, :name.like => "%:#{id} %") }.
+        map { |id| SlimtimerTask.all(:time_entries => entries, :name.like => "%:#{id}%") }.
         inject { |set, results| set | results }
     end
 
