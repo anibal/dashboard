@@ -86,6 +86,7 @@ class TimeReport
 
   class Task
     TARGET_HOURS_PER_POINT = 5.0
+    TARGET_HOURS_PER_POINT_ON_FEATURES = 4.0
     POINTS_SCALE = [1,2,3,5,8,13]
     FUDGE_FACTOR = 0.2
 
@@ -136,7 +137,7 @@ class TimeReport
     def actual_points
       return nil unless self[:story_type] == 'feature' && %w(delivered accepted).include?(self[:status])
       hours = self[:lifetime_hours] || 0
-      points = hours / TARGET_HOURS_PER_POINT
+      points = hours / TARGET_HOURS_PER_POINT_ON_FEATURES
       snap_to_points_scale(points)
     end
 
@@ -197,10 +198,11 @@ class TimeReport
     end
   end
 
+  NOMINAL_FULL_TEAM_SECONDS_PER_WEEK = 3600 * 6 * 4 * 4 # six hrs/day, four days, four dudes
   SLIMTIMER_TO_PIVOTAL_REGEX = /(\w:\w{3,4}) (\w+)(?: (\d+))$/
   WILDCARD = 'all'
 
-  attr_reader :rows, :users, :project, :period, :subtotal_rows, :total_rows, :team_strength
+  attr_reader :rows, :users, :project, :period, :subtotal_rows, :total_rows
 
   def initialize(period, project)
     @period = period
@@ -210,7 +212,6 @@ class TimeReport
     query_pivotal(period) unless @project.wildcard?
     sort_tasks_by_pivotal_status
     calculate_totals
-    calculate_team_strength
 
     user_ids = @users.map &:id
     @rows = @tasks.map { |t| Row.new(t, user_ids) }
@@ -222,15 +223,41 @@ class TimeReport
     @project.wildcard? ? 'All projects' : @project.name
   end
 
+  def seconds_per_point_this_period
+    if delivered_total[:points] == 0
+      1.0 / 0
+    else
+      total_total[:time_this_period] / delivered_total[:points]
+    end
+  end
+
+  def period_duration(unit = :seconds)
+    seconds = period.end - period.begin
+    case unit
+    when :seconds
+      seconds
+    when :weeks
+      seconds / 3600 / 24 / 7
+    else
+      raise "I was looking for :seconds or :weeks"
+    end
+  end
+
+  def team_strength
+    100 * total_total[:time_this_period] / (NOMINAL_FULL_TEAM_SECONDS_PER_WEEK *
+                                            period_duration(:weeks))
+  end
+
+  # totals
   def delivered_total
     @subtotals.find {|s| s[:name] == "Delivered/Accepted Features" }
   end
+
   def total_total
     @totals   #.find {|t| t[:name] == "Grand Total" }
   end
-  def seconds_per_point_this_period
-    total_total[:time_this_period] / delivered_total[:points]
-  end
+
+
 
 private
 
@@ -304,9 +331,5 @@ private
     @subtotals << Total.new('Undelivered Features', @tasks.select { |t| t.feature? && t.undelivered? }, total_hours)
     @subtotals << Total.new('Overhead', @tasks.select { |t| t.overhead? }, total_hours)
     @subtotals << chores
-  end
-
-  def calculate_team_strength
-    @team_strength = 'lorem%'
   end
 end

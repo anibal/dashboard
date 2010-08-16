@@ -36,8 +36,14 @@
           %td.number=        row.formatted_value_for :lifetime_hours_per_point
 
 %p
-  Team strength for the period
-  = @time_report.team_strength
-%p
-  Total hours per point this period
+  Team strength for the (
+  = "%d" % @time_report.period_duration(:weeks)
+  week ) sprint:
+  = "%d" % @time_report.team_strength
+  \% &nbsp; <strong>|</strong> &nbsp;
+  Total hours per point this period:
   = "%.1f" % (@time_report.seconds_per_point_this_period / 3600.0)
+  &nbsp;( target
+  = "%.1f" % TimeReport::Task::TARGET_HOURS_PER_POINT
+  )
+%p
