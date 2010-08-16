@@ -76,6 +76,7 @@ put "/:project_id/iterations/:iteration_id" do |project_id, iteration_id|
 end
 
 get "/reports" do
+  @body_class = "reports"
   @projects = Project.all
   haml :reports
 end
