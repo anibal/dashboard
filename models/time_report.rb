@@ -222,6 +222,16 @@ class TimeReport
     @project.wildcard? ? 'All projects' : @project.name
   end
 
+  def delivered_total
+    @subtotals.find {|s| s[:name] == "Delivered/Accepted Features" }
+  end
+  def total_total
+    @totals   #.find {|t| t[:name] == "Grand Total" }
+  end
+  def seconds_per_point_this_period
+    total_total[:time_this_period] / delivered_total[:points]
+  end
+
 private
 
   def query_slimtimer(range)
@@ -297,6 +307,6 @@ private
   end
 
   def calculate_team_strength
-    @team_strength = '40%'
+    @team_strength = 'lorem%'
   end
 end

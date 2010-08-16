@@ -38,3 +38,6 @@
 %p
   Team strength for the period
   = @time_report.team_strength
+%p
+  Total hours per point this period
+  = "%.1f" % (@time_report.seconds_per_point_this_period / 3600.0)
