@@ -3,7 +3,7 @@
 %w[ ext/fixnum ext/array mpd_proxy ].each { |lib| require "lib/#{lib}" }
 require 'config'
 %w[ ci pivotal nagios stats].each { |lib| require "lib/#{lib}" }
-%w[ project slimtimer_task slimtimer_user time_entry time_report
+%w[ project slimtimer_task slimtimer_user time_entry time_report story
   ].each { |model| require "models/#{model}" }
 
 # -----------------------------------------------------------------------------------
@@ -89,4 +89,12 @@ get "/time_reports/:project" do |project_id|
   @time_report = TimeReport.new(s..e, Project.find(project_id))
   @enable_blueprint = true
   haml :time_report
+end
+
+post "/update_story" do
+  story = Story.first_or_create('id' => params['id'])
+  story.attributes = { 'billed' => false }.merge(params['story'] || {})
+  story.save
+
+  status 200
 end
