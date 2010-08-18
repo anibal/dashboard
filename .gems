@@ -4,9 +4,11 @@ sinatra-content-for
 datamapper
 data_objects
 do_mysql
+dm-mysql-adapter
 haml
 hpricot
 httparty
 json
 librmpd
 yahoo-weather
+# thin
