@@ -1,4 +1,6 @@
 # TODO: make this executable
+
+# Used by the app
 sinatra
 sinatra-content-for
 datamapper
@@ -11,4 +13,8 @@ httparty
 json
 librmpd
 yahoo-weather
-# thin
+
+# Used in development/running
+#thin
+#capistrano
+#capistrano-ext
