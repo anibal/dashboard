@@ -301,11 +301,14 @@ private
     @tasks.each do |t|
       if t[:name] =~ SLIMTIMER_TO_PIVOTAL_REGEX
         begin
-          story = @project.pivotal_story($3)
-          t[:points] = story['estimate']
-          t[:story_type] = story['story_type']
-          t[:status] = story['current_state']
-          t[:pivotal_name] = story['name']
+          pivotal_story = @project.pivotal_story($3)
+          story = Story.first_or_create(:id => pivotal_story["id"])
+
+          t[:points] = pivotal_story['estimate']
+          t[:story_type] = pivotal_story['story_type']
+          t[:status] = pivotal_story['current_state']
+          t[:pivotal_name] = pivotal_story['name']
+          t[:pivotal_story] = story
         rescue Exception => e
           p e
         end

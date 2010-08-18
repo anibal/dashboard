@@ -1,3 +1,6 @@
+- content_for :head do
+  %script{ :src => "/javascripts/report.js", :type => "text/javascript" }
+
 %table#timereport
   %caption
     = "#{@time_report.project_name}:"
@@ -18,6 +21,7 @@
       %th Total Hours This Period
       %th Lifetime Hours
       %th Lifetime Hours / Point
+      %th Billed
   - ['', 'subtotal', 'total'].each do |rowtype|
     %tbody{:class => rowtype}
       - @time_report.send(rowtype == "" ? "rows" : rowtype + "_rows").each do |row|
@@ -34,6 +38,11 @@
           %td.number=        row.formatted_value_for :time_this_period
           %td.number=        row.formatted_value_for :lifetime_hours
           %td.number=        row.formatted_value_for :lifetime_hours_per_point
+          %td
+            - if story = row.value_for(:pivotal_story)
+              %form{:action => "/update_story"}
+                %input{:type => 'hidden', :name => "id", :value => story.id}
+                %input.toggle-billed{:type => 'checkbox', :name => "story[billed]", :value => 1, :checked => (story.billed ? 'checked' : nil)}
 
 %p
   Team strength for the (
