@@ -8,6 +8,9 @@ body {
 body.dashboard {
   overflow: hidden;
 }
+body.reports {
+  padding: 1em;
+}
 #wrap {
   width: 926px;
   height: 512px;

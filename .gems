@@ -1,11 +1,20 @@
 # TODO: make this executable
+
+# Used by the app
 sinatra
 sinatra-content-for
-haml
 datamapper
+data_objects
+do_mysql
+dm-mysql-adapter
+haml
 hpricot
+httparty
 json
 librmpd
 yahoo-weather
-data_objects
-do_mysql
+
+# Used in development/running
+#thin
+#capistrano
+#capistrano-ext

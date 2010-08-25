@@ -1,8 +1,10 @@
-%w[date rubygems sinatra sinatra/content_for haml dm-core dm-aggregates open-uri hpricot json librmpd yahoo-weather httparty].each { |lib| require lib }
-%w[ext/fixnum ext/array mpd_proxy].each { |lib| require "lib/#{lib}" }
+%w[ date rubygems sinatra sinatra/content_for haml dm-core dm-aggregates
+    open-uri hpricot json librmpd yahoo-weather httparty ].each { |lib| require lib }
+%w[ ext/fixnum ext/array mpd_proxy ].each { |lib| require "lib/#{lib}" }
 require 'config'
-%w[ci pivotal nagios stats].each { |lib| require "lib/#{lib}" }
-%w[project slimtimer_task slimtimer_user time_entry time_report].each { |model| require "models/#{model}" }
+%w[ ci pivotal nagios stats].each { |lib| require "lib/#{lib}" }
+%w[ project slimtimer_task slimtimer_user time_entry time_report story
+  ].each { |model| require "models/#{model}" }
 
 # -----------------------------------------------------------------------------------
 # Helpers
@@ -76,6 +78,7 @@ put "/:project_id/iterations/:iteration_id" do |project_id, iteration_id|
 end
 
 get "/reports" do
+  @body_class = "reports"
   @projects = Project.all
   haml :reports
 end
@@ -86,4 +89,12 @@ get "/time_reports/:project" do |project_id|
   @time_report = TimeReport.new(s..e, Project.find(project_id))
   @enable_blueprint = true
   haml :time_report
+end
+
+post "/update_story" do
+  story = Story.first_or_create('id' => params['id'])
+  story.attributes = { 'billed' => false }.merge(params['story'] || {})
+  story.save
+
+  status 200
 end

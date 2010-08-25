@@ -13,7 +13,7 @@ configure :development do
       :name => "Project 1",
       :ci => { },
       :pivotal => {
-        :id => nil
+        :id => "an integer"
       },
       :slimtimer  => {
         :ids => ["tri"]
@@ -21,7 +21,9 @@ configure :development do
     }
   }
 
-  NAGIOS_URL = "http://nagios.trike.com.au/nagios/cgi-bin/status.cgi?host=all&servicestatustypes=28&hoststatustypes=15"
+  NAGIOS_URL = "http://nagios.trike.com.au/cgi-bin/nagios3/status.cgi?host=all&type=detail&hoststatustypes=3&serviceprops=42&servicestatustypes=28"
+  NAGIOS_USER = "dashboard"
+  NAGIOS_PW = "password"
 
   PIVOTAL_URL = "http://www.pivotaltracker.com/services/v3"
   PIVOTAL_TOKEN = "token"
@@ -42,7 +44,7 @@ configure :production do
     :adapter  => "mysql",
     :database => "dashboard_prod",
     :username => "dashoard_prod",
-    :password => "",
+    :password => "password",
     :host     => "mysql"
   })
 
@@ -52,7 +54,7 @@ configure :production do
       :name => "Project 1",
       :ci => { },
       :pivotal => {
-        :id => nil
+        :id => "an integer"
       },
       :slimtimer  => {
         :ids => ["tri", "tro"]
@@ -60,7 +62,9 @@ configure :production do
     }
   }
 
-  NAGIOS_URL = "http://nagios.trike.com.au/nagios/cgi-bin/status.cgi?host=all&servicestatustypes=28&hoststatustypes=15"
+  NAGIOS_URL = "http://nagios.trike.com.au/cgi-bin/nagios3/status.cgi?host=all&type=detail&hoststatustypes=3&serviceprops=42&servicestatustypes=28"
+  NAGIOS_USER = "dashboard"
+  NAGIOS_PW = "password"
 
   PIVOTAL_URL = "http://www.pivotaltracker.com/services/v3"
   PIVOTAL_TOKEN = "token"
