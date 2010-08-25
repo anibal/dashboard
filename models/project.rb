@@ -1,3 +1,5 @@
+require 'activesupport'
+
 class Project
   WILDCARD_ID = 'all'
 
@@ -29,11 +31,12 @@ class Project
   end
 
   def prev_iteration
-    @attributes[:prev_iteration] ||= iteration_dates.last
+    @attributes[:prev_iteration] ||= dates_to_beginning_of_day(iteration_dates.last)
   end
 
   def curr_iteration
-    @attributes[:curr_iteration] ||= [iteration_dates.last.last, Time.now] rescue nil
+    @attributes[:curr_iteration] ||= dates_to_beginning_of_day([iteration_dates.last.last,
+                                                                    Time.now]) rescue nil
   end
 
   def method_missing(method, *args, &blk)
@@ -50,6 +53,14 @@ class Project
 
   def has_pivotal_id?
     @attributes[:pivotal] && @attributes[:pivotal][:id]
+  end
+
+  private
+
+  def dates_to_beginning_of_day(dates)
+    it_start, it_end = dates
+    it_start, it_end = [it_start.beginning_of_day, it_end.beginning_of_day]
+    [it_start, it_end]
   end
 end
 

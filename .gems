@@ -13,6 +13,7 @@ httparty
 json
 librmpd
 yahoo-weather
+activesupport
 
 # Used in development/running
 #thin
