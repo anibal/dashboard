@@ -229,8 +229,8 @@ body.nagios #nagios-status {
 }
 #ci-failure-overlay {
   left: 5px;
-  width: 315px;
-  height: 501px;
+  width: 300px;
+  height: 490px;
   background-color: #b00;
 }
 #standup-overlay {
@@ -258,7 +258,7 @@ body.nagios #nagios-status {
 }
 #ci-failure-message {
   left: 10px;
-  width: 300px;
+  width: 290px;
   top: 60px;
 }
 #ci-failure-message .project-name {
