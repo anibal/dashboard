@@ -11,13 +11,8 @@
           = attributes[:name]
           .points= "#{attributes[:pivotal][:current]}/#{attributes[:pivotal][:velocity]}"
         .info
-          .ci
-            .message
-            .author
           .summary
-            .attribute.label Av.P
-            .attribute= "#{attributes[:pivotal][:average]}"
-            .attribute.separator= "|"
+            .attribute= attributes[:shepherd]
             .attribute.stats.right= haml :stats, :locals => { :stats => attributes[:activity], :max => max_activity_across_projects(@projects) }, :layout => false
   #second.column
     %h1 Systems
