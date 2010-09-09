@@ -3,7 +3,7 @@
 %w[ ext/fixnum ext/array mpd_proxy ].each { |lib| require "lib/#{lib}" }
 require 'config'
 %w[ ci pivotal nagios stats].each { |lib| require "lib/#{lib}" }
-%w[ project slimtimer_task slimtimer_user time_entry time_report story
+%w[ project slimtimer_task slimtimer_user time_entry time_report story shepherd
   ].each { |model| require "models/#{model}" }
 
 # -----------------------------------------------------------------------------------
@@ -97,4 +97,19 @@ post "/update_story" do
   story.save
 
   status 200
+end
+
+get "/shepherds" do
+  @projects = Project.all
+  haml :shepherds
+end
+
+post "/shepherds/update" do
+  params["shepherd"].each do |project, name|
+    shepherd = Shepherd.first_or_create(:project => project)
+    shepherd.name = name
+    shepherd.save
+  end
+
+  redirect "/shepherds"
 end

@@ -55,6 +55,11 @@ class Project
     @attributes[:pivotal] && @attributes[:pivotal][:id]
   end
 
+  def shepherd
+    shepherd = Shepherd.first(:project => id)
+    shepherd && shepherd.name
+  end
+
   private
 
   def dates_to_beginning_of_day(dates)

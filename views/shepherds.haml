@@ -1,0 +1,9 @@
+#content
+  %form{ :action => "/shepherds/update", :method => "post" }
+    - @projects.each do |project|
+      .shepherd
+        %label{ :for => "shepherd[#{project.id}]" }= "#{project.name}:"
+        %br
+        %input{ :type => "text", :name => "shepherd[#{project.id}]", :value => project.shepherd }
+
+    %input{ :type => "submit", :value => "Update Shepherds" }
