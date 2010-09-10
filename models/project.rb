@@ -1,4 +1,4 @@
-require 'activesupport'
+require 'active_support'
 
 class Project
   WILDCARD_ID = 'all'
