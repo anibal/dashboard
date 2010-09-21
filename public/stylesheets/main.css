@@ -240,7 +240,8 @@ body.nagios #nagios-status {
   background-color: #fc0;
 }
 #friday-overlay {
-  background-color: #83C500;
+  background: #fff url("/images/calvin_and_hobbes.jpg") -20px left no-repeat;
+  opacity: 1.0;
 }
 .overlay-message {
   left: 70px;
