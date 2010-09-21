@@ -1,6 +1,7 @@
 function fetchNagiosStatus() {
   $.getJSON("/nagios_status", function(data) {
     var problemCount = parseInt(data.problem_count);
+    var criticalCount = parseInt(data.critical_count);
 
     $("#nagios-status .points").html(problemCount + "/" + data.system_count);
     $("#nagios-status .problems").html(data.problems.join("<br />"));
@@ -12,7 +13,7 @@ function fetchNagiosStatus() {
     }
 
     $("#nagios-status").removeClass("failure");
-    if (problemCount > 0) {
+    if (criticalCount > 0) {
       $("#nagios-status").addClass("failure");
     }
   });

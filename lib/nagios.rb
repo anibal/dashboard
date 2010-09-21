@@ -12,6 +12,7 @@ class Nagios
       {
         :system_count => doc.search("table.serviceTotals").at("td.serviceTotalsOK").inner_html.to_i,
         :problem_count => problems.size,
+        :critical_count => problems.grep(/^C:/).size,
         :problems => problems.map { |problem|
           "#{problem.search("> td")[1].inner_text.strip} (#{problem.search("> td")[0].inner_text.strip})"
         }
