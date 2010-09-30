@@ -169,7 +169,16 @@ body.nagios #nagios-status {
 }
 
 .clock {
-  margin: 10px 40px;
+  text-align: center;
+}
+.clock .time {
+  font-size: 18pt;
+  font-weight: bold;
+  color: #475E96;
+  text-shadow: #ccc 3px 3px;
+}
+.clock .date {
+  margin-top: 20px;
 }
 .weather {
   width: 245px;

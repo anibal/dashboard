@@ -56,6 +56,13 @@ function meetingOverlay() {
   }
 };
 
+function tickClock() {
+  var now = new Date();
+  $(".clock .date").html(now.toLocaleDateString());
+  $(".clock .time").html(now.toLocaleTimeString());
+  setTimeout("tickClock();", 200);
+};
+
 function reload() {
   location.href = "/";
   setTimeout("reload();", 1800000);
@@ -64,5 +71,6 @@ function reload() {
 $(function() {
   fetchCIStatus();
   updateMpdSong();
+  tickClock();
   setTimeout("reload();", 1800000);
 });
