@@ -43,6 +43,11 @@ get "/" do
 
   @weather = YahooWeather::Client.new.lookup_location("ASXX0075", "c")
   @weather_image = Hpricot(@weather.description).at("img").attributes["src"]
+  @weather_condition = case @weather.condition.code.to_i
+                       when 32: 'Cider Weather'
+                       else
+                         @weather.condition.text
+                       end
 
   @projects = PROJECTS
   @projects.each do |name, attributes|
