@@ -201,6 +201,9 @@ body.nagios #nagios-status {
   font-weight: bold;
   margin-bottom: 5px;
 }
+.weather .temp .high {
+  color: #BE6D00;
+}
 .weather .text {
   font-size: 10pt;
   overflow: hidden;
