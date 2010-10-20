@@ -120,7 +120,7 @@ begin
     end
   end
 rescue
-  raise if (Time.now > last_ran + 40 * ONE_HOUR)
+  raise if (Time.now > last_run + 40 * ONE_HOUR)
 else
   ran!
 end
