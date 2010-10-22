@@ -1,13 +1,49 @@
 #!/usr/bin/env ruby
 
-%w[rubygems sinatra].each {|l| require l }
+require 'rubygems'
+require 'optparse'
+require 'rdoc/usage'
+require 'logger'
+require 'pp'
 
-set :environment, ENV['SINATRA_ENV'] || 'development'
+def bail_with_usage(opts)
+  STDERR.puts opts
+  exit
+end
+
+@options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: #{File.basename($0)} [options]"
+  opts.on("-l", "--logfile FILE", "Log to FILE (default STDOUT)") do |l|
+    @options[:log] = l
+  end
+  opts.on("-e", "--environment SINATRA_ENV", "Sinatra environment (default development)") do |e|
+    @options[:environment] = e
+  end
+  opts.on_tail("-h", "--help", "Show this message") do
+    bail_with_usage(opts)
+  end
+  args = opts.parse!(ARGV) rescue begin
+    STDERR.puts "#{$!}\n"
+    bail_with_usage(opts)
+  end
+end
+
+require 'sinatra'
+
+set :environment, @options[:environment] || ENV['SINATRA_ENV'] || 'development'
 disable :run
+
+def log
+  @log ||= begin
+             log = Logger.new((@options[:log] || STDOUT), 'daily')
+             log.level = Logger::INFO
+             log
+           end
+end
 
 require File.join(File.dirname(__FILE__), '../dashboard')
 require File.join(File.dirname(__FILE__), '../lib/slimtimer_api')
-require 'pp'
 
 FULL_DATE_TIME = "%F %T"
 ONE_HOUR = 1 * 60 * 60
@@ -29,53 +65,60 @@ def handle_timeouts(max_timeouts, task)
   rescue Timeout::Error
     timeouts += 1
     if timeouts > MAX_TIMEOUTS
-      STDERR.puts "Exceeded #{MAX_TIMEOUTS} timeouts on slimtimer during:"
-      STDERR.puts "  #{task}"
-      exit 1
+      log.fatal "Exceeded #{MAX_TIMEOUTS} timeouts on slimtimer during:\n  #{task}"
+      raise "SlimTimer timed out #{MAX_TIMEOUTS} times, so we gave up."
     else
+      log.debug "SlimTimer timed out (times: #{timeouts})"
       retry
     end
   end
 end
 
 def run_now?
-  last_run.nil? ||
+  run_now = last_run.nil? ||
     ( Time.now > last_run + 24 * ONE_HOUR ) ||
     (( Time.now > last_run + 18 * ONE_HOUR ) && ( Time.now.hour <= 4 ))
+  if !run_now
+    log.info "Called, but decided not to do anything"
+  end
+  run_now
 end
 
 def last_run
   if File.exist?(LAST_RUN_FILE)
     File.mtime(LAST_RUN_FILE)
   else
+    log.debug "#{LAST_RUN_FILE} didn't exist"
     nil
   end
 end
 
 def ran!
   FileUtils.touch(LAST_RUN_FILE)
+  log.debug "Completed run and touched #{LAST_RUN_FILE}"
+  log.debug "---"
 end
 
 exit unless run_now?
 
 begin
   SLIMTIMER_USERS.each do |email, password|
-    puts "Loading slimtimer data for #{email}"
+    log.info "Loading slimtimer data for #{email}"
     st = SlimtimerApi.new(SLIMTIMER_APIKEY, email, password)
-    puts "  Slimtimer connected as user id #{st.user_id}"
+    log.info "  Slimtimer connected as user id #{st.user_id}"
 
-    puts "  Loading tasks"
+    log.info "  Loading tasks"
     tasks = []
     handle_timeouts(MAX_TIMEOUTS, "loading tasks for #{email}") do
       tasks = st.tasks
     end
-    puts "    Got #{tasks.size} tasks; updating"
+    log.info "    Got #{tasks.size} tasks; updating"
     SlimtimerTask.update(tasks)
 
-    puts "  Loading db user"
+    log.info "  Loading db user"
     u = SlimtimerUser.get(st.user_id)
     if u.nil?
-      puts "    Building new user"
+      log.info "    Building new user"
       u = SlimtimerUser.new
       u.id = st.user_id
       task = tasks.first # FIXME Assumes that at least one task was returned
@@ -93,8 +136,8 @@ begin
         a
       }.flatten.find { |person| person['user_id'] == u.id }
 
-      puts "      Found person in one of their tasks:"
-      puts "      '#{person['name']}'"
+      log.info "      Found person in one of their tasks:"
+      log.info "      '#{person['name']}'"
 
       u.name = person['name']
       u.email = person['email']
@@ -108,10 +151,10 @@ begin
     failed = 0
     until end_range >= Time.now
       handle_timeouts(MAX_TIMEOUTS, "retrieving time entries for #{email} on #{start_range}") do
-        puts "  Loading time entries from #{start_range} to #{end_range}"
+        log.info "  Loading time entries from #{start_range} to #{end_range}"
         entries = st.time_entries(start_range.strftime(FULL_DATE_TIME),
                                 end_range.strftime(FULL_DATE_TIME))
-        puts "    Got #{entries.size} entries"
+        log.info "    Got #{entries.size} entries"
         u.update_time_entries(entries)
 
         start_range = end_range
@@ -119,6 +162,10 @@ begin
       end
     end
   end
+rescue Interrupt
+  log.info "Interrupted"
+  log.info "---"
+  exit 1
 rescue
   raise if (Time.now > last_run + 40 * ONE_HOUR)
 else
