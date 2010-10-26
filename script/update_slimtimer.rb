@@ -8,7 +8,7 @@ require 'pp'
 
 def bail_with_usage(opts)
   STDERR.puts opts
-  exit
+  exit 1
 end
 
 @options = {}
@@ -37,6 +37,7 @@ disable :run
 def log
   @log ||= begin
              log = Logger.new((@options[:log] || STDOUT), 'daily')
+             log.datetime_format = "%Y-%m-%d %H:%M:%S"
              log.level = Logger::INFO
              log
            end
@@ -97,9 +98,10 @@ def ran!
   FileUtils.touch(LAST_RUN_FILE)
   log.debug "Completed run and touched #{LAST_RUN_FILE}"
   log.debug "---"
+  true
 end
 
-exit unless run_now?
+exit 0 unless run_now?
 
 begin
   SLIMTIMER_USERS.each do |email, password|
@@ -166,8 +168,10 @@ rescue Interrupt
   log.info "Interrupted"
   log.info "---"
   exit 1
-rescue
+rescue Exception => e
+  log.info e
   raise if (Time.now > last_run + 40 * ONE_HOUR)
 else
   ran!
+  exit 0
 end
