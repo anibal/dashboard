@@ -6,7 +6,7 @@ require 'rdoc/usage'
 require 'logger'
 require 'pp'
 
-def bail_with_usage(opts)
+def quit_with_usage(opts)
   STDERR.puts opts
   exit 1
 end
@@ -21,11 +21,11 @@ OptionParser.new do |opts|
     @options[:environment] = e
   end
   opts.on_tail("-h", "--help", "Show this message") do
-    bail_with_usage(opts)
+    quit_with_usage(opts)
   end
   args = opts.parse!(ARGV) rescue begin
     STDERR.puts "#{$!}\n"
-    bail_with_usage(opts)
+    quit_with_usage(opts)
   end
 end
 

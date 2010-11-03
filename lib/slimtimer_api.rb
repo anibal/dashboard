@@ -71,7 +71,6 @@ class SlimtimerApi
         'user' => { 'email' => email, 'password' => password },
         'api_key' => @api_key
       }.to_yaml)
-    pp response
     @user_id, @access_token = response['response']['user_id'], response['response']['access_token']
   end
 
