@@ -57,10 +57,10 @@ h1 {
   -moz-border-radius: 12px 12px 0 0;
   text-shadow: #eee 1px 1px;
 }
-.status.building .identifier {
+.status.yellow .identifier {
   background-color: #EDF600;
 }
-.status.failure .identifier {
+.status.red .identifier {
   background-color: #EF4136;
 }
 .status .identifier .points {

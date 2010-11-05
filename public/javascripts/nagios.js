@@ -12,9 +12,9 @@ function fetchNagiosStatus() {
       $("#nagios-status .problem-overlay").show();
     }
 
-    $("#nagios-status").removeClass("failure");
+    $("#nagios-status").removeClass("red");
     if (criticalCount > 0) {
-      $("#nagios-status").addClass("failure");
+      $("#nagios-status").addClass("red");
     }
   });
 

@@ -7,7 +7,6 @@ configure :development do
   DataMapper::Logger.new(STDOUT, :debug)
   DataMapper.setup(:default, "mysql://localhost/dashboard_dev")
 
-  CI_STATUS_FILE = "tmp/ci_status_last.xml"
   PROJECTS = {
     "project1" => {
       :name => "Project 1",
@@ -20,6 +19,8 @@ configure :development do
       }
     }
   }
+
+  CI_URL = "http://ci.trike.com.au/api/json"
 
   NAGIOS_URL = "http://nagios.trike.com.au/cgi-bin/nagios3/status.cgi?host=all&type=detail&hoststatustypes=3&serviceprops=42&servicestatustypes=28"
   NAGIOS_USER = "dashboard"
@@ -48,7 +49,6 @@ configure :production do
     :host     => "mysql"
   })
 
-  CI_STATUS_FILE = "tmp/ci_status_last.xml"
   PROJECTS = {
     "project1" => {
       :name => "Project 1",
@@ -61,6 +61,8 @@ configure :production do
       }
     }
   }
+
+  CI_URL = "http://ci.trike.com.au/api/json"
 
   NAGIOS_URL = "http://nagios.trike.com.au/cgi-bin/nagios3/status.cgi?host=all&type=detail&hoststatustypes=3&serviceprops=42&servicestatustypes=28"
   NAGIOS_USER = "dashboard"

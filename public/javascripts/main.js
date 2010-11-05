@@ -8,12 +8,12 @@ function fetchCIStatus() {
       var ciAttr = attributes.ci;
       $(".project[ref = " + project + "]").attr("class",  "project status inactive " + ciAttr.status);
 
-      if (ciAttr.status == "failure" && !_(knownFailures).include(project)) {
+      if (ciAttr.status == "red" && !_(knownFailures).include(project)) {
         newFailure = true;
         knownFailures.push(project);
         showCIOverlay(attributes);
       }
-      else if (ciAttr.status != "failure" && _(knownFailures).include(project)) {
+      else if (ciAttr.status != "red" && _(knownFailures).include(project)) {
         knownFailures = _(knownFailures).without([project]);
       }
       if (!newFailure) $(".ci-failure").hide();
@@ -28,7 +28,6 @@ function showCIOverlay(project) {
 
   $("#ci-failure-message .project-name").html(project.name);
   $("#ci-failure-message .project-name").effect("pulsate", { times: 10 }, 2000);
-  $("#ci-failure-message .author").html(project.ci.author);
 };
 
 function updateMpdSong() {
