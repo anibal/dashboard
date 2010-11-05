@@ -9,11 +9,10 @@
       .project.status.inactive{ :ref => project }
         .identifier
           = attributes[:name]
-          .points= "#{attributes[:pivotal][:current]}/#{attributes[:pivotal][:velocity]}"
+          .points= attributes[:shepherd]
         .info
           .summary
-            .attribute= attributes[:shepherd]
-            .attribute.stats.right= haml :stats, :locals => { :stats => attributes[:activity], :max => max_activity_across_projects(@projects) }, :layout => false
+            .attribute.stats= haml :stats, :locals => { :stats => attributes[:activity], :max => max_activity_across_projects(@projects) }, :layout => false
   #second.column
     %h1 Systems
     = haml :nagios_status, :layout => false

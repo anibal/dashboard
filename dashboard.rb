@@ -51,7 +51,6 @@ get "/" do
 
   @projects = PROJECTS
   @projects.each do |name, attributes|
-    Pivotal.status_for(attributes[:pivotal])
     attributes[:activity] = Stats.status_for(name)
     attributes[:shepherd] = Project.find(name).shepherd
   end

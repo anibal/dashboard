@@ -21,12 +21,22 @@ body.reports {
 #content {
   margin: 5px 0;
 }
+
 #content .column {
   float: left;
   height: 487px;
   margin: 0;
   width: 305px !important;
 }
+
+#content .column#first {
+  width: 320px !important;
+}
+
+#content .column#second {
+  width: 290px !important;
+}
+
 h1 {
   text-align: center;
   margin: 0;
@@ -37,14 +47,20 @@ h1 {
 }
 
 .status {
-  width: 275px;
-  margin: 10px auto;
+  float: left;
+  width: 145px;
+  margin: 10px 5px;
   background-color: #fff;
   border: 2px solid #fff;
   -webkit-border-radius: 12px;
   -moz-border-radius: 12px;
   -webkit-box-shadow: rgba(66, 66, 66, 0.5) 4px 4px 4px;
   -moz-box-shadow: rgba(66, 66, 66, 0.5) 4px 4px 4px;
+}
+#content .column#second .status {
+  float: none;
+  width: 260px;
+  margin: 10px auto;
 }
 .status .identifier {
   height: 27px;
@@ -64,13 +80,18 @@ h1 {
   background-color: #EF4136;
 }
 .status .identifier .points {
-  width: 100px;
+  width: 60px;
   text-align: right;
   float: right;
 }
+#content .column#first .status .identifier .points {
+  height: 24px;
+  font-size: 11pt;
+  line-height: 24px;
+}
 .status .info {
   font-size: 10pt;
-  padding: 6px 15px;
+  padding: 6px 10px;
   line-height: 18px;
   font-weight: bold;
   -webkit-border-radius: 0 0 12px 12px;
@@ -132,7 +153,7 @@ h1 {
 }
 .status .info .bar {
   height: 0;
-  width: 4px;
+  width: 3px;
   background-color: #000;
 }
 .status .problems {
