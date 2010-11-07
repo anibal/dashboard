@@ -80,11 +80,12 @@ h1 {
   background-color: #EF4136;
 }
 .status .identifier .points {
-  width: 60px;
+  width: 100px;
   text-align: right;
   float: right;
 }
 #content .column#first .status .identifier .points {
+  width: 60px;
   height: 24px;
   font-size: 11pt;
   line-height: 24px;
