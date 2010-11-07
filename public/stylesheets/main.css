@@ -263,7 +263,7 @@ body.nagios #nagios-status {
 }
 #ci-failure-overlay {
   left: 5px;
-  width: 300px;
+  width: 315px;
   height: 490px;
   background-color: #b00;
 }
