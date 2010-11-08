@@ -30,7 +30,7 @@ function fetchCIStatus() {
 function showCIOverlay(project) {
   $(".ci-failure").show();
 
-  $("#ci-failure-message .project-name").html(project.name);
+  $("#ci-failure-message .project-name").html(project.description);
   $("#ci-failure-message .project-name").effect("pulsate", { times: 10 }, 2000);
 };
 
