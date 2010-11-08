@@ -8,6 +8,10 @@ function fetchCIStatus() {
       var ciAttr = attributes.ci;
       $(".project[ref = " + project + "]").attr("class",  "project status inactive " + ciAttr.status);
 
+      if (ciAttr.health != null) {
+        $(".project[ref = " + project + "] .health").html('<img src="http://ci.trike.com.au/static/66ffcbeb/images/16x16/' + ciAttr.health + '" />');
+      }
+
       if (ciAttr.status == "red" && !_(knownFailures).include(project)) {
         newFailure = true;
         knownFailures.push(project);

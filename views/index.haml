@@ -12,7 +12,8 @@
           .points= attributes[:shepherd]
         .info
           .summary
-            .attribute.stats= haml :stats, :locals => { :stats => attributes[:activity], :max => max_activity_across_projects(@projects) }, :layout => false
+            .attribute.health
+            .attribute.stats.right= haml :stats, :locals => { :stats => attributes[:activity], :max => max_activity_across_projects(@projects) }, :layout => false
   #second.column
     %h1 Systems
     = haml :nagios_status, :layout => false

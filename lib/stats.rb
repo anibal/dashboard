@@ -8,7 +8,7 @@ class Stats
       return [] unless File.exist?(stats)
 
       doc = Nokogiri::HTML.parse(File.open(stats))
-      doc.xpath(".//table/tr").first.xpath(".//td").map { |col| col.text }.map { |v| v.to_i }
+      doc.xpath(".//table/tr").first.xpath(".//td").map { |col| col.text }.map { |v| v.to_i }[-15..-1]
     end
   end
 end
