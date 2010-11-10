@@ -22,6 +22,19 @@ function fetchCIStatus() {
       }
       if (!newFailure) $(".ci-failure").hide();
     });
+
+    var projectStatus = _(data).values().map(function(item) { return item.ci.status; });
+    var globalStatus = "green";
+    if (_(projectStatus).include("yellow")) {
+      globalStatus = "yellow";
+    }
+    else if (_(projectStatus).include("red")) {
+      globalStatus = "red";
+    }
+
+    $("#first")
+      .removeClass("green yellow red")
+      .addClass(globalStatus);
   });
 
   setTimeout("fetchCIStatus();", 60000);

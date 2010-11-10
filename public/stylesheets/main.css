@@ -31,10 +31,22 @@ body.reports {
 
 #content .column#first {
   width: 320px !important;
+  background-position: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 #content .column#second {
   width: 290px !important;
+}
+
+#content #first.green {
+  background-image: url(http://ci.trike.com.au/plugin/chucknorris/images/thumb_up.jpg);
+}
+#content #first.yellow {
+  background-image: url(http://ci.trike.com.au/plugin/chucknorris/images/alert.jpg);
+}
+#content #first.red {
+  background-image: url(http://ci.trike.com.au/plugin/chucknorris/images/bad_ass.jpg);
 }
 
 h1 {
