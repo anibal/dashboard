@@ -40,13 +40,13 @@ body.reports {
 }
 
 #content #first.green {
-  background-image: url(http://ci.trike.com.au/plugin/chucknorris/images/thumb_up.jpg);
+  background-image: url(/images/chuck/thumb_up.jpg);
 }
 #content #first.yellow {
-  background-image: url(http://ci.trike.com.au/plugin/chucknorris/images/alert.jpg);
+  background-image: url(/images/chuck/alert.jpg);
 }
 #content #first.red {
-  background-image: url(http://ci.trike.com.au/plugin/chucknorris/images/bad_ass.jpg);
+  background-image: url(/images/chuck/bad_ass.jpg);
 }
 
 h1 {
