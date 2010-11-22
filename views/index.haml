@@ -9,10 +9,11 @@
       .project.status.inactive{ :ref => project }
         .identifier
           = attributes[:name]
+          .health.builds
           .points= attributes[:shepherd]
         .info
           .summary
-            .attribute.health
+            .attribute.health.rcov
             .attribute.stats.right= haml :stats, :locals => { :stats => attributes[:activity], :max => max_activity_across_projects(@projects) }, :layout => false
   #second.column
     %h1 Systems

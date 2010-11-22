@@ -10,7 +10,8 @@ class CI
         status[:status] = "no_ci"
       else
         status[:status] = color_map(project["color"])
-        status[:health] = health(project["healthReport"])
+        status[:health] = health(project["healthReport"], "Build")
+        status[:rcov]   = health(project["healthReport"], "Rcov")
       end
     end
 
@@ -27,9 +28,9 @@ class CI
         end
     end
 
-    def health(report)
-      return unless report[0]
-      report[0]["iconUrl"]
+    def health(report, id)
+      return unless report = report.find { |r| r["description"] =~ %r{^#{id}} }
+      report["iconUrl"]
     end
   end
 end
