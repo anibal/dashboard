@@ -326,6 +326,12 @@ body.nagios #nagios-status {
   color: #000;
 }
 
+#friday-message img {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
 /* Input page
  **************************************************************** */
 #center-wrap {
