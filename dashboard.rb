@@ -49,7 +49,7 @@ get "/" do
                          @weather.condition.text
                        end
 
-  @projects = PROJECTS
+  @projects = PROJECTS.reject { |name, attributes| attributes[:hidden] }
   @projects.each do |name, attributes|
     attributes[:activity] = Stats.status_for(name)
     attributes[:shepherd] = Project.find(name).shepherd
