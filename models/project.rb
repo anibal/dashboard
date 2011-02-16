@@ -64,6 +64,7 @@ class Project
 
   def dates_to_beginning_of_day(dates)
     it_start, it_end = dates
+    return nil unless it_start && it_end
     it_start, it_end = [it_start.beginning_of_day, it_end.beginning_of_day]
     [it_start, it_end]
   end
