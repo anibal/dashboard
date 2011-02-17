@@ -1,6 +1,7 @@
 require 'dashboard'
+require 'dm-migrations'
 
-require 'rake'                                                                                               
+require 'rake'
 require 'spec/rake/spectask'
 
 namespace :db do
