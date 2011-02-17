@@ -35,8 +35,11 @@ class Project
   end
 
   def curr_iteration
-    @attributes[:curr_iteration] ||= dates_to_beginning_of_day([iteration_dates.last.last,
-                                                                    Time.now]) rescue nil
+    @attributes[:curr_iteration] ||= if start_date = iteration_dates.last.try(:last)
+      dates_to_beginning_of_day([start_date, Time.now])
+    else
+      dates_to_beginning_of_day([Time.now.beginning_of_week, Time.now.end_of_week])
+    end
   end
 
   def method_missing(method, *args, &blk)
