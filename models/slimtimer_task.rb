@@ -8,6 +8,10 @@ class SlimtimerTask
 
   has n, :time_entries
 
+  def support?
+    name =~ /^s:/
+  end
+
   def self.update(tasks)
     tasks.each do |task_attributes|
       task = get(task_attributes['id']) || new

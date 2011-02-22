@@ -257,8 +257,6 @@ class TimeReport
     @totals   #.find {|t| t[:name] == "Grand Total" }
   end
 
-
-
 private
 
   def query_slimtimer(range)
@@ -269,8 +267,9 @@ private
       SlimtimerTask.all(:time_entries => entries, :completed => false)
     else
       @project.slimtimer[:ids].
-        map { |id| SlimtimerTask.all(:time_entries => entries, :name.like => "%:#{id}%") }.
-        inject { |set, results| set | results }
+        map    { |id| SlimtimerTask.all(:time_entries => entries, :name.like => "%:#{id}%") }.
+        inject { |set, results| set | results }.
+        reject { |task| task.support? }
     end
 
     @tasks = @tasks.group_by(&:name).map do |name, tasks|
