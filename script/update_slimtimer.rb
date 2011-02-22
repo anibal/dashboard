@@ -36,7 +36,7 @@ disable :run
 
 def log
   @log ||= begin
-             log = Logger.new((@options[:log] || STDOUT), 'daily')
+             log = Logger.new((@options[:log] || STDOUT))
              log.datetime_format = "%Y-%m-%d %H:%M:%S"
              log.level = Logger::INFO
              log
