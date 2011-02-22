@@ -31,8 +31,8 @@ class SlimtimerApi
     self.class.get(path, options)
   end
 
-  def tasks(show_completed = 'yes', role = 'owner,coworker')
-    result = get('/tasks', :show_completed => show_completed, :role => role)
+  def tasks(offset = 0, show_completed = 'yes', role = 'owner,coworker')
+    result = get('/tasks', :show_completed => show_completed, :role => role, :offset => offset)
     if result['tasks']
       case result['tasks']['task']
       when Hash
@@ -62,7 +62,7 @@ class SlimtimerApi
   private
 
   def get_access_token(email, password)
-    response = self.class.post("http://slimtimer.com/users/token", 
+    response = self.class.post("http://slimtimer.com/users/token",
       :headers => {
         "Accept"       => "application/xml",
         "Content-Type" => "application/x-yaml"
