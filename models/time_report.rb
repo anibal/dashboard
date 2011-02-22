@@ -297,21 +297,37 @@ private
 
   def query_pivotal(range)
     return unless @project.has_pivotal_id?
+
+    stories = Pivotal.stories_modified_since(@project.attributes[:pivotal][:id], range.begin.to_date)
     @tasks.each do |t|
       if t[:name] =~ SLIMTIMER_TO_PIVOTAL_REGEX
         begin
           pivotal_story = @project.pivotal_story($3)
-          story = Story.first_or_create(:id => pivotal_story["id"])
+          stories = stories.delete_if { |story| story["id"] == pivotal_story["id"] }
 
-          t[:points] = pivotal_story['estimate']
-          t[:story_type] = pivotal_story['story_type']
-          t[:status] = pivotal_story['current_state']
-          t[:pivotal_name] = pivotal_story['name']
-          t[:pivotal_story] = story
-        rescue Exception => e
+          t[:points]        = pivotal_story['estimate']
+          t[:story_type]    = pivotal_story['story_type']
+          t[:status]        = pivotal_story['current_state']
+          t[:pivotal_name]  = pivotal_story['name']
+          t[:pivotal_story] = Story.first_or_create(:id => pivotal_story["id"])
+        rescue Exception    => e
           p e
         end
       end
+    end
+
+    open_stories = stories.select { |story| !["unstarted", "delivered", "accepted"].include?(story["current_state"])  }
+    open_stories.each do |story|
+      @tasks << Task.new("",
+        :points           => story['estimate'],
+        :story_type       => story['story_type'],
+        :status           => story['current_state'],
+        :pivotal_name     => story['name'],
+        :pivotal_story    => Story.first_or_create(:id => story["id"]),
+        :lifetime_hours   => 0,
+        :time_this_period => 0,
+        :time_by_user     => UserTimeList.new
+      )
     end
 
     @tasks

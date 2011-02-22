@@ -63,5 +63,9 @@ class Pivotal
     def story(project_id, id)
       get("#{PIVOTAL_URL}/projects/#{project_id}/stories/#{id}")["story"]
     end
+
+    def stories_modified_since(project_id, date)
+      get("#{PIVOTAL_URL}/projects/#{project_id}/stories?filter=modified_since:#{date.to_s(:db)}")["stories"]
+    end
   end
 end
