@@ -75,6 +75,24 @@ def handle_timeouts(max_timeouts, task)
   end
 end
 
+# Fetches all records for the given entity.
+# Slimtimer has a default limits of records that are returned.
+# The solution is to paginate through the results.
+# http://slimtimer.com/help/api
+def fetch_with_pagination(connection, entity, per_page)
+  offset  = 0
+  records = []
+
+  begin
+    set = handle_timeouts(MAX_TIMEOUTS, "loading tasks (offset: #{offset})") { connection.send(entity, offset) }
+
+    records += set
+    offset  += per_page
+  end until set.empty?
+
+  records
+end
+
 def run_now?
   run_now = last_run.nil? ||
     ( Time.now > last_run + 24 * ONE_HOUR ) ||
@@ -104,18 +122,19 @@ end
 exit 0 unless run_now?
 
 begin
+  st  = SlimtimerApi.new(SLIMTIMER_APIKEY, SLIMTIMER_GOD, SLIMTIMER_USERS[SLIMTIMER_GOD])
+  log.info "  Slimtimer connected as user id #{st.user_id}"
+
+  # Load all tasks associated with the Slimtimer God
+  log.info "  Loading tasks"
+  tasks = fetch_with_pagination(st, :tasks, 50)
+  log.info "    Got #{tasks.size} tasks; updating"
+  SlimtimerTask.update(tasks)
+
   SLIMTIMER_USERS.each do |email, password|
     log.info "Loading slimtimer data for #{email}"
     st = SlimtimerApi.new(SLIMTIMER_APIKEY, email, password)
     log.info "  Slimtimer connected as user id #{st.user_id}"
-
-    log.info "  Loading tasks"
-    tasks = []
-    handle_timeouts(MAX_TIMEOUTS, "loading tasks for #{email}") do
-      tasks = st.tasks
-    end
-    log.info "    Got #{tasks.size} tasks; updating"
-    SlimtimerTask.update(tasks)
 
     log.info "  Loading db user"
     u = SlimtimerUser.get(st.user_id)
