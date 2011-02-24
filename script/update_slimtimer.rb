@@ -84,7 +84,7 @@ def fetch_with_pagination(connection, entity, per_page)
   records = []
 
   begin
-    set = handle_timeouts(MAX_TIMEOUTS, "loading tasks (offset: #{offset})") { connection.send(entity, offset) }
+    set = handle_timeouts(MAX_TIMEOUTS, "loading tasks (offset: #{offset})") { connection.send(entity, offset, "yes", "owner,coworker,reporter") }
 
     records += set
     offset  += per_page
