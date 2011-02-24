@@ -10,6 +10,7 @@
   %thead
     %tr
       %th Task
+      %th Pivotal ID
       %th Pivotal Name
       %th Story Type
       %th Pivotal Status
@@ -27,6 +28,7 @@
       - @time_report.send(rowtype == "" ? "rows" : rowtype + "_rows").each do |row|
         %tr{ :class => row.classes }
           %td=               row.formatted_value_for :name
+          %td=               row.formatted_value_for :pivotal_id
           %td=               row.formatted_value_for :pivotal_name
           %td=               row.formatted_value_for :story_type
           %td=               row.formatted_value_for :status

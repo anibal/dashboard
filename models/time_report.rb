@@ -308,6 +308,7 @@ private
           t[:points]        = pivotal_story['estimate']
           t[:story_type]    = pivotal_story['story_type']
           t[:status]        = pivotal_story['current_state']
+          t[:pivotal_id]    = pivotal_story['id']
           t[:pivotal_name]  = pivotal_story['name']
           t[:pivotal_story] = Story.first_or_create(:id => pivotal_story["id"])
         rescue Exception    => e
@@ -322,6 +323,7 @@ private
         :points           => story['estimate'],
         :story_type       => story['story_type'],
         :status           => story['current_state'],
+        :pivotal_id       => story['id'],
         :pivotal_name     => story['name'],
         :pivotal_story    => Story.first_or_create(:id => story["id"]),
         :lifetime_hours   => 0,
