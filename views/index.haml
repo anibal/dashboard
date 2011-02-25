@@ -1,12 +1,14 @@
 - content_for :head do
   %script{ :src => "/javascripts/main.js", :type => "text/javascript" }
   %script{ :src => "/javascripts/nagios.js", :type => "text/javascript" }
+  :javascript
+    var chartbeat_api_key = "#{@chartbeat_api_key}";
 
 #content
   #first.column
     %h1 Projects
     - @projects.each do |project, attributes|
-      .project.status.inactive{ :ref => project }
+      .project.status.inactive{ :ref => project, :chartbeat_url => attributes[:chartbeat_url] }
         .identifier
           = attributes[:name]
           .health.builds

@@ -58,6 +58,18 @@ function updateMpdSong() {
   setTimeout("updateMpdSong();", 10000);
 };
 
+function fetchChartbeatStatus() {
+  $(".project[chartbeat_url]").each(function() {
+    var chartbeat_url = $(this).attr("chartbeat_url");
+
+    $.getJSON("http://api.chartbeat.com/quickstats?host=" + chartbeat_url + "&apikey=" + chartbeat_api_key, function(data) {
+      $(".project[chartbeat_url='" + chartbeat_url + "'] .points").html(data.people);
+    });
+  });
+
+  setTimeout("fetchChartbeatStatus();", 11000);
+};
+
 function meetingOverlay() {
   var date = new Date();
 
@@ -90,6 +102,7 @@ function reload() {
 $(function() {
   fetchCIStatus();
   updateMpdSong();
+  fetchChartbeatStatus();
   tickClock();
   setTimeout("reload();", 1800000);
 });

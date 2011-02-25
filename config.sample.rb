@@ -16,7 +16,8 @@ configure :development do
       },
       :slimtimer  => {
         :ids => ["tri"]
-      }
+      },
+      :chartbeat_url => "example.com"
     }
   }
 
@@ -33,6 +34,9 @@ configure :development do
   SLIMTIMER_USERS = {
     "email@example.com" => "password"
   }
+  SLIMTIMER_GOD = "email@example.com"
+
+  CHARTBEAT_APIKEY = "key"
 end
 
 # -----------------------------------------------------------------------------------
@@ -58,7 +62,8 @@ configure :production do
       },
       :slimtimer  => {
         :ids => ["tri", "tro"]
-      }
+      },
+      :chartbeat_url => "example.com"
     }
   }
 
@@ -75,4 +80,7 @@ configure :production do
   SLIMTIMER_USERS = {
     "email@example.com" => "password"
   }
+  SLIMTIMER_GOD = "email@example.com"
+
+  CHARTBEAT_APIKEY = "key"
 end
