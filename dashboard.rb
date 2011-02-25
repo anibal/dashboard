@@ -40,7 +40,7 @@ end
 # -----------------------------------------------------------------------------------
 get "/" do
   @body_class = "dashboard"
-  @chartbeat_api_key = CHARTBEAT_API_KEY
+  @chartbeat_api_key = CHARTBEAT_APIKEY
 
   @weather = YahooWeather::Client.new.lookup_location("ASXX0075", "c")
   @weather_image = Hpricot(@weather.description).at("img").attributes["src"]
