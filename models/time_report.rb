@@ -317,7 +317,7 @@ private
       end
     end
 
-    open_stories = stories.select { |story| !["unstarted", "delivered", "accepted"].include?(story["current_state"])  }
+    open_stories = stories.select { |story| !["unscheduled", "unstarted"].include?(story["current_state"])  }
     open_stories.each do |story|
       @tasks << Task.new("",
         :points           => story['estimate'],
