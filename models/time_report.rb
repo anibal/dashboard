@@ -305,13 +305,14 @@ private
           pivotal_story = @project.pivotal_story($3)
           stories = stories.delete_if { |story| story["id"] == pivotal_story["id"] }
 
-          t[:points]        = pivotal_story['estimate']
-          t[:story_type]    = pivotal_story['story_type']
-          t[:status]        = pivotal_story['current_state']
-          t[:pivotal_id]    = pivotal_story['id']
-          t[:pivotal_name]  = pivotal_story['name']
-          t[:pivotal_story] = Story.first_or_create(:id => pivotal_story["id"])
-        rescue Exception    => e
+          t[:points]         = pivotal_story['estimate']
+          t[:story_type]     = pivotal_story['story_type']
+          t[:status]         = pivotal_story['current_state']
+          t[:pivotal_id]     = pivotal_story['id']
+          t[:pivotal_name]   = pivotal_story['name']
+          t[:pivotal_story]  = Story.first_or_create(:id => pivotal_story["id"])
+          t[:pivotal_labels] = pivotal_story['labels']
+        rescue Exception => e
           p e
         end
       end
@@ -326,6 +327,7 @@ private
         :pivotal_id       => story['id'],
         :pivotal_name     => story['name'],
         :pivotal_story    => Story.first_or_create(:id => story["id"]),
+        :pivotal_labels   => story['labels'],
         :lifetime_hours   => 0,
         :time_this_period => 0,
         :time_by_user     => UserTimeList.new

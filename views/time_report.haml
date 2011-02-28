@@ -14,6 +14,7 @@
       %th Pivotal Name
       %th Story Type
       %th Pivotal Status
+      %th Labels
       %th Estimate
       %th True Points
       %th % of Total Hours This Period
@@ -32,6 +33,7 @@
           %td=               row.formatted_value_for :pivotal_name
           %td=               row.formatted_value_for :story_type
           %td=               row.formatted_value_for :status
+          %td=               row.formatted_value_for :pivotal_labels
           %td.points.number= row.formatted_value_for :points
           %td.points.number= row.formatted_value_for :actual_points
           %td.number=        row.formatted_value_for :time_this_period_percent
