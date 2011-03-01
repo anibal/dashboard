@@ -143,7 +143,7 @@ begin
       u = SlimtimerUser.new
       u.id = st.user_id
       task = tasks.first # FIXME Assumes that at least one task was returned
-      person = %w[owners coworkers reporters].map { |k|
+      person = %w[owners coworkers reporters].map{ |k|
         a = if task[k].nil? || task[k]['person'].nil?
           []
         else
@@ -153,7 +153,6 @@ begin
             task[k]['person']
           end
         end
-        pp a
         a
       }.flatten.find { |person| person['user_id'] == u.id }
 
