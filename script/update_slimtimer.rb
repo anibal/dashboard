@@ -155,6 +155,7 @@ begin
         end
         a
       }.flatten.find { |person| person['user_id'] == u.id }
+      next unless person
 
       log.info "      Found person in one of their tasks:"
       log.info "      '#{person['name']}'"
