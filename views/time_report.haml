@@ -4,9 +4,8 @@
 %table#timereport
   %caption
     = "#{@time_report.project_name}:"
-    = @time_report.period.first.strftime("%F")
-    through
-    = @time_report.period.last.strftime("%F")
+    = haml :_report_top, { :layout => false }, :period => @time_report.period
+
   %thead
     %tr
       = haml(:_report_header, { :layout => false }, :users => @time_report.users)

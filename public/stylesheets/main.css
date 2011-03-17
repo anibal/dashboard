@@ -361,6 +361,11 @@ body.nagios #nagios-status {
   font-weight: bold;
 }
 
+#timereport caption .links {
+  display: block;
+  float: right;
+}
+
 #timereport tr:nth-child(even) {
   background-color: #eee;
 }

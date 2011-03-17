@@ -3,9 +3,8 @@
 
 %table#timereport
   %caption
-    = @summary_report.period.first.strftime("%F")
-    through
-    = @summary_report.period.last.strftime("%F")
+    = haml :_report_top, { :layout => false }, :period => @summary_report.period
+
   %thead
     %tr
       = haml(:_report_header, { :layout => false }, :users => @summary_report.users)

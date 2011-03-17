@@ -1,0 +1,6 @@
+= period.first.strftime("%F")
+through
+= period.last.strftime("%F")
+
+%span.links
+  %a{ :href => "/reports" } << Back to reports list
