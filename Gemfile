@@ -13,6 +13,7 @@ gem "json"
 gem "librmpd"
 gem "httparty"
 gem "yahoo-weather"
+gem "i18n"
 gem "activesupport"
 
 group :development do
