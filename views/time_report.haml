@@ -9,44 +9,13 @@
     = @time_report.period.last.strftime("%F")
   %thead
     %tr
-      %th Task
-      %th Pivotal ID
-      %th Pivotal Name
-      %th Story Type
-      %th Pivotal Status
-      %th Labels
-      %th Estimate
-      %th True Points
-      %th % of Total Hours This Period
-      - @time_report.users.each do |user|
-        %th= user.name
-      %th Total Hours This Period
-      %th Lifetime Hours
-      %th Lifetime Hours / Point
-      %th Billed
+      = haml(:_report_header, { :layout => false }, :users => @time_report.users)
+
   - ['', 'subtotal', 'total'].each do |rowtype|
     %tbody{:class => rowtype}
       - @time_report.send(rowtype == "" ? "rows" : rowtype + "_rows").each do |row|
         %tr{ :class => row.classes }
-          %td=               row.formatted_value_for :name
-          %td=               row.formatted_value_for :pivotal_id
-          %td=               row.formatted_value_for :pivotal_name
-          %td=               row.formatted_value_for :story_type
-          %td=               row.formatted_value_for :status
-          %td=               row.formatted_value_for :pivotal_labels
-          %td.points.number= row.formatted_value_for :points
-          %td.points.number= row.formatted_value_for :actual_points
-          %td.number=        row.formatted_value_for :time_this_period_percent
-          - @time_report.users.each do |user|
-            %td.number= row.formatted_value_for user.id
-          %td.number=        row.formatted_value_for :time_this_period
-          %td.number=        row.formatted_value_for :lifetime_hours
-          %td.number=        row.formatted_value_for :lifetime_hours_per_point
-          %td
-            - if story = row.value_for(:pivotal_story)
-              %form{:action => "/update_story"}
-                %input{:type => 'hidden', :name => "id", :value => story.id}
-                %input.toggle-billed{:type => 'checkbox', :name => "story[billed]", :value => 1, :checked => (story.billed ? 'checked' : nil)}
+          = haml(:_report_row, { :layout => false }, :users => @time_report.users, :row => row)
 
 %p
   Team strength for the (

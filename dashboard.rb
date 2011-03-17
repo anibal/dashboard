@@ -3,7 +3,7 @@
 %w[ ext/fixnum ext/array mpd_proxy ].each { |lib| require "lib/#{lib}" }
 require 'config'
 %w[ ci pivotal nagios stats].each { |lib| require "lib/#{lib}" }
-%w[ project slimtimer_task slimtimer_user time_entry time_report summary_report story shepherd
+%w[ project slimtimer_task slimtimer_user time_entry report time_report summary_report story shepherd
   ].each { |model| require "models/#{model}" }
 
 # -----------------------------------------------------------------------------------
@@ -87,6 +87,16 @@ get "/reports" do
   @body_class = "reports"
   @projects = Project.all
   haml :reports
+end
+
+get "/time_reports/summary" do |project_id|
+  s = Time.local(*params['start'].split('-')) rescue Time.now - 7 * 24 * 3600
+  e = Time.local(*params['end'].split('-')) rescue Time.now
+
+  @summary_report = SummaryReport.new(s..e)
+
+  @enable_blueprint = true
+  haml :summary_report
 end
 
 get "/time_reports/:project" do |project_id|

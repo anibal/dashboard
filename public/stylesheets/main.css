@@ -401,3 +401,10 @@ body.nagios #nagios-status {
 #timereport tr.overestimate td.points {
   background-color: #ccccff;
 }
+
+#timereport tr.project_name td {
+  background-color: #283147;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+}

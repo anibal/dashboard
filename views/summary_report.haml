@@ -1,0 +1,25 @@
+- content_for :head do
+  %script{ :src => "/javascripts/report.js", :type => "text/javascript" }
+
+%table#timereport
+  %caption
+    = @summary_report.period.first.strftime("%F")
+    through
+    = @summary_report.period.last.strftime("%F")
+  %thead
+    %tr
+      = haml(:_report_header, { :layout => false }, :users => @summary_report.users)
+
+  - @summary_report.reports.each do |report|
+    %tbody
+      %tr.project_name
+        %td{ :colspan => 9 }= "#{report.project_name}"
+      - report.rows.each do |row|
+        %tr{ :class => row.classes }
+          = haml(:_report_row, { :layout => false }, :users => report.users, :row => row)
+
+  - ['subtotal', 'total'].each do |rowtype|
+    %tbody{:class => rowtype}
+      - @summary_report.send(rowtype + "_rows").each do |row|
+        %tr{ :class => row.classes }
+          = haml(:_report_row, { :layout => false }, :users => @summary_report.users, :row => row)

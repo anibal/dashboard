@@ -1,5 +1,8 @@
 #content
   %h1 Trike Dashboard Reports
+
+  %a{ :href => "/time_reports/summary" } Last weeks summary
+
   - @projects.each do |project|
     %h2= project.name
     - if project.prev_iteration

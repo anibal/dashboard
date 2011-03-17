@@ -1,0 +1,19 @@
+%td=               row.formatted_value_for :name
+%td=               row.formatted_value_for :pivotal_id
+%td=               row.formatted_value_for :pivotal_name
+%td=               row.formatted_value_for :story_type
+%td=               row.formatted_value_for :status
+%td=               row.formatted_value_for :pivotal_labels
+%td.points.number= row.formatted_value_for :points
+%td.points.number= row.formatted_value_for :actual_points
+%td.number=        row.formatted_value_for :time_this_period_percent
+- users.each do |user|
+  %td.number= row.formatted_value_for user.id
+%td.number=        row.formatted_value_for :time_this_period
+%td.number=        row.formatted_value_for :lifetime_hours
+%td.number=        row.formatted_value_for :lifetime_hours_per_point
+%td
+  - if story = row.value_for(:pivotal_story)
+    %form{:action => "/update_story"}
+      %input{:type => 'hidden', :name => "id", :value => story.id}
+      %input.toggle-billed{:type => 'checkbox', :name => "story[billed]", :value => 1, :checked => (story.billed ? 'checked' : nil)}
