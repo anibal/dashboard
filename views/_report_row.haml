@@ -1,5 +1,7 @@
 %td=               row.formatted_value_for :name
-%td=               row.formatted_value_for :pivotal_id
+%td
+  %a{ :href => "https://www.pivotaltracker.com/story/show/#{row.formatted_value_for(:pivotal_id)}", :target => "_blank" }
+    =              row.formatted_value_for :pivotal_id
 %td=               row.formatted_value_for :pivotal_name
 %td=               row.formatted_value_for :story_type
 %td=               row.formatted_value_for :status
