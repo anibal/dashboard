@@ -18,9 +18,9 @@ helpers do
     time.strftime("%Y-%m-%d-%H-%M-%S")
   end
 
-  def time_report_link(project, start, finish)
+  def report_link(start, finish, project_id = "summary")
     str = '/time_reports'
-    str << "/#{project.id}"
+    str << "/#{project_id}"
     str << "?start=#{encode_special_time(start)}"
     str << "&end=#{encode_special_time(finish)}"
   end
@@ -85,13 +85,17 @@ end
 
 get "/reports" do
   @body_class = "reports"
+
   @projects = Project.all
+  @start = (Time.now - 7 * 24 * 3600)
+  @finish = Time.now
+
   haml :reports
 end
 
 get "/time_reports/summary" do |project_id|
-  s = Time.local(*params['start'].split('-')) rescue Time.now - 7 * 24 * 3600
-  e = Time.local(*params['end'].split('-')) rescue Time.now
+  s = Time.local(*params['start'].split('-'))
+  e = Time.local(*params['end'].split('-'))
 
   @summary_report = SummaryReport.new(s..e)
 
@@ -100,9 +104,11 @@ get "/time_reports/summary" do |project_id|
 end
 
 get "/time_reports/:project" do |project_id|
-  s = Time.local(*params['start'].split('-')) rescue Time.now - 7 * 24 * 3600
-  e = Time.local(*params['end'].split('-')) rescue Time.now
+  s = Time.local(*params['start'].split('-'))
+  e = Time.local(*params['end'].split('-'))
+
   @time_report = TimeReport.new(s..e, Project.find(project_id))
+
   @enable_blueprint = true
   haml :time_report
 end
