@@ -12,12 +12,15 @@ class TimeReport < Report
     query_slimtimer(period)
     query_pivotal(period) unless @project.wildcard?
     sort_tasks_by_pivotal_status
-    calculate_totals
 
-    user_ids = @users.map &:id
+    user_ids = users.map &:id
     @rows = @tasks.map { |t| Row.new(t, user_ids) }
-    @subtotal_rows = @subtotals.map { |t| Row.new(t, user_ids) }
+
+    @totals = calculate_totals(@tasks)
     @total_rows = [Row.new(@totals, user_ids)]
+
+    @subtotals = calculate_subtotals(@tasks, @totals)
+    @subtotal_rows = @subtotals.map { |t| Row.new(t, user_ids) }
   end
 
   def project_name
@@ -140,19 +143,5 @@ private
 
   def sort_tasks_by_pivotal_status
     @tasks.sort!
-  end
-
-  def calculate_totals
-    chores = Total.new('Chores', @tasks.select { |t| t[:story_type] == 'chore' })
-    @totals = Total.new('Grand Total', @tasks)
-
-    total_hours = @totals[:time_this_period] - chores[:time_this_period]
-
-    @subtotals = []
-    @subtotals << Total.new('Bugs', @tasks.select { |t| t.bug? }, total_hours)
-    @subtotals << Total.new('Delivered/Accepted Features', @tasks.select { |t| t.feature? && t.delivered? }, total_hours)
-    @subtotals << Total.new('Undelivered Features', @tasks.select { |t| t.feature? && t.undelivered? }, total_hours)
-    @subtotals << Total.new('Overhead', @tasks.select { |t| t.overhead? }, total_hours)
-    @subtotals << chores
   end
 end

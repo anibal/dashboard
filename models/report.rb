@@ -201,4 +201,22 @@ class Report
       list
     end
   end
+
+protected
+
+  def calculate_totals(tasks)
+    Total.new('Grand Total', tasks)
+  end
+
+  def calculate_subtotals(tasks, totals)
+    chores = Total.new('Chores', tasks.select { |t| t[:story_type] == 'chore' })
+    total_hours = totals[:time_this_period] - chores[:time_this_period]
+
+    subtotals = []
+    subtotals << Total.new('Bugs', tasks.select { |t| t.bug? }, total_hours)
+    subtotals << Total.new('Delivered/Accepted Features', tasks.select { |t| t.feature? && t.delivered? }, total_hours)
+    subtotals << Total.new('Undelivered Features', tasks.select { |t| t.feature? && t.undelivered? }, total_hours)
+    subtotals << Total.new('Overhead', tasks.select { |t| t.overhead? }, total_hours)
+    subtotals << chores
+  end
 end

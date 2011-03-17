@@ -11,11 +11,13 @@ class SummaryReport < Report
       @reports << time_report unless time_report.rows.empty?
     end
 
-    calculate_totals
-
     user_ids = users.map &:id
-    @subtotal_rows = @subtotals.map { |t| Row.new(t, user_ids) }
-    @total_rows = [Row.new(@totals, user_ids)]
+
+    totals = calculate_totals(tasks)
+    @total_rows = [Row.new(totals, user_ids)]
+
+    subtotals = calculate_subtotals(tasks, totals)
+    @subtotal_rows = subtotals.map { |t| Row.new(t, user_ids) }
   end
 
   def users
@@ -24,19 +26,5 @@ class SummaryReport < Report
 
   def tasks
     @reports.map(&:tasks).flatten.uniq
-  end
-
-  def calculate_totals
-    chores = Total.new('Chores', tasks.select { |t| t[:story_type] == 'chore' })
-    @totals = Total.new('Grand Total', tasks)
-
-    total_hours = @totals[:time_this_period] - chores[:time_this_period]
-
-    @subtotals = []
-    @subtotals << Total.new('Bugs', tasks.select { |t| t.bug? }, total_hours)
-    @subtotals << Total.new('Delivered/Accepted Features', tasks.select { |t| t.feature? && t.delivered? }, total_hours)
-    @subtotals << Total.new('Undelivered Features', tasks.select { |t| t.feature? && t.undelivered? }, total_hours)
-    @subtotals << Total.new('Overhead', tasks.select { |t| t.overhead? }, total_hours)
-    @subtotals << chores
   end
 end
