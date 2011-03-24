@@ -5,5 +5,10 @@ tmp/*
 stats/*
 *.swp
 .rvmrc
+
+# Vagrant
 .vagrant
 Vagrantfile
+
+# Sublime Text
+*.sublime-project
