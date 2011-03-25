@@ -132,13 +132,17 @@ private
         :pivotal_name     => story['name'],
         :pivotal_story    => Story.first_or_create(:id => story["id"]),
         :pivotal_labels   => story['labels'],
-        :lifetime_hours   => 0,
+        :lifetime_hours   => lifetime_hours_for_task(story['id']),
         :time_this_period => 0,
         :time_by_user     => UserTimeList.new
       )
     end
 
     @tasks
+  end
+
+  def lifetime_hours_for_task(pivotal_id)
+    SlimtimerTask.all(:name.like => "%#{pivotal_id}%").aggregate(:hours.sum) || 0
   end
 
   def sort_tasks_by_pivotal_status
