@@ -16,6 +16,7 @@ gem "yahoo-weather"
 gem "i18n"
 gem "activesupport"
 gem "rake"
+gem "rack", "1.1.0"
 
 group :development do
 	gem "thin"
