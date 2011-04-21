@@ -15,9 +15,14 @@ gem "httparty"
 gem "yahoo-weather"
 gem "i18n"
 gem "activesupport"
+gem "rake"
 
 group :development do
 	gem "thin"
 	gem "capistrano"
 	gem "capistrano-ext"
+end
+
+group :test do
+  gem "rspec"
 end

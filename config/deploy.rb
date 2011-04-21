@@ -6,6 +6,7 @@ stages = Dir[stages_glob].collect { |f| File.basename(f, ".rb") }.sort
 set :stages, stages
 set :default_stage, 'it'
 require 'capistrano/ext/multistage'
+require 'bundler/capistrano'
 
 set :application, "dashboard"
 set :repository,  "git://github.com/tricycle/dashboard.git"

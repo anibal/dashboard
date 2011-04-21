@@ -1,8 +1,11 @@
+require 'rubygems'
+require 'bundler/setup'
+
 require 'dashboard'
 require 'dm-migrations'
 
 require 'rake'
-require 'spec/rake/spectask'
+require 'rspec/core/rake_task'
 
 namespace :db do
   desc "DESTRUCTIVE: auto_migrates the database"
@@ -12,8 +15,8 @@ namespace :db do
 end
 
 desc "Run all specs"
-Spec::Rake::SpecTask.new('spec') do |t|
-  t.spec_files = FileList['spec/**/*.rb']
+RSpec::Core::RakeTask.new('spec') do |t|
+  t.pattern = 'spec/**/*.rb'
 end
 
 desc "Run all specs (alias to spec)"
