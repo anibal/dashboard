@@ -87,8 +87,12 @@ get "/reports" do
   @body_class = "reports"
 
   @projects = Project.all
-  @start = (Time.now - 7 * 24 * 3600)
-  @finish = Time.now
+
+  @ranges = [
+    { :start => 2.weeks.ago.beginning_of_week, :finish => 2.weeks.ago.end_of_week, :name => '2 weeks ago' },
+    { :start => 1.week.ago.beginning_of_week, :finish => 1.week.ago.end_of_week, :name => 'Last week' },
+    { :start => Time.now.beginning_of_week, :finish => Time.now.end_of_week, :name => 'This week' },
+  ]
 
   haml :reports
 end

@@ -2,8 +2,12 @@
   %h1 Trike Dashboard Reports
 
   %p
-    %a{ :href => report_link(@start, @finish) } Last weeks summary
+    %b summary:
+    - @ranges.each do |range|
+      %a{ :href => report_link(range[:start], range[:finish]) }= range[:name]
 
   - @projects.each do |project|
     %p
-      %a{ :href => report_link(@start, @finish, project.id) }= project.name
+      %b= "#{project.name}:"
+      - @ranges.each do |range|
+        %a{ :href => report_link(range[:start], range[:finish], project.id) }= range[:name]
