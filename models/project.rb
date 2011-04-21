@@ -6,7 +6,7 @@ class Project
   def self.all
     @all ||= PROJECTS.map do |id, attributes|
       new id, attributes
-    end
+    end.sort_by(&:name)
   end
 
   def self.find(id)
