@@ -12,7 +12,7 @@
   - @summary_report.reports.each do |report|
     %tbody
       %tr.project_name
-        %td{ :colspan => 9 }= "#{report.project_name}"
+        %td{ :colspan => 16 }= "#{report.project_name}"
       - report.rows.each do |row|
         %tr{ :class => row.classes }
           = haml(:_report_row, { :layout => false }, :users => report.users, :row => row)
