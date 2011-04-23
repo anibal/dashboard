@@ -7,8 +7,8 @@
     = haml :_report_top, { :layout => false }, :period => @time_report.period
 
   %thead
-    %tr
-      = haml(:_report_header, { :layout => false }, :users => @time_report.users)
+    %tr.header= haml(:_report_header, { :layout => false }, :users => @time_report.users)
+    %tr.filler= haml(:_report_header, { :layout => false }, :users => @time_report.users)
 
   - ['', 'subtotal', 'total'].each do |rowtype|
     %tbody{:class => rowtype}

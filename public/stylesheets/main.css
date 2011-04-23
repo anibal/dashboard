@@ -384,6 +384,15 @@ body.nagios #nagios-status {
   white-space: nowrap;
 }
 
+#timereport thead tr.header {
+  position: fixed;
+  z-index: 50;
+}
+
+#timereport thead tr.filler th {
+  visibility: hidden;
+}
+
 #timereport tbody.total td, #timereport tbody.subtotal td {
   background-color: #D9FFFF;
 }

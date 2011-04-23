@@ -6,8 +6,8 @@
     = haml :_report_top, { :layout => false }, :period => @summary_report.period
 
   %thead
-    %tr
-      = haml(:_report_header, { :layout => false }, :users => @summary_report.users)
+    %tr.header= haml(:_report_header, { :layout => false }, :users => @summary_report.users)
+    %tr.filler= haml(:_report_header, { :layout => false }, :users => @summary_report.users)
 
   - @summary_report.reports.each do |report|
     %tbody
