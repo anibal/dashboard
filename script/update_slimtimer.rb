@@ -142,20 +142,9 @@ begin
       log.info "    Building new user"
       u = SlimtimerUser.new
       u.id = st.user_id
-      task = tasks.first # FIXME Assumes that at least one task was returned
-      person = %w[owners coworkers reporters].map{ |k|
-        a = if task[k].nil? || task[k]['person'].nil?
-          []
-        else
-          if task[k]['person'].is_a? Hash
-            [task[k]['person']]
-          else
-            task[k]['person']
-          end
-        end
-        a
-      }.flatten.find { |person| person['user_id'] == u.id }
-      next unless person
+
+      owners = tasks.map { |t| t["owners"]["person"] }.uniq
+      person = owners.find { |o| o["user_id"] == u.id }
 
       log.info "      Found person in one of their tasks:"
       log.info "      '#{person['name']}'"
