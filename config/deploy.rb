@@ -1,4 +1,4 @@
-trikelibs = Dir['config/cap-tasks/*.rb'].reject{ |file| file =~ /(radiant)/ }
+trikelibs = Dir['config/cap-tasks/*.rb'].reject{ |file| file =~ /(radiant|aws)/ }
 trikelibs.each { |trikelib| load(trikelib)  }
 
 stages_glob = File.join(File.dirname(__FILE__), "deploy", "*.rb")
