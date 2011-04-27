@@ -76,9 +76,9 @@ private
         reject { |task| task.support? }
     end
 
-    @tasks = @tasks.group_by(&:name).map do |name, tasks|
+    @tasks = @tasks.group_by(&:canonical_name).map do |name, tasks|
       values = {
-        :lifetime_hours => 0,
+        :lifetime_hours => SlimtimerTask.all(:name => tasks.map(&:name).uniq).aggregate(:hours.sum),
         :time_this_period => 0,
         :time_by_user => UserTimeList.new
       }
@@ -90,12 +90,8 @@ private
           values[:time_by_user][user_id] += time
         end
       end
-      Task.new(name, values)
-    end
 
-    lifetime_hours_by_task_name = Hash[*(SlimtimerTask.all.aggregate(:hours.sum, :name).map(&:reverse).flatten)]
-    @tasks.each do |t|
-      t[:lifetime_hours] = lifetime_hours_by_task_name[t[:name]]
+      Task.new(name, values)
     end
   end
 
