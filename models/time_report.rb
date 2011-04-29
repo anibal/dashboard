@@ -80,15 +80,14 @@ private
       values = {
         :lifetime_hours => SlimtimerTask.all(:name => tasks.map(&:name).uniq).aggregate(:hours.sum),
         :time_this_period => 0,
-        :time_by_user => UserTimeList.new
+        :time_by_user => UserTimeList.new(users)
       }
       tasks.each do |task|
         time_entries = task.time_entries.ending_in(range)
         times = time_entries.aggregate(:duration_in_seconds.sum, :slimtimer_user_id).map(&:reverse)
+
         values[:time_this_period] += times.inject(0) { |sum, a| sum + a[1] }
-        times.each do |user_id, time|
-          values[:time_by_user][user_id] += time
-        end
+        times.each { |user_id, time| values[:time_by_user][user_id] += time }
       end
 
       Task.new(name, values)
@@ -130,7 +129,7 @@ private
         :pivotal_labels   => story['labels'],
         :lifetime_hours   => lifetime_hours_for_task(story['id']),
         :time_this_period => 0,
-        :time_by_user     => UserTimeList.new
+        :time_by_user     => UserTimeList.new(users)
       )
     end
 

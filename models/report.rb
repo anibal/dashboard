@@ -68,7 +68,7 @@ class Report
       case key
       when :time_by_user
         @tasks.map { |task| task[:time_by_user] }.inject(UserTimeList.new) { |sum, val|
-          sum ? sum + val : val
+          sum ? (sum + val) : val
         }
       when :name
         @name
@@ -170,11 +170,11 @@ class Report
     def undelivered?; !delivered?; end
   end
 
-    class UserTimeList
+  class UserTimeList
     include Enumerable
 
-    def initialize(time_by_user = {})
-      @time_by_user = time_by_user
+    def initialize(users = [])
+      users.each { |u| @time_by_user[u.id] = 0 }
     end
 
     def [](user_id)
