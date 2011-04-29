@@ -174,6 +174,7 @@ class Report
     include Enumerable
 
     def initialize(users = [])
+      @time_by_user = {}
       users.each { |u| @time_by_user[u.id] = 0 }
     end
 
