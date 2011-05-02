@@ -15,10 +15,14 @@ Trikelings (see http://github.com/tricycle/dashboard).
 
 == Install
 
-Install the gems at +.gems+.
+Install the gems using +bundle install+.
 Dup +config.sample.rb+, only +s/sample\.//+.
-cron the +.rb+ scripts at +script/+ to run regularly.
+Update the +config.rb+ file to point to the correct DB.
 Do like you would with any other sinatra (http://www.sinatrarb.com/) app.
+
+== Server Install
+
+Cron the +.rb+ scripts at +script/+ to run regularly.
 
 == License
 
