@@ -65,7 +65,7 @@ private
 
   def query_slimtimer(range)
     entries = TimeEntry.ending_in(range)
-    @users = SlimtimerUser.all(:time_entries => entries, :order => [ :name.asc ])
+    @users = SlimtimerUser.all(:order => [ :name.asc ])
 
     @tasks = if @project.wildcard?
       SlimtimerTask.all(:time_entries => entries, :completed => false)
