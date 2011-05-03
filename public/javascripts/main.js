@@ -73,10 +73,10 @@ function fetchChartbeatStatus() {
 function meetingOverlay() {
   var date = new Date();
 
-  if (date.getDay() == 1 && date.getHours() == 10 && date.getMinutes() >= 0 && date.getMinutes() < 30) {
+  if (date.getDay() == 1 && date.getHours() == 9 && date.getMinutes() >= 30 && date.getMinutes() < 59) {
     $(".monday").show();
   }
-  else if (date.getHours() == 10 && date.getMinutes() >= 0 && date.getMinutes() < 10) {
+  else if (date.getHours() == 9 && date.getMinutes() >= 30 && date.getMinutes() < 40) {
     $(".standup").show();
   }
   else if (window.location.hash == '#friday' || (date.getDay() == 5 && date.getHours() == 12 && date.getMinutes() >= 0 && date.getMinutes() <= 30)) {
