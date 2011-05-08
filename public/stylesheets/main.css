@@ -203,6 +203,10 @@ h1 {
   font-weight: normal;
   z-index: 2;
 }
+#nagios-status .problems .critical {
+  font-weight: bold;
+  color: #BE6D00;
+}
 body.nagios #nagios-status {
   margin: 5px;
 }
