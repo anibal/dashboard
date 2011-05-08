@@ -184,7 +184,8 @@ h1 {
 #nagios-status .info {
   position: relative;
   height: auto;
-  max-height: 397px;
+  max-height: 387px;
+  overflow: hidden;
 }
 #nagios-status .problem-overlay {
   position: absolute;
