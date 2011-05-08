@@ -2,6 +2,8 @@
 # Development environment
 # -----------------------------------------------------------------------------------
 configure :development do
+  
+  # Music Player Daemon, as in http://mpd.wikia.com/wiki/Music_Player_Daemon_Wiki
   MpdProxy.setup "mpd", 6600, true
 
   DataMapper::Logger.new(STDOUT, :debug)
@@ -23,20 +25,25 @@ configure :development do
 
   CI_URL = "http://ci.trike.com.au/api/json"
 
+  # The Industry Standard In IT Infrastructure Monitoring: http://www.nagios.org/
   NAGIOS_URL = "http://nagios.trike.com.au/cgi-bin/nagios3/status.cgi?host=all&type=detail&hoststatustypes=3&serviceprops=42&servicestatustypes=28"
   NAGIOS_USER = "dashboard"
   NAGIOS_PW = "password"
 
+  # https://www.pivotaltracker.com/
   PIVOTAL_URL = "http://www.pivotaltracker.com/services/v3"
   PIVOTAL_TOKEN = "token"
 
+  # Task time tracking and reporting: http://slimtimer.com/
   SLIMTIMER_APIKEY = "key"
   SLIMTIMER_USERS = {
     "email@example.com" => "password"
   }
   SLIMTIMER_GOD = "email@example.com"
 
+  # Real-time monitoring of your online presence: http://chartbeat.com/
   CHARTBEAT_APIKEY = "key"
+
 end
 
 # -----------------------------------------------------------------------------------
