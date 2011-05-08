@@ -1,8 +1,14 @@
+# TODO: Bundle this? See config.ru before.
 %w[ date rubygems sinatra sinatra/content_for haml dm-core dm-aggregates
     open-uri hpricot json librmpd yahoo-weather httparty active_support/all ].each { |lib| require lib }
+
+# Extensions to Ruby standard classes, TODO: Check if this _really required.
 %w[ ext/fixnum ext/array mpd_proxy ].each { |lib| require "lib/#{lib}" }
+
 require 'config'
+
 %w[ ci pivotal nagios stats].each { |lib| require "lib/#{lib}" }
+
 %w[ project slimtimer_task slimtimer_user time_entry report time_report summary_report story shepherd
   ].each { |model| require "models/#{model}" }
 
