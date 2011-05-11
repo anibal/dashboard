@@ -1,5 +1,5 @@
 Given /^it is a sunny day$/ do
-  pending # express the regexp above with the code you wish you had
+  use_vcr_cassette "weather" #TODO: Not sure if this should come here
 end
 
 Given /^I visit the "([^"]*)"$/ do |arg1|

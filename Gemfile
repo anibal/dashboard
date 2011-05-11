@@ -29,4 +29,7 @@ group :test do
   gem "cucumber"
   gem 'capybara'
   gem "cucumber-sinatra"
+  # HTTP request recording and replaying
+  gem "vcr"
+  gem "webmock"
 end
