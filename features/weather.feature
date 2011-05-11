@@ -4,7 +4,7 @@ Feature: Weather display
   
   Scenario:
     Given it is a sunny day
-      And I visit the "/"
+      And I go to "/"
      Then I should see "the sun shinning"
       And I should see "30" degrees as "minimum" temperature
       And I should see "40" degrees as "maximum" temperature
