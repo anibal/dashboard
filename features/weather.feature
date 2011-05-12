@@ -3,9 +3,10 @@ Feature: Weather display
   I want weather information to be displayed in the dashboard
   
   Scenario:
-    Given it is a sunny day
-      And I go to "/"
-     Then I should see "the sun shinning"
-      And I should see "30" degrees as "minimum" temperature
-      And I should see "40" degrees as "maximum" temperature
-      And I should see "clear skies"
+    Given the day is "cloudy"
+      And I visit the home page
+     Then I should see "Showers in the Vicinity"
+      And I should see "14°" degrees as "minimum" temperature
+      And I should see "16°" degrees as "maximum" temperature
+      And I should see the icon of a "clouded sun"
+

@@ -22,6 +22,7 @@
     = haml :nagios_status, :layout => false
 
   #third.column
+    -# TODO: This classes should be replaced by IDs
     .clock
       .time
       .date
@@ -30,6 +31,7 @@
         %img{ :src => @weather_image }
       .info
         .temp
+        -# TODO: We should have an ID for both low and max, for better semantic and testing
           = "#{@weather.condition.temp}°C"
           %span.high= "#{@weather.forecasts.first.high}°C"
         .text= @weather_condition

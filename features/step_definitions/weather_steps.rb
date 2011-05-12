@@ -1,13 +1,21 @@
-Given /^it is a sunny day$/ do
-  use_vcr_cassette "weather" #TODO: Not sure if this should come here
+Given /^the day is (.+)$/ do |description|
+  @cassete = "weather.#{description}"
 end
 
-Given /^I visit the "([^"]*)"$/ do |arg1|
-  pending # express the regexp above with the code you wish you had
+When /^(?:|I )visit (.+)$/ do |page_name|
+  VCR.use_cassette(@cassete) do 
+    When "I go to #{page_name}"
+  end
 end
 
-Then /^I should see "([^"]*)" degrees as "([^"]*)" temperature$/ do |arg1, arg2|
-  pending # express the regexp above with the code you wish you had
+Then /^I should see "([^"]*)" degrees as "([^"]*)" temperature$/ do |temperature, type|
+  # TODO: This should test for low and high in an explicit way, current
+  # HTML structure doesn't really allow it, so it will wait a new layout
+  # with ID's for weather, max and min
+  Then "I should see \"#{temperature}\" within \".temp\""
 end
 
-
+Then /^I should see the icon of a "(.+)"$/ do |icon|
+  icon_sources = { 'clouded sun' => 'http://l.yimg.com/a/i/us/we/52/28.gif' }
+  Then "I should see the image \"#{icon_sources[icon]}\""
+end

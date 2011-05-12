@@ -1,4 +1,3 @@
-require 'vcr_cucumber_helpers.rb' #TODO: Fix this require, already opened a ticket at https://github.com/myronmarston/vcr/issues/63
 require 'vcr'
 
 VCR.config do |c|
