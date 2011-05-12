@@ -27,12 +27,21 @@ class PivotalSlimtimerUpdater
   end
 
   def create_slimtimer_task(name)
-    ::SlimtimerApi.new(SLIMTIMER_APIKEY, "t-sommer@gmx.net", "fL828$gT!Y&N").create_task name, "trike"
+    slimtimer_api.create_task name, "trike"
   end
 
   def finish_slimtimer_task(name)
+		new_tasks = slimtimer_api.tasks(0, "no", "owner")
+    SlimtimerTask.update(new_tasks)
+
     SlimtimerTask.all(:name => name).each do |task|
-      ::SlimtimerApi.new(SLIMTIMER_APIKEY, "t-sommer@gmx.net", "fL828$gT!Y&N").finish_task task.id, name
+      slimtimer_api.finish_task task.id, name
     end
+  end
+
+private
+
+	def slimtimer_api
+		@st_api = ::SlimtimerApi.new(SLIMTIMER_APIKEY)
   end
 end

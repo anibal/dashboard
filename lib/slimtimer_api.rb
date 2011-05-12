@@ -63,7 +63,7 @@ class SlimtimerApi
 		response = self.class.post("http://slimtimer.com/users/#{@user_id}/tasks",
       :headers => update_headers,
       :body => base_query.merge({
-        'task' => { 'name' => name, 'tags' => "" }
+        'task' => { 'name' => name, 'tags' => tags }
       }).to_yaml)
   end
 
