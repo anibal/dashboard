@@ -2,7 +2,7 @@
     open-uri hpricot json librmpd yahoo-weather httparty active_support/all ].each { |lib| require lib }
 %w[ ext/fixnum ext/array mpd_proxy ].each { |lib| require "lib/#{lib}" }
 require 'config'
-%w[ ci pivotal nagios stats].each { |lib| require "lib/#{lib}" }
+%w[ ci pivotal nagios stats pivotal_slimtimer_updater].each { |lib| require "lib/#{lib}" }
 %w[ project slimtimer_task slimtimer_user time_entry report time_report summary_report story shepherd
   ].each { |model| require "models/#{model}" }
 
@@ -139,3 +139,10 @@ post "/shepherds/update" do
 
   redirect "/shepherds"
 end
+
+post "/projects/:project_id/pivotal_update" do |project_id|
+  project = Project.find(project_id)
+  updater = PivotalSlimtimerUpdater.new(project, request.body.read)
+  updater.update if updater.valid?
+end
+
