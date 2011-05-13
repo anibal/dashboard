@@ -14,6 +14,13 @@ namespace :db do
   end
 end
 
+namespace :page_speed do
+	desc "Fetch page speed results for configured projects"
+  task :fetch_results do
+  	PageSpeed.fetch_results
+  end
+end
+
 desc "Run all specs"
 RSpec::Core::RakeTask.new('spec') do |t|
   t.pattern = 'spec/**/*.rb'

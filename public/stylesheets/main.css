@@ -148,6 +148,9 @@ h1 {
   margin: 0 5px;
   font-weight: normal;
 }
+.status .info .attribute.speed {
+  margin-top: -2px;
+}
 .status .info .attribute.right {
   float: right;
 }
