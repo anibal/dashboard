@@ -27,7 +27,7 @@ class PivotalSlimtimerUpdater
   end
 
   def create_slimtimer_task(name)
-    slimtimer_api.create_task name, "trike"
+    slimtimer_api.create_task name, SLIMTIMER_GOD_TAG
   end
 
   def finish_slimtimer_task(name)
