@@ -7,7 +7,7 @@
 
 require 'config'
 
-%w[ ci pivotal nagios stats].each { |lib| require "lib/#{lib}" }
+%w[ ci pivotal nagios stats pivotal_slimtimer_updater page_speed ].each { |lib| require "lib/#{lib}" }
 
 %w[ project slimtimer_task slimtimer_user time_entry report time_report summary_report story shepherd
   ].each { |model| require "models/#{model}" }
@@ -58,8 +58,9 @@ get "/" do
 
   @projects = PROJECTS.reject { |name, attributes| attributes[:hidden] }
   @projects.each do |name, attributes|
-    attributes[:activity] = Stats.status_for(name)
-    attributes[:shepherd] = Project.find(name).shepherd
+    attributes[:activity] 				= Stats.status_for(name)
+    attributes[:shepherd] 				= Project.find(name).shepherd
+    attributes[:page_speed_score] = PageSpeed.load_results[name]
   end
 
   haml :index
@@ -145,3 +146,10 @@ post "/shepherds/update" do
 
   redirect "/shepherds"
 end
+
+post "/projects/:project_id/pivotal_update" do |project_id|
+  project = Project.find(project_id)
+  updater = PivotalSlimtimerUpdater.new(project, request.body.read)
+  updater.update if updater.valid?
+end
+

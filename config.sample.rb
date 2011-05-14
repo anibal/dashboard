@@ -69,7 +69,8 @@ configure :production do
         :id => "an integer"
       },
       :slimtimer  => {
-        :ids => ["tri", "tro"]
+        :ids => ["tri", "tro"],
+        :task_prefix => "i:tri system"
       },
       :chartbeat_url => "example.com"
     }
@@ -91,6 +92,9 @@ configure :production do
   SLIMTIMER_GOD = "email@example.com"
 
   CHARTBEAT_APIKEY = "key"
+
+  GOOGLE_PAGE_SPEED_URL = "https://www.googleapis.com/pagespeedonline/v1/runPagespeed"
+  GOOGLE_SIMPLE_APIKEY = "key"
 end
 
 # -----------------------------------------------------------------------------------

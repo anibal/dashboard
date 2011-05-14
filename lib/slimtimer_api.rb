@@ -17,7 +17,7 @@ class SlimtimerApi
   # }
   format :xml
 
-  def initialize(api_key, email, password)
+  def initialize(api_key, email = SLIMTIMER_GOD, password = SLIMTIMER_USERS[SLIMTIMER_GOD])
     @api_key = api_key
     get_access_token(email, password)
   end
@@ -59,14 +59,27 @@ class SlimtimerApi
     end
   end
 
+  def create_task(name, tags = "")
+		response = self.class.post("http://slimtimer.com/users/#{@user_id}/tasks",
+      :headers => update_headers,
+      :body => base_query.merge({
+        'task' => { 'name' => name, 'tags' => tags }
+      }).to_yaml)
+  end
+
+  def finish_task(id, name)
+		response = self.class.put("http://slimtimer.com/users/#{@user_id}/tasks/#{id}",
+      :headers => update_headers,
+      :body => base_query.merge({
+        'task' => { 'name' => name, 'completed_on' => Time.now }
+      }).to_yaml)	
+  end
+
   private
 
   def get_access_token(email, password)
     response = self.class.post("http://slimtimer.com/users/token",
-      :headers => {
-        "Accept"       => "application/xml",
-        "Content-Type" => "application/x-yaml"
-      },
+      :headers => update_headers,
       :body => {
         'user' => { 'email' => email, 'password' => password },
         'api_key' => @api_key
@@ -76,5 +89,12 @@ class SlimtimerApi
 
   def base_query
     @base_query ||= { :api_key => @api_key, :access_token => @access_token }
+  end
+
+  def update_headers
+		{
+    	"Accept"       => "application/xml",
+      "Content-Type" => "application/x-yaml"
+    }
   end
 end
