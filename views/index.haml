@@ -15,7 +15,9 @@
           .points= attributes[:shepherd]
         .info
           .summary
-            .attribute.health.rcov
+            .attribute.speed
+              - if attributes[:page_speed_score]
+                %img{ :src => "https://chart.googleapis.com/chart?cht=gom&chd=t:#{attributes[:page_speed_score]}&chs=40x18&chf=bg,s,65432100" }
             .attribute.stats.right= haml :stats, :locals => { :stats => attributes[:activity], :max => max_activity_across_projects(@projects) }, :layout => false
   #second.column
     %h1 Systems
