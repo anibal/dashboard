@@ -1,5 +1,5 @@
-Given /^the day is (.+)$/ do |description|
-  @cassete = "weather.#{description}"
+Given /^the day is "(.+)"$/ do |description|
+  @cassete = "weather_#{description}"
 end
 
 When /^(?:|I )visit (.+)$/ do |page_name|
@@ -12,6 +12,10 @@ Then /^I should see "([^"]*)" degrees as "([^"]*)" temperature$/ do |temperature
   # TODO: This should test for low and high in an explicit way, current
   # HTML structure doesn't really allow it, so it will wait a new layout
   # with ID's for weather, max and min
+    puts "*"*80
+    require 'pp'
+    pp page.methods - Object.methods
+    pp body
   Then "I should see \"#{temperature}\" within \".temp\""
 end
 
