@@ -28,6 +28,7 @@ group :test do
   gem "rspec"
   gem "cucumber"
   gem 'capybara'
+  gem 'capybara-envjs'
   gem "cucumber-sinatra"
   # HTTP request recording and replaying
   gem "vcr"
