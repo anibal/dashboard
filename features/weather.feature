@@ -10,3 +10,10 @@ Feature: Weather display
       And I should see "16°" degrees as "maximum" temperature
       And I should see the icon of a "clouded sun"
 
+  Scenario:
+    Given the day is "sunny"
+      And I visit the home page
+     Then I should see "Cider Weather"
+      And I should see "13°" degrees as "minimum" temperature
+      And I should see "16°" degrees as "maximum" temperature
+      And I should see the icon of a "bright spotless sun"

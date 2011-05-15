@@ -1,4 +1,4 @@
-Given /^the day is "(.+)"$/ do |description|
+Given /^the day is "([^"]*)"$/ do |description|
   @cassete = "weather_#{description}"
 end
 
@@ -12,14 +12,11 @@ Then /^I should see "([^"]*)" degrees as "([^"]*)" temperature$/ do |temperature
   # TODO: This should test for low and high in an explicit way, current
   # HTML structure doesn't really allow it, so it will wait a new layout
   # with ID's for weather, max and min
-    puts "*"*80
-    require 'pp'
-    pp page.methods - Object.methods
-    pp body
   Then "I should see \"#{temperature}\" within \".temp\""
 end
 
 Then /^I should see the icon of a "(.+)"$/ do |icon|
-  icon_sources = { 'clouded sun' => 'http://l.yimg.com/a/i/us/we/52/28.gif' }
+  icon_sources = { 'clouded sun' => 'http://l.yimg.com/a/i/us/we/52/28.gif',
+                   'bright spotless sun' => 'http://l.yimg.com/a/i/us/we/52/32.gif'  }
   Then "I should see the image \"#{icon_sources[icon]}\""
 end

@@ -1,0 +1,72 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: http://weather.yahooapis.com:80/forecastrss?p=ASXX0075&u=c
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      expires: 
+      - Sun, 15 May 2011 02:16:17 GMT
+      content-type: 
+      - text/xml;charset=UTF-8
+      date: 
+      - Sun, 15 May 2011 01:56:17 GMT
+      cache-control: 
+      - private, max-age=1200
+      transfer-encoding: 
+      - chunked
+    body: |
+      <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+      		<rss version="2.0" xmlns:yweather="http://xml.weather.yahoo.com/ns/rss/1.0" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#">
+      			<channel>
+      		
+      <title>Yahoo! Weather - Melbourne, AS</title>
+      <link>http://us.rd.yahoo.com/dailynews/rss/weather/Melbourne__AS/*http://weather.yahoo.com/forecast/ASXX0075_c.html</link>
+      <description>Yahoo! Weather for Melbourne, AS</description>
+      <language>en-us</language>
+      <lastBuildDate>Sun, 15 May 2011 11:00 am AEST</lastBuildDate>
+      <ttl>60</ttl>
+      <yweather:location city="Melbourne" region=""   country="AS"/>
+      <yweather:units temperature="C" distance="km" pressure="mb" speed="km/h"/>
+      <yweather:wind chill="13"   direction="250"   speed="25.75" />
+      <yweather:atmosphere humidity="58"  visibility="9.99"  pressure="1015.92"  rising="0" />
+      <yweather:astronomy sunrise="7:12 am"   sunset="5:20 pm"/>
+      <image>
+      <title>Yahoo! Weather</title>
+      <width>142</width>
+      <height>18</height>
+      <link>http://weather.yahoo.com</link>
+      <url>http://l.yimg.com/a/i/brand/purplelogo//uh/us/news-wea.gif</url>
+      </image>
+      <item>
+      <title>Conditions for Melbourne, AS at 11:00 am AEST</title>
+      <geo:lat>-37.74</geo:lat>
+      <geo:long>144.9</geo:long>
+      <link>http://us.rd.yahoo.com/dailynews/rss/weather/Melbourne__AS/*http://weather.yahoo.com/forecast/ASXX0075_c.html</link>
+      <pubDate>Sun, 15 May 2011 11:00 am AEST</pubDate>
+      <yweather:condition  text="Sunny"  code="32"  temp="13"  date="Sun, 15 May 2011 11:00 am AEST" />
+      <description><![CDATA[
+      <img src="http://l.yimg.com/a/i/us/we/52/32.gif"/><br />
+      <b>Current Conditions:</b><br />
+      Sunny, 13 C<BR />
+      <BR /><b>Forecast:</b><BR />
+      Sun - Sunny. High: 16 Low: 8<br />
+      Mon - Sunny. High: 16 Low: 6<br />
+      <br />
+      <a href="http://us.rd.yahoo.com/dailynews/rss/weather/Melbourne__AS/*http://weather.yahoo.com/forecast/ASXX0075_c.html">Full Forecast at Yahoo! Weather</a><BR/><BR/>
+      (provided by <a href="http://www.weather.com" >The Weather Channel</a>)<br/>
+      ]]></description>
+      <yweather:forecast day="Sun" date="15 May 2011" low="8" high="16" text="Sunny" code="32" />
+      <yweather:forecast day="Mon" date="16 May 2011" low="6" high="16" text="Sunny" code="32" />
+      <guid isPermaLink="false">ASXX0075_2011_05_15_11_00_AEST</guid>
+      </item>
+      </channel>
+      </rss>
+      <!-- api7.weather.ac4.yahoo.com uncompressed/chunked Sat May 14 18:56:17 PDT 2011 -->
+
+    http_version: "1.1"
