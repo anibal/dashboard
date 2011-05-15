@@ -24,6 +24,8 @@ class PageSpeed
 
     def load_results
 			@results ||= JSON.parse(File.read(results_file)).to_hash
+    rescue Errno::ENOENT
+      {}
     end
   end
 end
