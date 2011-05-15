@@ -32,6 +32,6 @@ begin
   desc "Run all specs (alias to spec)"
   task :test => :spec
   task :default => :spec
-rescue MissingSourceFile # you're not in dev mode
+rescue # you're not in dev mode
 end
 
