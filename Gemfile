@@ -26,4 +26,5 @@ end
 
 group :test do
   gem "rspec"
+  gem "jasmine"
 end
