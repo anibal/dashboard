@@ -33,4 +33,7 @@ group :test do
   # HTTP request recording and replaying
   gem "vcr"
   gem "webmock"
+  # Time manipulation
+  gem "timecop"
+  gem "chronic"
 end

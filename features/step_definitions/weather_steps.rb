@@ -3,6 +3,7 @@ Given /^the day is "([^"]*)"$/ do |description|
 end
 
 When /^(?:|I )visit (.+)$/ do |page_name|
+  @cassete ||= 'default'
   VCR.use_cassette(@cassete) do 
     When "I go to #{page_name}"
   end

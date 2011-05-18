@@ -8,9 +8,9 @@ require 'capybara'
 require 'capybara/cucumber'
 require 'rspec'
 
-# Faster? Headless JavaScript testing support with Env.js
+# Faster! Headless JavaScript testing support with Env.js
 require 'capybara/envjs'
-Capybara.javascript_driver = :envjs
+#Capybara.javascript_driver = :envjs
 
 Capybara.app = Sinatra::Application
 
