@@ -12,6 +12,7 @@
 #
 src_files:
     - public/javascripts/**/*.js
+    - spec/javascripts/support/jquery-1.6.1.min.js
 
 # stylesheets
 #
