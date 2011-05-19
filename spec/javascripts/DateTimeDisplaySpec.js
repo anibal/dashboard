@@ -17,10 +17,10 @@ describe("Date/Time display update", function() {
       this.displayed_time = $('.time').text();
     });
 
-    waits(201);
+    waits(2000);
 
     runs(function () {
-      expect( this.displayed_time ).not.toEqual( $('.time') );
+      expect( this.displayed_time ).not.toEqual( $('.time').text() );
     });
 
   });
