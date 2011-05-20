@@ -34,3 +34,12 @@ begin
 rescue MissingSourceFile # you're not in dev mode
 end
 
+begin
+  require 'cucumber/rake/task'
+  Cucumber::Rake::Task.new(:features)
+rescue LoadError
+  desc 'Cucumber rake task not available (Cucumber not installed)'
+  task :features do
+    abort 'Cucumber is not available. In order to run specs, you must: (sudo) gem install cucumber or bundle install'
+  end
+end  
