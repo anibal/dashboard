@@ -44,6 +44,8 @@ configure :development do
 
   # Real-time monitoring of your online presence: http://chartbeat.com/
   CHARTBEAT_APIKEY = "key"
+  
+  GOOGLE_CALENDAR_EMBED_CODE = "http://www.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showDate=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;mode=AGENDA&amp;height=496&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=dnv17juvgme52i520fj9pahf6g%40group.calendar.google.com&amp;color=%230D7813&amp;src=fjch0inl5i4uqjs8t1kvqaoduk%40group.calendar.google.com&amp;color=%23AB8B00&amp;ctz=Australia%2FSydney"
 
 end
 

@@ -47,6 +47,7 @@ end
 get "/" do
   @body_class = "dashboard"
   @chartbeat_api_key = CHARTBEAT_APIKEY
+  @google_calendar_embed_code = GOOGLE_CALENDAR_EMBED_CODE
 
   @weather = YahooWeather::Client.new.lookup_location("ASXX0075", "c")
   @weather_image = Hpricot(@weather.description).at("img").attributes["src"]
