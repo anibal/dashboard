@@ -26,9 +26,13 @@ GEM
       rack-test (>= 0.5.4)
       selenium-webdriver (>= 0.0.27)
       xpath (~> 0.1.3)
+    capybara-envjs (0.4.0)
+      capybara (~> 0.4.0)
+      envjs (>= 0.3.7)
     celerity (0.8.9)
     childprocess (0.1.8)
       ffi (~> 1.0.6)
+    chronic (0.3.0)
     crack (0.1.8)
     cucumber (0.10.2)
       builder (>= 2.1.2)
@@ -87,6 +91,8 @@ GEM
       dm-core (~> 1.0.2)
     do_mysql (0.10.3)
       data_objects (= 0.10.3)
+    envjs (0.3.8)
+      johnson (>= 2.0.0.pre3)
     eventmachine (0.12.10)
     extlib (0.9.15)
     fastercsv (1.5.4)
@@ -105,6 +111,8 @@ GEM
       rack (>= 1.1)
       rspec (>= 1.3.1)
       selenium-webdriver (>= 0.1.3)
+    johnson (2.0.0.pre3)
+      stackdeck (~> 0.2)
     json (1.5.1)
     json_pure (1.5.1)
     librmpd (0.1.1)
@@ -135,11 +143,14 @@ GEM
       ffi (>= 1.0.7)
       json_pure
       rubyzip
+    shotgun (0.9)
+      rack (>= 1.0)
     sinatra (1.2.0)
       rack (~> 1.1)
       tilt (< 2.0, >= 1.2.2)
     sinatra-content-for (0.2)
       sinatra
+    stackdeck (0.2.0)
     stringex (1.1.0)
     templater (1.0.0)
       diff-lcs (>= 1.1.2)
@@ -151,6 +162,7 @@ GEM
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
     tilt (1.2.2)
+    timecop (0.3.5)
     uuidtools (2.1.2)
     vcr (1.9.0)
     webmock (1.6.2)
@@ -169,6 +181,8 @@ DEPENDENCIES
   capistrano
   capistrano-ext
   capybara
+  capybara-envjs
+  chronic
   cucumber
   cucumber-sinatra
   data_objects
@@ -185,9 +199,11 @@ DEPENDENCIES
   rack (= 1.1.0)
   rake
   rspec
+  shotgun
   sinatra
   sinatra-content-for
   thin
+  timecop
   vcr
   webmock
   yahoo-weather

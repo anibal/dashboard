@@ -19,6 +19,7 @@ gem "rake"
 gem "rack", "1.1.0"
 
 group :development do
+  gem "shotgun"
 	gem "thin"
 	gem "capistrano"
 	gem "capistrano-ext"
@@ -28,9 +29,14 @@ group :test do
   gem "rspec"
   gem "cucumber"
   gem 'capybara'
+  gem 'capybara-envjs'
   gem "cucumber-sinatra"
-  # HTTP request recording and replaying
+  # Request/Response record/replay
   gem "vcr"
   gem "webmock"
+  # Javascript 
   gem "jasmine"
+  # Time manipulation
+  gem "timecop"
+  gem "chronic"
 end
