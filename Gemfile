@@ -32,4 +32,5 @@ group :test do
   # HTTP request recording and replaying
   gem "vcr"
   gem "webmock"
+  gem "jasmine"
 end

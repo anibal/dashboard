@@ -43,3 +43,13 @@ rescue LoadError
     abort 'Cucumber is not available. In order to run specs, you must: (sudo) gem install cucumber or bundle install'
   end
 end  
+
+begin
+  require 'jasmine'
+  load 'jasmine/tasks/jasmine.rake'
+rescue LoadError
+  task :jasmine do
+    abort "Jasmine is not available. In order to run jasmine, you must: (sudo) gem install jasmine"
+  end
+end
+

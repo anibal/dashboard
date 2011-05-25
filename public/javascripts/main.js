@@ -89,9 +89,10 @@ function meetingOverlay() {
 
 function tickClock() {
   var now = new Date();
-  $(".clock .date").html(now.toLocaleDateString());
-  $(".clock .time").html(now.toLocaleTimeString());
-  setTimeout("tickClock();", 200);
+  /* See http://fisforformat.sourceforge.net/ */
+  $(".clock .date").html(now.f('EE, MMM d, yyyy'));
+  $(".clock .time").html(now.f('HH:mm:ss'));
+  return setTimeout("tickClock();", 200);
 };
 
 function reload() {
